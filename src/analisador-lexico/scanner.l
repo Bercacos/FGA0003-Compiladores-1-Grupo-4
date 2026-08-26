@@ -7,6 +7,12 @@
 
 if          { printf("KW_IF\n"); }
 while       { printf("KW_WHILE\n"); }
+for         { printf("KW_FOR\n"); }
+int         { printf("KW_INT\n"); }
+float       { printf("KW_FLOAT\n"); }
+char        { printf("KW_CHAR\n"); }
+string      { printf("KW_STRING\n"); }
+
 
 "//".*     { /* Ignorar comentários de linha */ }
 
@@ -16,7 +22,10 @@ while       { printf("KW_WHILE\n"); }
 
 [0-9]+(\.[0-9]+)?  { printf("NUMBER(%s)\n", yytext); }
 
-[+\-*/=]   { printf("OPERATOR(%s)\n", yytext); }
+[+\-*/]   { printf("OPERATOR(%s)\n", yytext); }
+
+"=="        { printf("EQ\n"); }
+"="         { printf("ASSIGN\n"); } 
 
 [ \t\n]+  { /* Não faz nada */ }
 
