@@ -1,74 +1,67 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "parser.tab.h"  /* contém as definições de token geradas pelo Bison */
 %}
 
-/* Definições de padrões de token e ações */
 %%
 
-if          { printf("KW_IF\n"); }
-while       { printf("KW_WHILE\n"); }
-for         { printf("KW_FOR\n"); }
-else        { printf("KW_ELSE\n"); }
-return      { printf("KW_RETURN\n"); }
+if          { return KW_IF; }
+while       { return KW_WHILE; }
+for         { return KW_FOR; }
+else        { return KW_ELSE; }
+return      { return KW_RETURN; }
 
-"("         { printf("LPAREN\n"); }
-")"         { printf("RPAREN\n"); }
-"{"         { printf("LCHAVE\n"); }
-"}"         { printf("RCHAVE\n"); }
-"["         { printf("LCOLCH\n"); }
-"]"         { printf("RCOLCH\n"); }
-"<="        { printf("MENEQ\n");  }
-">="        { printf("MAIOREQ\n");}
-"!="        { printf("DIFER\n"); }
-"=="        { printf("EQ\n"); }
-"++"        { printf("INCRE\n"); }
-"--"        { printf("DECRE\n"); }
-"="         { printf("ASSIGN\n"); }
-"<"         { printf("MENOR\n");  }
-">"         { printf("MAIOR\n");  }
-";"         { printf("PONTOVIR\n"); }
-","         { printf("VIRGULA\n"); }
+int         { return KW_INT; }
+float       { return KW_FLOAT; }
+char        { return KW_CHAR; }
+string      { return KW_STRING; }
+double      { return KW_DOUBLE; }
+void        { return KW_VOID; }
 
+"("         { return LPAREN; }
+")"         { return RPAREN; }
+"{"         { return LCHAVE; }
+"}"         { return RCHAVE; }
+"["         { return LCOLCH; }
+"]"         { return RCOLCH; }
+"<="        { return MENEQ;  }
+">="        { return MAIOREQ;}
+"!="        { return DIFER; }
+"=="        { return EQ; }
+"++"        { return INCRE; }
+"--"        { return DECRE; }
+"="         { return ASSIGN; }
+"<"         { return MENOR;  }
+">"         { return MAIOR;  }
+";"         { return PONTOVIR; }
+","         { return VIRGULA; }
 
+"+"         { return PLUS; }
+"-"         { return MINUS; }
+"*"         { return TIMES; }
+"/"         { return DIVIDE; }
 
-int         { printf("KW_INT\n"); }
-float       { printf("KW_FLOAT\n"); }
-char        { printf("KW_CHAR\n"); }
-string      { printf("KW_STRING\n"); }
-double      { printf("KW_DOUBLE\n"); }
-void        { printf("KW_VOID\n"); }
-
-
-"//".*     { /* Ignorar comentários de linha */ }
+"//".*                       { /* Ignorar comentários de linha */ }
 
 "/*"([^*]|\*+[^*/])*\*+\/    { /* Ignorar comentários de bloco */ }
 
-[a-zA-Z_][a-zA-Z0-9_]*  { printf("IDENT(%s)\n", yytext); }
+[a-zA-Z_][a-zA-Z0-9_]*  { yylval.sval = strdup(yytext); return IDENT; }
 
-[0-9]+(\.[0-9]+)?  { printf("NUMBER(%s)\n", yytext); }
+[0-9]+(\.[0-9]+)?  { yylval.dval = atof(yytext); return NUMBER; }
 
-\"([^\"\\]|\\.)*\"  { printf("STRING(%s)\n", yytext); }
+\"([^\"\\]|\\.)*\"  { yylval.sval = strdup(yytext); return STRINGLIT; }
 
-\'([^\'\\]|\\.)\'   { printf("CHAR(%s)\n", yytext); }
+\'([^\'\\]|\\.)\'   { yylval.ival = yytext[1]; return CHARLIT; }
 
+[ \t\r\n]+  { /* Não faz nada */ }
 
-
-[+\-*/]   { printf("OPERATOR(%s)\n", yytext); }
- 
-
-[ \t\n]+  { /* Não faz nada */ }
-
-.  { printf("UNKNOWN(%s)\n", yytext); }
+.  { fprintf(stderr, "Erro léxico: caractere não reconhecido '%s'\n", yytext); }
 
 %%
 
 /* Função auxiliar do Flex (quando termina o arquivo de entrada) */
 int yywrap(void) {
     return 1;
-}
-
-/* Função principal: executa o analisador léxico */
-int main(void) {
-    yylex();
-    return 0;
 }
