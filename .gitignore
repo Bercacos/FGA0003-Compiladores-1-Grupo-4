@@ -1,0 +1,9 @@
+#Gerados por flex/bison (recriados pelo Makefile)
+lex.yy.c
+*.tab.c
+*.tab.h
+*.output
+
+# Binários gerados
+scanner
+parser
