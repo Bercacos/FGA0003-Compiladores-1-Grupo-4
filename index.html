@@ -449,26 +449,16 @@
 
 
 <h1 id="fga0003-compiladores-1-grupo-4">FGA0003 - Compiladores 1 - Grupo 4<a class="headerlink" href="#fga0003-compiladores-1-grupo-4" title="Permanent link">&para;</a></h1>
-<p>Interpretador para uma linguagem semelhante a C, desenvolvido na disciplina de Compiladores 1.</p>
+<p>Interpretador para linguagem C, desenvolvido na disciplina de Compiladores 1.</p>
 <h2 id="sobre-o-projeto">Sobre o projeto<a class="headerlink" href="#sobre-o-projeto" title="Permanent link">&para;</a></h2>
-<p>Este projeto implementa, em etapas, um compilador/interpretador para uma linguagem
-simplificada semelhante a C. O desenvolvimento esta organizado nas fases classicas
-de construcao de compiladores:</p>
+<p>Este projeto implementa, em etapas, um interpretador para a linguagem C. O desenvolvimento está organizado nas fases clássicas de construção de compiladores:</p>
 <ul>
 <li><strong>Analise lexica</strong> - reconhecimento de tokens (<code>flex</code>)</li>
 <li><strong>Analise sintatica</strong> - verificacao da gramatica (<code>bison</code>)</li>
-<li><strong>Analise semantica</strong> - tabela de simbolos, tipos e verificacoes</li>
-<li><strong>Geracao/execucao</strong> - avaliacao ou geracao de codigo</li>
+<li><strong>Analise semantica</strong> - tabela de símbolos, tipos e verificacoes</li>
+<li><strong>Geracao/execucao</strong> - avaliação ou geração de código</li>
 </ul>
 <h2 id="estado-atual">Estado atual<a class="headerlink" href="#estado-atual" title="Permanent link">&para;</a></h2>
-<p>A versao atual reconhece declaracoes de variaveis dos tipos <code>int</code>, <code>float</code>, <code>double</code>,
-<code>char</code> e <code>string</code>, atribuicoes e expressoes com precedencia correta para <code>+</code>, <code>-</code>,
-<code>*</code>, <code>/</code>, <code>%</code>, comparacoes e parenteses. Tambem aceita varios declaradores e
-incremento/decremento.</p>
-<p>Ponteiros, funcoes e estruturas de controle ainda nao fazem parte desta etapa. O
-parser verifica a sintaxe; tabela de simbolos, tipos e avaliacao pertencem a
-proxima etapa semantica.</p>
-<p>Veja <a href="uso.md">Como usar</a> para instrucoes de build e execucao.</p>
 
 
 
