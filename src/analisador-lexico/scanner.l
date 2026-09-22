@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "parser.tab.h"  /* contém as definições de token geradas pelo Bison */
+#include "parser.tab.h"
 %}
+
+%option yylineno noyywrap noinput nounput
 
 %%
 
@@ -26,15 +28,15 @@ void        { return KW_VOID; }
 "}"         { return RCHAVE; }
 "["         { return LCOLCH; }
 "]"         { return RCOLCH; }
-"<="        { return MENEQ;  }
-">="        { return MAIOREQ;}
+"<="        { return MENEQ; }
+">="        { return MAIOREQ; }
 "!="        { return DIFER; }
 "=="        { return EQ; }
 "++"        { return INCRE; }
 "--"        { return DECRE; }
 "="         { return ASSIGN; }
-"<"         { return MENOR;  }
-">"         { return MAIOR;  }
+"<"         { return MENOR; }
+">"         { return MAIOR; }
 ";"         { return PONTOVIR; }
 ","         { return VIRGULA; }
 
@@ -42,26 +44,22 @@ void        { return KW_VOID; }
 "-"         { return MINUS; }
 "*"         { return TIMES; }
 "/"         { return DIVIDE; }
+"%"         { return MOD; }
 
-"//".*                       { /* Ignorar comentários de linha */ }
-
-"/*"([^*]|\*+[^*/])*\*+\/    { /* Ignorar comentários de bloco */ }
+"//".*                       { /* Ignorar comentarios de linha */ }
+"/*"([^*]|\*+[^*/])*\*+\/    { /* Ignorar comentarios de bloco */ }
 
 [a-zA-Z_][a-zA-Z0-9_]*  { yylval.sval = strdup(yytext); return IDENT; }
+[0-9]+(\.[0-9]+)?      { yylval.dval = atof(yytext); return NUMBER; }
+\"([^\"\\]|\\.)*\"      { yylval.sval = strdup(yytext); return STRINGLIT; }
+\'([^\'\\]|\\.)\'       { yylval.ival = yytext[1]; return CHARLIT; }
 
-[0-9]+(\.[0-9]+)?  { yylval.dval = atof(yytext); return NUMBER; }
+[ \t\r\n]+  { /* Ignorar espacos em branco */ }
 
-\"([^\"\\]|\\.)*\"  { yylval.sval = strdup(yytext); return STRINGLIT; }
-
-\'([^\'\\]|\\.)\'   { yylval.ival = yytext[1]; return CHARLIT; }
-
-[ \t\r\n]+  { /* Não faz nada */ }
-
-.  { fprintf(stderr, "Erro léxico: caractere não reconhecido '%s'\n", yytext); }
+.  {
+    fprintf(stderr, "Erro lexico na linha %d: caractere nao reconhecido '%s'\n",
+            yylineno, yytext);
+    return yytext[0];
+}
 
 %%
-
-/* Função auxiliar do Flex (quando termina o arquivo de entrada) */
-int yywrap(void) {
-    return 1;
-}
