@@ -18,3 +18,7 @@ make test
 ```
 
 O projeto requer `flex`, `bison`, `gcc` e `make`.
+
+## Testes
+
+Os testes dos analisadores léxico e sintático estão descritos na [documentação de testes](docs/testes.md).
