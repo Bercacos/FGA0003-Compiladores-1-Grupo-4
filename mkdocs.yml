@@ -1,0 +1,44 @@
+site_name: FGA0003 - Compiladores 1 - Grupo 4
+site_description: Interpretador de C.
+repo_url: https://github.com/Bercacos/FGA0003-Compiladores-1-Grupo-4
+repo_name: Bercacos/FGA0003-Compiladores-1-Grupo-4
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  language: pt-BR
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Mudar para modo escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Mudar para modo claro
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.instant
+    - search.suggest
+    - content.code.copy
+    - content.action.edit
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - toc:
+      permalink: true
+
+nav:
+  - Inicio: index.md
+
