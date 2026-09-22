@@ -9,6 +9,7 @@ extern char *yytext;
 %}
 %define parse.error detailed
 %union { int ival; double dval; char *sval; }
+
 %token KW_IF KW_WHILE KW_FOR KW_ELSE KW_RETURN
 %token KW_INT KW_FLOAT KW_CHAR KW_STRING KW_DOUBLE KW_VOID
 %token LPAREN RPAREN LCHAVE RCHAVE LCOLCH RCOLCH
@@ -18,16 +19,37 @@ extern char *yytext;
 %token <dval> NUMBER
 %token <ival> CHARLIT
 %destructor { free($$); } <sval>
+
 %left EQ DIFER
 %left MENOR MENEQ MAIOR MAIOREQ
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
 %precedence UPLUS UMINUS
+%precedence THEN
+%precedence KW_ELSE
+
 %start programa
 %%
+
+/* Estrutura do programa e comandos */
 programa: %empty | programa comando ;
-comando: declaracao PONTOVIR | atribuicao PONTOVIR | expressao PONTOVIR | bloco ;
+comando:
+    declaracao PONTOVIR
+  | atribuicao PONTOVIR
+  | expressao PONTOVIR
+  | bloco
+  | comando_if
+  | KW_RETURN PONTOVIR
+  | KW_RETURN expressao PONTOVIR
+  | funcao
+  ;
 bloco: LCHAVE programa RCHAVE ;
+comando_if:
+    KW_IF LPAREN expressao RPAREN comando %prec THEN
+  | KW_IF LPAREN expressao RPAREN comando KW_ELSE comando
+  ;
+
+/* Declaracoes de variaveis e atribuicao */
 declaracao: tipo lista_declaradores ;
 tipo: KW_INT | KW_FLOAT | KW_DOUBLE | KW_CHAR | KW_STRING ;
 lista_declaradores: declarador | lista_declaradores VIRGULA declarador ;
@@ -36,6 +58,17 @@ declarador:
   | IDENT ASSIGN expressao { free($1); }
   ;
 atribuicao: IDENT ASSIGN expressao { free($1); } ;
+
+/* Definicao de funcoes */
+funcao:
+    tipo IDENT LPAREN parametros RPAREN bloco { free($2); }
+  | KW_VOID IDENT LPAREN parametros RPAREN bloco { free($2); }
+  ;
+parametros: %empty | KW_VOID | lista_parametros ;
+lista_parametros: parametro | lista_parametros VIRGULA parametro ;
+parametro: tipo IDENT { free($2); } ;
+
+/* Expressoes */
 expressao:
     NUMBER
   | CHARLIT
@@ -61,10 +94,12 @@ expressao:
   | expressao DIFER expressao
   ;
 %%
+
 void yyerror(const char *mensagem) {
     fprintf(stderr, "Erro sintatico na linha %d, proximo a '%s': %s\n",
             yylineno, yytext ? yytext : "fim do arquivo", mensagem);
 }
+
 int main(int argc, char **argv) {
     if (argc > 2) {
         fprintf(stderr, "Uso: %s [arquivo]\n", argv[0]);

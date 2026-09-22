@@ -48,6 +48,7 @@ void        { return KW_VOID; }
 
 "//".*                       { /* Ignorar comentarios de linha */ }
 "/*"([^*]|\*+[^*/])*\*+\/    { /* Ignorar comentarios de bloco */ }
+^#.*                         { /* Ignorar diretivas de pre-processador (#include, #define, ...) */ }
 
 [a-zA-Z_][a-zA-Z0-9_]*  { yylval.sval = strdup(yytext); return IDENT; }
 [0-9]+(\.[0-9]+)?      { yylval.dval = atof(yytext); return NUMBER; }
