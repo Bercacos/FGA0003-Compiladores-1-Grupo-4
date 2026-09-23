@@ -465,6 +465,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#atualizacao-apos-as-novas-regras-sintaticas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atualização após as novas regras sintáticas
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -571,6 +582,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#atualizacao-apos-as-novas-regras-sintaticas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atualização após as novas regras sintáticas
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -671,6 +693,40 @@
 <h2 id="limites-dos-testes">Limites dos testes<a class="headerlink" href="#limites-dos-testes" title="Permanent link">&para;</a></h2>
 <p>Os testes desta versão verificam principalmente o reconhecimento léxico e a aceitação ou rejeição da sintaxe. O programa ainda não apresenta a sequência de tokens para inspeção individual nem executa as instruções analisadas.</p>
 <p>Quando forem implementadas a análise semântica e a execução do interpretador, serão necessários testes para declaração e uso de variáveis, compatibilidade de tipos e resultados calculados. Assim, os resultados atuais não devem ser entendidos como validação do interpretador completo.</p>
+<h2 id="atualizacao-apos-as-novas-regras-sintaticas">Atualização após as novas regras sintáticas<a class="headerlink" href="#atualizacao-apos-as-novas-regras-sintaticas" title="Permanent link">&para;</a></h2>
+<p>Após a inclusão de <code>if</code>/<code>else</code>, definições de funções e <code>return</code>, a suíte adicional foi atualizada. O teste que antes esperava a rejeição de <code>if</code> passou a esperar sua aceitação, e foram acrescentados dez casos. Na versão atual, a suíte principal passou (7/7) e a adicional passou (30/30).</p>
+<p>Os novos casos verificam <code>if</code> simples, <code>if-else</code>, <code>if</code> aninhado, funções com parâmetros tipados, sem parâmetros e com <code>(void)</code>, e <code>return</code>. Também verificam a rejeição de <code>if</code> sem condição, <code>else</code> isolado, parâmetro sem tipo, vírgula final nos parâmetros e <code>return</code> sem ponto e vírgula.</p>
+<table>
+<thead>
+<tr>
+<th>Entrada</th>
+<th>Resultado esperado</th>
+<th>Saída observada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>if (1) { int x = 2; }</code></td>
+<td>Aceitar</td>
+<td><code>Analise sintatica concluida com sucesso.</code></td>
+</tr>
+<tr>
+<td><code>if () { int x = 1; }</code></td>
+<td>Rejeitar</td>
+<td>Erro sintático: <code>unexpected RPAREN</code></td>
+</tr>
+<tr>
+<td><code>int soma(int a, int b) { return a + b; }</code></td>
+<td>Aceitar</td>
+<td><code>Analise sintatica concluida com sucesso.</code></td>
+</tr>
+<tr>
+<td><code>int soma(int a,) { return a; }</code></td>
+<td>Rejeitar</td>
+<td>Erro sintático: <code>unexpected RPAREN</code></td>
+</tr>
+</tbody>
+</table>
 
 
 
