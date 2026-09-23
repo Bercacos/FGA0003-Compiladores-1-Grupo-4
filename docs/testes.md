@@ -38,3 +38,16 @@ Foi identificado um ponto de melhoria no tratamento de comentários de bloco sem
 Os testes desta versão verificam principalmente o reconhecimento léxico e a aceitação ou rejeição da sintaxe. O programa ainda não apresenta a sequência de tokens para inspeção individual nem executa as instruções analisadas.
 
 Quando forem implementadas a análise semântica e a execução do interpretador, serão necessários testes para declaração e uso de variáveis, compatibilidade de tipos e resultados calculados. Assim, os resultados atuais não devem ser entendidos como validação do interpretador completo.
+
+## Atualização após as novas regras sintáticas
+
+Após a inclusão de `if`/`else`, definições de funções e `return`, a suíte adicional foi atualizada. O teste que antes esperava a rejeição de `if` passou a esperar sua aceitação, e foram acrescentados dez casos. Na versão atual, a suíte principal passou (7/7) e a adicional passou (30/30).
+
+Os novos casos verificam `if` simples, `if-else`, `if` aninhado, funções com parâmetros tipados, sem parâmetros e com `(void)`, e `return`. Também verificam a rejeição de `if` sem condição, `else` isolado, parâmetro sem tipo, vírgula final nos parâmetros e `return` sem ponto e vírgula.
+
+| Entrada | Resultado esperado | Saída observada |
+| --- | --- | --- |
+| `if (1) { int x = 2; }` | Aceitar | `Analise sintatica concluida com sucesso.` |
+| `if () { int x = 1; }` | Rejeitar | Erro sintático: `unexpected RPAREN` |
+| `int soma(int a, int b) { return a + b; }` | Aceitar | `Analise sintatica concluida com sucesso.` |
+| `int soma(int a,) { return a; }` | Rejeitar | Erro sintático: `unexpected RPAREN` |
