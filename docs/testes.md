@@ -1,8 +1,10 @@
 # Testes dos analisadores léxico e sintático
 
+Os testes automatizados ficam em `tests/test_parser.sh` (suíte principal) e `tests/teste_parser_extra.sh` (suíte ampliada). Como rodar: ver [Como usar](uso.md).
+
 ## Objetivo
 
-Foram realizados testes dos analisadores léxico e sintático do projeto na versão `59f37e5`. O objetivo foi verificar se o programa reconhece os elementos da linguagem e aceita ou rejeita as estruturas conforme as regras implementadas nesta etapa.
+Foram realizados testes dos analisadores léxico e sintático do projeto. O objetivo foi verificar se o programa reconhece os elementos da linguagem e aceita ou rejeita as estruturas conforme as regras implementadas nesta etapa.
 
 ## Testes realizados
 

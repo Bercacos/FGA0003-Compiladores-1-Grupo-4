@@ -1,5 +1,6 @@
 site_name: FGA0003 - Compiladores 1 - Grupo 4
-site_description: Interpretador de C.
+site_description: Interpretador de um subconjunto de C — documentação do Grupo 4.
+site_url: https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/
 repo_url: https://github.com/Bercacos/FGA0003-Compiladores-1-Grupo-4
 repo_name: Bercacos/FGA0003-Compiladores-1-Grupo-4
 edit_uri: edit/main/docs/
@@ -24,9 +25,11 @@ theme:
         name: Mudar para modo claro
   features:
     - navigation.tabs
+    - navigation.sections
     - navigation.top
     - navigation.instant
     - search.suggest
+    - search.highlight
     - content.code.copy
     - content.action.edit
 
@@ -34,11 +37,20 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
   - pymdownx.inlinehilite
+  - tables
   - toc:
       permalink: true
 
 nav:
-  - Inicio: index.md
+  - Início: index.md
+  - Como usar: uso.md
+  - Estrutura do projeto: estrutura.md
+  - Análise léxica: analise-lexica.md
+  - Análise sintática: analise-sintatica.md
+  - Decisões técnicas: decisoes-tecnicas.md
+  - Sprints: sprints.md
+  - Problemas e soluções: problemas-e-solucoes.md
   - Testes: testes.md
