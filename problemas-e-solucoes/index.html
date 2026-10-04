@@ -10,11 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/testes/">
+        <link rel="canonical" href="https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/problemas-e-solucoes/">
       
       
-        <link rel="prev" href="../problemas-e-solucoes/">
+        <link rel="prev" href="../sprints/">
       
+      
+        <link rel="next" href="../testes/">
       
       
         
@@ -25,7 +27,7 @@
     
     
       
-        <title>Testes - FGA0003 - Compiladores 1 - Grupo 4</title>
+        <title>Problemas e soluções - FGA0003 - Compiladores 1 - Grupo 4</title>
       
     
     
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#testes-dos-analisadores-lexico-e-sintatico" class="md-skip">
+        <a href="#problemas-encontrados-e-solucoes-adotadas" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -110,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Testes
+              Problemas e soluções
             
           </span>
         </div>
@@ -354,9 +356,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../problemas-e-solucoes/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -373,11 +377,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../testes/" class="md-tabs__link">
         
   
   
@@ -628,33 +630,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../problemas-e-solucoes/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Problemas e soluções
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -674,7 +649,7 @@
   <span class="md-ellipsis">
     
   
-    Testes
+    Problemas e soluções
   
 
     
@@ -692,7 +667,7 @@
   <span class="md-ellipsis">
     
   
-    Testes
+    Problemas e soluções
   
 
     
@@ -718,10 +693,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#objetivo" class="md-nav__link">
+  <a href="#1-integracao-flex-bison" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Objetivo
+        1. Integração Flex ↔ Bison
       
     </span>
   </a>
@@ -729,10 +704,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testes-realizados" class="md-nav__link">
+  <a href="#2-ambiguidade-do-ifelse" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testes realizados
+        2. Ambiguidade do if/else
       
     </span>
   </a>
@@ -740,49 +715,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#resultados" class="md-nav__link">
+  <a href="#3-precedencia-e-associatividade-das-expressoes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Resultados
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Resultados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#exemplos-de-entradas-e-saidas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exemplos de entradas e saídas
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ponto-de-melhoria" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ponto de melhoria
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limites-dos-testes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limites dos testes
+        3. Precedência e associatividade das expressões
       
     </span>
   </a>
@@ -790,10 +726,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#atualizacao-apos-as-novas-regras-sintaticas" class="md-nav__link">
+  <a href="#4-comentario-de-bloco-sem-fechamento" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Atualização após as novas regras sintáticas
+        4. Comentário de bloco sem fechamento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-tokens-lexicos-ainda-sem-regra-sintatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Tokens léxicos ainda sem regra sintática
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-escopo-da-documentacao-vs-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Escopo da documentação vs. código
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-limite-da-etapa-atual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Limite da etapa atual
       
     </span>
   </a>
@@ -804,6 +773,33 @@
   
 </nav>
       
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -835,10 +831,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#objetivo" class="md-nav__link">
+  <a href="#1-integracao-flex-bison" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Objetivo
+        1. Integração Flex ↔ Bison
       
     </span>
   </a>
@@ -846,10 +842,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testes-realizados" class="md-nav__link">
+  <a href="#2-ambiguidade-do-ifelse" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testes realizados
+        2. Ambiguidade do if/else
       
     </span>
   </a>
@@ -857,49 +853,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#resultados" class="md-nav__link">
+  <a href="#3-precedencia-e-associatividade-das-expressoes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Resultados
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Resultados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#exemplos-de-entradas-e-saidas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exemplos de entradas e saídas
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ponto-de-melhoria" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ponto de melhoria
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limites-dos-testes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limites dos testes
+        3. Precedência e associatividade das expressões
       
     </span>
   </a>
@@ -907,10 +864,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#atualizacao-apos-as-novas-regras-sintaticas" class="md-nav__link">
+  <a href="#4-comentario-de-bloco-sem-fechamento" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Atualização após as novas regras sintáticas
+        4. Comentário de bloco sem fechamento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-tokens-lexicos-ainda-sem-regra-sintatica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Tokens léxicos ainda sem regra sintática
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-escopo-da-documentacao-vs-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Escopo da documentação vs. código
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-limite-da-etapa-atual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Limite da etapa atual
       
     </span>
   </a>
@@ -934,7 +924,7 @@
 
 
   
-    <a href="https://github.com/Bercacos/FGA0003-Compiladores-1-Grupo-4/edit/main/docs/testes.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Bercacos/FGA0003-Compiladores-1-Grupo-4/edit/main/docs/problemas-e-solucoes.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -942,116 +932,33 @@
   
 
 
-<h1 id="testes-dos-analisadores-lexico-e-sintatico">Testes dos analisadores léxico e sintático<a class="headerlink" href="#testes-dos-analisadores-lexico-e-sintatico" title="Permanent link">&para;</a></h1>
-<p>Os testes automatizados ficam em <code>tests/test_parser.sh</code> (suíte principal) e <code>tests/teste_parser_extra.sh</code> (suíte ampliada). Como rodar: ver <a href="../uso/">Como usar</a>.</p>
-<h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
-<p>Foram realizados testes dos analisadores léxico e sintático do projeto. O objetivo foi verificar se o programa reconhece os elementos da linguagem e aceita ou rejeita as estruturas conforme as regras implementadas nesta etapa.</p>
-<h2 id="testes-realizados">Testes realizados<a class="headerlink" href="#testes-realizados" title="Permanent link">&para;</a></h2>
-<p>Na análise léxica, foram verificados identificadores, palavras reservadas, números, strings, caracteres, operadores, comentários e caracteres não reconhecidos. Também foram observadas as mensagens de erro e a indicação da linha em que o erro ocorre.</p>
-<p>Na análise sintática, foram testadas declarações de variáveis, atribuições, expressões aritméticas e comparações, uso de parênteses, múltiplos declaradores, incremento e decremento e blocos delimitados por chaves. Para cada grupo de construções, foram usadas entradas válidas e inválidas.</p>
-<h2 id="resultados">Resultados<a class="headerlink" href="#resultados" title="Permanent link">&para;</a></h2>
-<p>O projeto foi compilado sem erros. Os sete testes automatizados que já faziam parte do repositório passaram, assim como vinte testes adicionais. Nos testes manuais realizados, os casos válidos foram aceitos e os inválidos foram rejeitados conforme o esperado.</p>
-<h3 id="exemplos-de-entradas-e-saidas">Exemplos de entradas e saídas<a class="headerlink" href="#exemplos-de-entradas-e-saidas" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>Entrada</th>
-<th>Resultado esperado</th>
-<th>Saída observada</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>int _nome2 = 7;</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>int nome$ = 7;</code></td>
-<td>Rejeitar</td>
-<td>Erro léxico no <code>$</code>, seguido de erro sintático</td>
-</tr>
-<tr>
-<td><code>float x = 12.5;</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>float x = 12.5.3;</code></td>
-<td>Rejeitar</td>
-<td>Erro léxico no segundo <code>.</code>, seguido de erro sintático</td>
-</tr>
-<tr>
-<td><code>int x = 8; // comentario</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>int x = 8 /* comentario */ / 2;</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>int x = (2 + 3 * 4;</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected PONTOVIR</code></td>
-</tr>
-<tr>
-<td><code>{ int x = 1; x++;</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected end of file</code></td>
-</tr>
-<tr>
-<td><code>int x = 1; }</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected RCHAVE</code></td>
-</tr>
-<tr>
-<td><code>int x = 8 /* comentario sem fim;</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected TIMES</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="ponto-de-melhoria">Ponto de melhoria<a class="headerlink" href="#ponto-de-melhoria" title="Permanent link">&para;</a></h3>
-<p>Foi identificado um ponto de melhoria no tratamento de comentários de bloco sem fechamento. A entrada é rejeitada, mas o programa apresenta um erro sintático relacionado ao símbolo de multiplicação, em vez de informar que o comentário não foi encerrado. A rejeição está correta; a mensagem não descreve claramente a causa do problema.</p>
-<h2 id="limites-dos-testes">Limites dos testes<a class="headerlink" href="#limites-dos-testes" title="Permanent link">&para;</a></h2>
-<p>Os testes desta versão verificam principalmente o reconhecimento léxico e a aceitação ou rejeição da sintaxe. O programa ainda não apresenta a sequência de tokens para inspeção individual nem executa as instruções analisadas.</p>
-<p>Quando forem implementadas a análise semântica e a execução do interpretador, serão necessários testes para declaração e uso de variáveis, compatibilidade de tipos e resultados calculados. Assim, os resultados atuais não devem ser entendidos como validação do interpretador completo.</p>
-<h2 id="atualizacao-apos-as-novas-regras-sintaticas">Atualização após as novas regras sintáticas<a class="headerlink" href="#atualizacao-apos-as-novas-regras-sintaticas" title="Permanent link">&para;</a></h2>
-<p>Após a inclusão de <code>if</code>/<code>else</code>, definições de funções e <code>return</code>, a suíte adicional foi atualizada. O teste que antes esperava a rejeição de <code>if</code> passou a esperar sua aceitação, e foram acrescentados dez casos. Na versão atual, a suíte principal passou (7/7) e a adicional passou (30/30).</p>
-<p>Os novos casos verificam <code>if</code> simples, <code>if-else</code>, <code>if</code> aninhado, funções com parâmetros tipados, sem parâmetros e com <code>(void)</code>, e <code>return</code>. Também verificam a rejeição de <code>if</code> sem condição, <code>else</code> isolado, parâmetro sem tipo, vírgula final nos parâmetros e <code>return</code> sem ponto e vírgula.</p>
-<table>
-<thead>
-<tr>
-<th>Entrada</th>
-<th>Resultado esperado</th>
-<th>Saída observada</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>if (1) { int x = 2; }</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>if () { int x = 1; }</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected RPAREN</code></td>
-</tr>
-<tr>
-<td><code>int soma(int a, int b) { return a + b; }</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>int soma(int a,) { return a; }</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected RPAREN</code></td>
-</tr>
-</tbody>
-</table>
+<h1 id="problemas-encontrados-e-solucoes-adotadas">Problemas encontrados e soluções adotadas<a class="headerlink" href="#problemas-encontrados-e-solucoes-adotadas" title="Permanent link">&para;</a></h1>
+<p>Registro das dificuldades do Grupo 4 até a etapa léxico-sintática.</p>
+<h2 id="1-integracao-flex-bison">1. Integração Flex ↔ Bison<a class="headerlink" href="#1-integracao-flex-bison" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> O scanner precisa conhecer os códigos de token gerados pelo Bison (<code>parser.tab.h</code>). Compilar na ordem errada quebra o build.</p>
+<p><strong>Solução.</strong> O <code>Makefile</code> gera primeiro o parser (<code>bison -d</code>) e só depois o lexer (<code>flex</code>), incluindo <code>build/</code> no <code>-I</code> do <code>gcc</code>.</p>
+<h2 id="2-ambiguidade-do-ifelse">2. Ambiguidade do <code>if/else</code><a class="headerlink" href="#2-ambiguidade-do-ifelse" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> Gramáticas com <code>if</code> opcionalmente seguido de <code>else</code> geram conflito shift/reduce clássico (“dangling else”).</p>
+<p><strong>Solução.</strong> Uso de precedências no Bison:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>%precedence THEN
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>%precedence KW_ELSE
+</code></pre></div>
+<p>e a produção do <code>if</code> sem <code>else</code> marcada com <code>%prec THEN</code>, fazendo o <code>else</code> associar ao <code>if</code> mais interno.</p>
+<h2 id="3-precedencia-e-associatividade-das-expressoes">3. Precedência e associatividade das expressões<a class="headerlink" href="#3-precedencia-e-associatividade-das-expressoes" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> Expressões como <code>2 + 3 * 4</code> ou comparações encadeadas precisam de ordem estável.</p>
+<p><strong>Solução.</strong> Declarações <code>%left</code> no <code>parser.y</code> para igualdade, relacionais, soma e produto, além de <code>%precedence</code> para unários.</p>
+<h2 id="4-comentario-de-bloco-sem-fechamento">4. Comentário de bloco sem fechamento<a class="headerlink" href="#4-comentario-de-bloco-sem-fechamento" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> A entrada <code>int x = 8 /* comentario sem fim;</code> é rejeitada, mas a mensagem aponta erro sintático próximo de <code>*</code>, não “comentário não terminado”.</p>
+<p><strong>Solução parcial.</strong> Mantivemos a rejeição (comportamento correto) e documentamos o caso em <a href="../testes/">Testes</a> como ponto de melhoria. Melhoria futura: regra léxica/<code>&lt;&lt;EOF&gt;&gt;</code> que reporte comentário aberto.</p>
+<h2 id="5-tokens-lexicos-ainda-sem-regra-sintatica">5. Tokens léxicos ainda sem regra sintática<a class="headerlink" href="#5-tokens-lexicos-ainda-sem-regra-sintatica" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> <code>while</code> e <code>for</code> já existem no scanner, mas o parser ainda não os aceita — o que pode confundir quem testa essas construções.</p>
+<p><strong>Solução.</strong> Deixar os tokens preparados no léxico (evita retrabalho) e documentar claramente que laços entram em sprint futura. Testes atuais não esperam aceitação de <code>while</code>/<code>for</code>.</p>
+<h2 id="6-escopo-da-documentacao-vs-codigo">6. Escopo da documentação vs. código<a class="headerlink" href="#6-escopo-da-documentacao-vs-codigo" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> O GitHub Pages foi publicado cedo, mas a página inicial ficou com a seção <strong>Estado atual</strong> vazia e sem as seções exigidas pelo enunciado (estrutura, decisões, sprints, problemas/soluções).</p>
+<p><strong>Solução.</strong> Reorganizar a wiki MkDocs com páginas dedicadas a cada requisito do professor e preencher o estado real do interpretador (léxico/sintático prontos; AST/semântica/execução pendentes).</p>
+<h2 id="7-limite-da-etapa-atual">7. Limite da etapa atual<a class="headerlink" href="#7-limite-da-etapa-atual" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> É fácil interpretar “análise concluída com sucesso” como se o programa tivesse sido executado.</p>
+<p><strong>Solução.</strong> Deixar explícito no README e na documentação que o analisador <strong>apenas valida</strong> a entrada. Execução só existirá após AST + interpretador.</p>
 
 
 

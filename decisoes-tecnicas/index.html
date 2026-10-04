@@ -10,11 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/testes/">
+        <link rel="canonical" href="https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/decisoes-tecnicas/">
       
       
-        <link rel="prev" href="../problemas-e-solucoes/">
+        <link rel="prev" href="../analise-sintatica/">
       
+      
+        <link rel="next" href="../sprints/">
       
       
         
@@ -25,7 +27,7 @@
     
     
       
-        <title>Testes - FGA0003 - Compiladores 1 - Grupo 4</title>
+        <title>Decisões técnicas - FGA0003 - Compiladores 1 - Grupo 4</title>
       
     
     
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#testes-dos-analisadores-lexico-e-sintatico" class="md-skip">
+        <a href="#decisoes-tecnicas" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -110,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Testes
+              Decisões técnicas
             
           </span>
         </div>
@@ -316,9 +318,11 @@
   
   
   
+    
   
-    <li class="md-tabs__item">
-      <a href="../decisoes-tecnicas/" class="md-tabs__link">
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
         
   
   
@@ -373,11 +377,9 @@
   
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../testes/" class="md-tabs__link">
         
   
   
@@ -574,10 +576,37 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../decisoes-tecnicas/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Decisões técnicas
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -593,6 +622,103 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-interpretador-nao-compilador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Interpretador (não compilador)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-linguagem-fonte-subconjunto-de-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Linguagem-fonte: subconjunto de C
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-ferramentas-flex-bison-c-make" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Ferramentas: Flex + Bison + C + Make
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-pipeline-incremental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Pipeline incremental
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-documentacao-com-mkdocs-material-github-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Documentação com MkDocs Material + GitHub Pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-estrategia-de-testes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Estratégia de testes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-tratamento-de-erros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Tratamento de erros
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -655,37 +781,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Testes
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../testes/" class="md-nav__link">
         
   
   
@@ -701,109 +800,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#objetivo" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Objetivo
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#testes-realizados" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Testes realizados
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#resultados" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Resultados
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Resultados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#exemplos-de-entradas-e-saidas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exemplos de entradas e saídas
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ponto-de-melhoria" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ponto de melhoria
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limites-dos-testes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limites dos testes
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#atualizacao-apos-as-novas-regras-sintaticas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Atualização após as novas regras sintáticas
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -835,10 +831,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#objetivo" class="md-nav__link">
+  <a href="#1-interpretador-nao-compilador" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Objetivo
+        1. Interpretador (não compilador)
       
     </span>
   </a>
@@ -846,10 +842,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#testes-realizados" class="md-nav__link">
+  <a href="#2-linguagem-fonte-subconjunto-de-c" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Testes realizados
+        2. Linguagem-fonte: subconjunto de C
       
     </span>
   </a>
@@ -857,49 +853,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#resultados" class="md-nav__link">
+  <a href="#3-ferramentas-flex-bison-c-make" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Resultados
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Resultados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#exemplos-de-entradas-e-saidas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Exemplos de entradas e saídas
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ponto-de-melhoria" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ponto de melhoria
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limites-dos-testes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limites dos testes
+        3. Ferramentas: Flex + Bison + C + Make
       
     </span>
   </a>
@@ -907,10 +864,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#atualizacao-apos-as-novas-regras-sintaticas" class="md-nav__link">
+  <a href="#4-pipeline-incremental" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Atualização após as novas regras sintáticas
+        4. Pipeline incremental
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-documentacao-com-mkdocs-material-github-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Documentação com MkDocs Material + GitHub Pages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-estrategia-de-testes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Estratégia de testes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-tratamento-de-erros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Tratamento de erros
       
     </span>
   </a>
@@ -934,7 +924,7 @@
 
 
   
-    <a href="https://github.com/Bercacos/FGA0003-Compiladores-1-Grupo-4/edit/main/docs/testes.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Bercacos/FGA0003-Compiladores-1-Grupo-4/edit/main/docs/decisoes-tecnicas.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -942,116 +932,73 @@
   
 
 
-<h1 id="testes-dos-analisadores-lexico-e-sintatico">Testes dos analisadores léxico e sintático<a class="headerlink" href="#testes-dos-analisadores-lexico-e-sintatico" title="Permanent link">&para;</a></h1>
-<p>Os testes automatizados ficam em <code>tests/test_parser.sh</code> (suíte principal) e <code>tests/teste_parser_extra.sh</code> (suíte ampliada). Como rodar: ver <a href="../uso/">Como usar</a>.</p>
-<h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
-<p>Foram realizados testes dos analisadores léxico e sintático do projeto. O objetivo foi verificar se o programa reconhece os elementos da linguagem e aceita ou rejeita as estruturas conforme as regras implementadas nesta etapa.</p>
-<h2 id="testes-realizados">Testes realizados<a class="headerlink" href="#testes-realizados" title="Permanent link">&para;</a></h2>
-<p>Na análise léxica, foram verificados identificadores, palavras reservadas, números, strings, caracteres, operadores, comentários e caracteres não reconhecidos. Também foram observadas as mensagens de erro e a indicação da linha em que o erro ocorre.</p>
-<p>Na análise sintática, foram testadas declarações de variáveis, atribuições, expressões aritméticas e comparações, uso de parênteses, múltiplos declaradores, incremento e decremento e blocos delimitados por chaves. Para cada grupo de construções, foram usadas entradas válidas e inválidas.</p>
-<h2 id="resultados">Resultados<a class="headerlink" href="#resultados" title="Permanent link">&para;</a></h2>
-<p>O projeto foi compilado sem erros. Os sete testes automatizados que já faziam parte do repositório passaram, assim como vinte testes adicionais. Nos testes manuais realizados, os casos válidos foram aceitos e os inválidos foram rejeitados conforme o esperado.</p>
-<h3 id="exemplos-de-entradas-e-saidas">Exemplos de entradas e saídas<a class="headerlink" href="#exemplos-de-entradas-e-saidas" title="Permanent link">&para;</a></h3>
+<h1 id="decisoes-tecnicas">Decisões técnicas<a class="headerlink" href="#decisoes-tecnicas" title="Permanent link">&para;</a></h1>
+<p>Registro das escolhas principais do Grupo 4 e suas justificativas.</p>
+<h2 id="1-interpretador-nao-compilador">1. Interpretador (não compilador)<a class="headerlink" href="#1-interpretador-nao-compilador" title="Permanent link">&para;</a></h2>
+<p>Seguimos o <a href="https://github.com/sergioaafreitas/COMP1/blob/main/semana%2001/docs/Guia%20-%20Projeto%20de%20um%20interpretador.md">Guia — Projeto de um interpretador</a> do professor Sergio Freitas: front-end com Flex/Bison e, depois, execução direta sobre uma AST — sem gerar binário nativo como produto final.</p>
+<h2 id="2-linguagem-fonte-subconjunto-de-c">2. Linguagem-fonte: subconjunto de C<a class="headerlink" href="#2-linguagem-fonte-subconjunto-de-c" title="Permanent link">&para;</a></h2>
+<p>C foi escolhida por ser familiar ao curso e por ter material de apoio abundante nas práticas da disciplina. O escopo foi reduzido de propósito:</p>
+<ul>
+<li>tipos escalares simples (<code>int</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>string</code>)</li>
+<li>expressões, atribuições e blocos</li>
+<li><code>if</code>/<code>else</code>, funções e <code>return</code></li>
+</ul>
+<p>Fora do escopo atual: ponteiros, estruturas, arrays, laços e biblioteca padrão.</p>
+<h2 id="3-ferramentas-flex-bison-c-make">3. Ferramentas: Flex + Bison + C + Make<a class="headerlink" href="#3-ferramentas-flex-bison-c-make" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Entrada</th>
-<th>Resultado esperado</th>
-<th>Saída observada</th>
+<th>Ferramenta</th>
+<th>Motivo</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>int _nome2 = 7;</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
+<td>Flex</td>
+<td>Padrão da disciplina para análise léxica</td>
 </tr>
 <tr>
-<td><code>int nome$ = 7;</code></td>
-<td>Rejeitar</td>
-<td>Erro léxico no <code>$</code>, seguido de erro sintático</td>
+<td>Bison</td>
+<td>Parser LALR(1) com integração natural ao Flex</td>
 </tr>
 <tr>
-<td><code>float x = 12.5;</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
+<td>C (<code>gcc</code>)</td>
+<td>Linguagem de implementação dos exemplos do curso</td>
 </tr>
 <tr>
-<td><code>float x = 12.5.3;</code></td>
-<td>Rejeitar</td>
-<td>Erro léxico no segundo <code>.</code>, seguido de erro sintático</td>
-</tr>
-<tr>
-<td><code>int x = 8; // comentario</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>int x = 8 /* comentario */ / 2;</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>int x = (2 + 3 * 4;</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected PONTOVIR</code></td>
-</tr>
-<tr>
-<td><code>{ int x = 1; x++;</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected end of file</code></td>
-</tr>
-<tr>
-<td><code>int x = 1; }</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected RCHAVE</code></td>
-</tr>
-<tr>
-<td><code>int x = 8 /* comentario sem fim;</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected TIMES</code></td>
+<td>Make</td>
+<td>Um comando (<code>make</code>) gera lexer, parser e binário</td>
 </tr>
 </tbody>
 </table>
-<h3 id="ponto-de-melhoria">Ponto de melhoria<a class="headerlink" href="#ponto-de-melhoria" title="Permanent link">&para;</a></h3>
-<p>Foi identificado um ponto de melhoria no tratamento de comentários de bloco sem fechamento. A entrada é rejeitada, mas o programa apresenta um erro sintático relacionado ao símbolo de multiplicação, em vez de informar que o comentário não foi encerrado. A rejeição está correta; a mensagem não descreve claramente a causa do problema.</p>
-<h2 id="limites-dos-testes">Limites dos testes<a class="headerlink" href="#limites-dos-testes" title="Permanent link">&para;</a></h2>
-<p>Os testes desta versão verificam principalmente o reconhecimento léxico e a aceitação ou rejeição da sintaxe. O programa ainda não apresenta a sequência de tokens para inspeção individual nem executa as instruções analisadas.</p>
-<p>Quando forem implementadas a análise semântica e a execução do interpretador, serão necessários testes para declaração e uso de variáveis, compatibilidade de tipos e resultados calculados. Assim, os resultados atuais não devem ser entendidos como validação do interpretador completo.</p>
-<h2 id="atualizacao-apos-as-novas-regras-sintaticas">Atualização após as novas regras sintáticas<a class="headerlink" href="#atualizacao-apos-as-novas-regras-sintaticas" title="Permanent link">&para;</a></h2>
-<p>Após a inclusão de <code>if</code>/<code>else</code>, definições de funções e <code>return</code>, a suíte adicional foi atualizada. O teste que antes esperava a rejeição de <code>if</code> passou a esperar sua aceitação, e foram acrescentados dez casos. Na versão atual, a suíte principal passou (7/7) e a adicional passou (30/30).</p>
-<p>Os novos casos verificam <code>if</code> simples, <code>if-else</code>, <code>if</code> aninhado, funções com parâmetros tipados, sem parâmetros e com <code>(void)</code>, e <code>return</code>. Também verificam a rejeição de <code>if</code> sem condição, <code>else</code> isolado, parâmetro sem tipo, vírgula final nos parâmetros e <code>return</code> sem ponto e vírgula.</p>
-<table>
-<thead>
-<tr>
-<th>Entrada</th>
-<th>Resultado esperado</th>
-<th>Saída observada</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>if (1) { int x = 2; }</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>if () { int x = 1; }</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected RPAREN</code></td>
-</tr>
-<tr>
-<td><code>int soma(int a, int b) { return a + b; }</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>int soma(int a,) { return a; }</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected RPAREN</code></td>
-</tr>
-</tbody>
-</table>
+<h2 id="4-pipeline-incremental">4. Pipeline incremental<a class="headerlink" href="#4-pipeline-incremental" title="Permanent link">&para;</a></h2>
+<p>Em vez de tentar AST + semântica + interpretação de uma vez, o grupo fechou primeiro o reconhecimento léxico-sintático. Isso permite:</p>
+<ul>
+<li>apresentar progresso claro nos pontos de controle</li>
+<li>manter testes de aceitação/rejeição desde cedo</li>
+<li>evoluir para AST sem reescrever o front-end</li>
+</ul>
+<h2 id="5-documentacao-com-mkdocs-material-github-pages">5. Documentação com MkDocs Material + GitHub Pages<a class="headerlink" href="#5-documentacao-com-mkdocs-material-github-pages" title="Permanent link">&para;</a></h2>
+<p>A wiki do projeto vive em <code>docs/</code> e é publicada automaticamente na branch <code>gh-pages</code> pelo workflow <code>.github/workflows/docs.yml</code> a cada alteração em <code>docs/**</code> ou <code>mkdocs.yml</code>.</p>
+<p>Motivos:</p>
+<ul>
+<li>o professor avalia documentação no repositório</li>
+<li>Material for MkDocs oferece navegação, busca e tema legível</li>
+<li>o site fica acessível em <a href="https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/">bercacos.github.io/FGA0003-Compiladores-1-Grupo-4</a></li>
+</ul>
+<h2 id="6-estrategia-de-testes">6. Estratégia de testes<a class="headerlink" href="#6-estrategia-de-testes" title="Permanent link">&para;</a></h2>
+<p>Testes em shell (<code>tests/test_parser.sh</code> e <code>tests/teste_parser_extra.sh</code>) verificam apenas o código de saída do analisador:</p>
+<ul>
+<li>entrada válida → exit 0</li>
+<li>entrada inválida → exit ≠ 0</li>
+</ul>
+<p>É uma suíte simples, alinhada à etapa atual (ainda sem semântica/execução), e fácil de rodar no WSL.</p>
+<h2 id="7-tratamento-de-erros">7. Tratamento de erros<a class="headerlink" href="#7-tratamento-de-erros" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Léxico: mensagem própria + devolução do caractere inválido</li>
+<li>Sintático: <code>parse.error detailed</code> do Bison + <code>yyerror</code> com linha e lexema próximo</li>
+</ul>
+<p>Ainda não há recuperação sofisticada (panic mode avançado); a prioridade foi diagnosticar a falha e abortar a análise.</p>
 
 
 
