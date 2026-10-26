@@ -14,7 +14,7 @@ C foi escolhida por ser familiar ao curso e por ter material de apoio abundante 
 - expressões, atribuições e blocos
 - `if`/`else`, funções e `return`
 
-Fora do escopo atual: ponteiros, estruturas, arrays, laços e biblioteca padrão.
+Fora do escopo atual: ponteiros, estruturas, arrays, `for`, `do/while`, `switch` e biblioteca padrão. O escopo inclui `while`, `print` e operadores lógicos.
 
 ## 3. Ferramentas: Flex + Bison + C + Make
 
