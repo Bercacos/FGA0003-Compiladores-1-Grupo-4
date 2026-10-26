@@ -1,60 +1,38 @@
 # Análise léxica
 
-A análise léxica está em `src/analisador-lexico/scanner.l` e usa **Flex**. O scanner devolve tokens definidos em conjunto com o Bison (`parser.tab.h`).
+O scanner está em `src/analisador-lexico/scanner.l`, usa Flex e devolve os tokens declarados pelo Bison em `parser.tab.h`.
 
-## O que o scanner reconhece
+## Palavras reservadas
 
-### Palavras reservadas
+`if`, `else`, `while`, `print`, `return`, `int`, `float`, `double`, `char`, `string`, `void`. O token `for` continua reservado no léxico, mas a estrutura está fora do escopo do parser.
 
-`if`, `while`, `for`, `else`, `return`, `int`, `float`, `char`, `string`, `double`, `void`
+`var` na lista de requisitos é tratado como referência a variáveis: a linguagem usa declarações como `int x = 1;`, sem inferência de tipos por uma palavra-chave `var`.
 
-> Observação: `while` e `for` já são tokens léxicos, mas ainda **não possuem regras sintáticas** no parser.
+## Identificadores e literais
 
-### Identificadores e literais
-
-| Classe | Padrão / forma | Token |
+| Classe | Formas reconhecidas | Token |
 | --- | --- | --- |
-| Identificador | `[a-zA-Z_][a-zA-Z0-9_]*` | `IDENT` |
-| Número | `[0-9]+(\.[0-9]+)?` | `NUMBER` |
-| String | `"..."` com escapes | `STRINGLIT` |
-| Caractere | `'x'` com escape simples | `CHARLIT` |
+| Identificador | Letras, dígitos e `_`, sem começar por dígito | `IDENT` |
+| Número | Inteiros decimais e ponto flutuante, como `42`, `1.5`, `.5`, `1.`, `2e-3`, `1.5f` | `NUMBER` |
+| String | Aspas duplas, com escapes e sem quebra de linha literal | `STRINGLIT` |
+| Caractere | Um caractere ou escape entre aspas simples | `CHARLIT` |
 
-### Operadores e pontuação
+O sinal é um operador separado. Strings e caracteres preservam o reconhecimento de escapes existente; sua interpretação cabe às etapas seguintes.
+
+## Operadores e pontuação
 
 - Aritméticos: `+`, `-`, `*`, `/`, `%`
-- Relacionais/igualdade: `<`, `<=`, `>`, `>=`, `==`, `!=`
+- Relacionais e igualdade: `<`, `<=`, `>`, `>=`, `==`, `!=`
+- Lógicos: `&&`, `||`, `!`
 - Atribuição e incremento: `=`, `++`, `--`
-- Delimitadores: `( ) { } [ ] ; ,`
+- Delimitadores: `( ) { } [ ] ; ,` (colchetes não têm regra sintática)
 
-### Itens ignorados
+As palavras reservadas são reconhecidas antes de identificadores; nomes como `print_total` continuam identificadores.
 
-- Espaços em branco (`espaço`, tab, CR, LF)
-- Comentários de linha (`// ...`)
-- Comentários de bloco (`/* ... */`)
-- Diretivas de pré-processador no início da linha (`#include`, `#define`, ...)
+## Espaços, comentários e erros
 
-## Tratamento de erros
+Espaços, comentários `//` e `/* ... */` e diretivas iniciadas por `#` no começo da linha são ignorados. Diretivas não são expandidas: não há pré-processador C.
 
-Caracteres não reconhecidos geram mensagem no `stderr` com o número da linha:
+O estado exclusivo `COMENTARIO` permite detectar fim de arquivo antes de `*/`. Nesse caso o scanner emite uma mensagem de erro e devolve `INVALID`. Caracteres desconhecidos também devolvem `INVALID`, garantindo rejeição pelo parser. Strings e caracteres com quebra de linha literal são rejeitados.
 
-```text
-Erro lexico na linha N: caractere nao reconhecido '...'
-```
-
-O caractere é devolvido ao parser, que em geral também falha em seguida.
-
-## Opções Flex usadas
-
-```c
-%option yylineno noyywrap noinput nounput
-```
-
-- `yylineno` — rastreia a linha para mensagens de erro
-- `noyywrap` — um único arquivo/fluxo de entrada
-- `noinput` / `nounput` — evitam avisos de funções não usadas
-
-## Limitações conhecidas desta etapa
-
-- Comentário de bloco sem fechamento não gera mensagem léxica específica; a falha aparece depois no parser
-- Não há modo de impressão da lista de tokens (útil para depuração)
-- `while`/`for` reconhecidos no léxico ainda não são aceitos na gramática
+A opção `yylineno` mantém a linha para os diagnósticos. O programa termina com status diferente de zero em caso de erro; ainda não há recuperação avançada nem modo de listagem de tokens.

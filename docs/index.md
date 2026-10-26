@@ -19,7 +19,7 @@ A documentação abaixo segue os requisitos do professor ([Trabalho de Compilado
 | --- | --- | --- |
 | Ambiente e repositório | Concluído | `Makefile`, Flex/Bison e GitHub Pages (MkDocs) |
 | Análise léxica | Concluído | Tokens, literais, operadores, comentários e erros léxicos |
-| Análise sintática | Concluído (parcial) | Declarações, expressões, blocos, `if`/`else`, funções e `return` |
+| Análise sintática | Implementado; validação pendente | Declarações, expressões, blocos, `if`/`else`, `while`, `print`, funções e `return` |
 | AST | Pendente | Ainda não há construção de árvore sintática abstrata |
 | Análise semântica | Pendente | Sem tabela de símbolos nem checagem de tipos |
 | Interpretação | Pendente | O programa apenas aceita ou rejeita a entrada |

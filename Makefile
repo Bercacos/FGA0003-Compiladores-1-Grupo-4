@@ -24,6 +24,8 @@ run: $(TARGET)
 
 test: $(TARGET)
 	bash tests/test_parser.sh ./$(TARGET)
+	bash tests/teste_parser_extra.sh ./$(TARGET)
+	bash tests/test_scope.sh ./$(TARGET)
 
 clean:
 	rm -rf $(BUILD_DIR)
