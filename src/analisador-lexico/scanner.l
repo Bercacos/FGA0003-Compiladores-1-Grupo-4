@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "parser.tab.h"
+
+/* Registra a linha de cada token em yylloc (usado pelo parser via @N). */
+#define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
 %}
 
 %option yylineno noyywrap noinput nounput

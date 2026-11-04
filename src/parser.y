@@ -1,14 +1,48 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include "tabela.h"
 int yylex(void);
 void yyerror(const char *mensagem);
 extern FILE *yyin;
 extern int yylineno;
 extern char *yytext;
+
+/* Contagem de erros semanticos e tipo da declaracao em andamento. */
+static int erros_semanticos = 0;
+static Tipo tipo_corrente = TIPO_INT;
+
+static Tipo definir_tipo(Tipo tipo) {
+    tipo_corrente = tipo;
+    return tipo;
+}
+
+/* Registra o simbolo no escopo atual; reporta redeclaracao. */
+static void declarar(const char *nome, Categoria categoria, Tipo tipo, int linha) {
+    int escopo = tabela_escopo_atual();
+    TabelaStatus status = tabela_inserir(nome, categoria, tipo, escopo, linha);
+    if (status == TABELA_OK) return;
+    erros_semanticos++;
+    if (status == TABELA_REDECLARADO) {
+        Simbolo *anterior = tabela_buscar_no_escopo(nome, escopo);
+        fprintf(stderr, "Erro semantico na linha %d: '%s' ja declarado neste escopo (linha %d)\n",
+                linha, nome, anterior ? anterior->linha : 0);
+    } else {
+        fprintf(stderr, "Erro semantico na linha %d: nao foi possivel declarar '%s' (%s)\n",
+                linha, nome, tabela_status_para_texto(status));
+    }
+}
+
+/* Declara a funcao no escopo atual e abre o escopo dela (parametros + corpo). */
+static void abrir_funcao(const char *nome, Tipo retorno, int linha) {
+    declarar(nome, CAT_FUNCAO, retorno, linha);
+    tabela_entrar_escopo(nome);
+}
 %}
+%code requires { #include "tipos.h" }
+%locations
 %define parse.error detailed
-%union { int ival; double dval; char *sval; }
+%union { int ival; double dval; char *sval; Tipo tipo; }
 
 %token KW_IF KW_WHILE KW_FOR KW_ELSE KW_RETURN
 %token KW_INT KW_FLOAT KW_CHAR KW_STRING KW_DOUBLE KW_VOID
@@ -19,6 +53,7 @@ extern char *yytext;
 %token <dval> NUMBER
 %token <ival> CHARLIT
 %destructor { free($$); } <sval>
+%type <tipo> tipo
 
 %left EQ DIFER
 %left MENOR MENEQ MAIOR MAIOREQ
@@ -43,7 +78,9 @@ comando:
   | KW_RETURN expressao PONTOVIR
   | funcao
   ;
-bloco: LCHAVE programa RCHAVE ;
+bloco:
+    LCHAVE { tabela_entrar_escopo("bloco"); } programa RCHAVE { tabela_sair_escopo(); }
+  ;
 comando_if:
     KW_IF LPAREN expressao RPAREN comando %prec THEN
   | KW_IF LPAREN expressao RPAREN comando KW_ELSE comando
@@ -51,22 +88,32 @@ comando_if:
 
 /* Declaracoes de variaveis e atribuicao */
 declaracao: tipo lista_declaradores ;
-tipo: KW_INT | KW_FLOAT | KW_DOUBLE | KW_CHAR | KW_STRING ;
+tipo:
+    KW_INT    { $$ = definir_tipo(TIPO_INT); }
+  | KW_FLOAT  { $$ = definir_tipo(TIPO_FLOAT); }
+  | KW_DOUBLE { $$ = definir_tipo(TIPO_DOUBLE); }
+  | KW_CHAR   { $$ = definir_tipo(TIPO_CHAR); }
+  | KW_STRING { $$ = definir_tipo(TIPO_STRING); }
+  ;
 lista_declaradores: declarador | lista_declaradores VIRGULA declarador ;
 declarador:
-    IDENT { free($1); }
-  | IDENT ASSIGN expressao { free($1); }
+    IDENT { declarar($1, CAT_VARIAVEL, tipo_corrente, @1.first_line); free($1); }
+  | IDENT ASSIGN expressao { declarar($1, CAT_VARIAVEL, tipo_corrente, @1.first_line); free($1); }
   ;
 atribuicao: IDENT ASSIGN expressao { free($1); } ;
 
 /* Definicao de funcoes */
 funcao:
-    tipo IDENT LPAREN parametros RPAREN bloco { free($2); }
-  | KW_VOID IDENT LPAREN parametros RPAREN bloco { free($2); }
+    cabecalho_funcao parametros RPAREN LCHAVE programa RCHAVE { tabela_sair_escopo(); }
+  ;
+/* O escopo da funcao e aberto no cabecalho: parametros e corpo compartilham o mesmo escopo. */
+cabecalho_funcao:
+    tipo IDENT LPAREN { abrir_funcao($2, $1, @2.first_line); free($2); }
+  | KW_VOID IDENT LPAREN { abrir_funcao($2, TIPO_VOID, @2.first_line); free($2); }
   ;
 parametros: %empty | KW_VOID | lista_parametros ;
 lista_parametros: parametro | lista_parametros VIRGULA parametro ;
-parametro: tipo IDENT { free($2); } ;
+parametro: tipo IDENT { declarar($2, CAT_PARAMETRO, $1, @2.first_line); free($2); } ;
 
 /* Expressoes */
 expressao:
@@ -112,11 +159,16 @@ int main(int argc, char **argv) {
             return EXIT_FAILURE;
         }
     }
+    tabela_iniciar();
     int resultado = yyparse();
     if (argc == 2) fclose(yyin);
+    int status = EXIT_FAILURE;
     if (resultado == 0) {
         puts("Analise sintatica concluida com sucesso.");
-        return EXIT_SUCCESS;
+        tabela_imprimir();
+        if (erros_semanticos == 0) status = EXIT_SUCCESS;
+        else fprintf(stderr, "%d erro(s) semantico(s).\n", erros_semanticos);
     }
-    return EXIT_FAILURE;
+    tabela_liberar();
+    return status;
 }
