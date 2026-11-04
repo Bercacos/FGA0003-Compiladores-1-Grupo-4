@@ -3,6 +3,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include "parser.tab.h"
+
+#define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno;
+
+/* Decodifica o caractere de um literal 'c' ou '\c' (yytext) */
+static int decodifica_char(const char *t) {
+    if (t[1] != '\\') return (unsigned char)t[1];
+    switch (t[2]) {
+    case 'n': return '\n';
+    case 't': return '\t';
+    case 'r': return '\r';
+    case '0': return '\0';
+    default:  return (unsigned char)t[2];
+    }
+}
 %}
 
 %option yylineno noyywrap noinput nounput
@@ -53,7 +67,7 @@ void        { return KW_VOID; }
 [a-zA-Z_][a-zA-Z0-9_]*  { yylval.sval = strdup(yytext); return IDENT; }
 [0-9]+(\.[0-9]+)?      { yylval.dval = atof(yytext); return NUMBER; }
 \"([^\"\\]|\\.)*\"      { yylval.sval = strdup(yytext); return STRINGLIT; }
-\'([^\'\\]|\\.)\'       { yylval.ival = yytext[1]; return CHARLIT; }
+\'([^\'\\]|\\.)\'       { yylval.ival = decodifica_char(yytext); return CHARLIT; }
 
 [ \t\r\n]+  { /* Ignorar espacos em branco */ }
 

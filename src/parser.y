@@ -11,6 +11,7 @@ static No *raiz = NULL;
 %}
 %code requires { #include "ast.h" }
 %define parse.error detailed
+%locations
 %union { int ival; double dval; char *sval; No *no; }
 
 %token KW_IF KW_WHILE KW_FOR KW_ELSE KW_RETURN
@@ -39,7 +40,7 @@ static No *raiz = NULL;
 %start unidade
 %%
 
-unidade: programa { raiz = no_novo(N_PROGRAMA, NULL, $1, NULL, NULL); } ;
+unidade: programa { raiz = no_novo(@$.first_line, N_PROGRAMA, NULL, $1, NULL, NULL); } ;
 
 /* Estrutura do programa e comandos */
 programa: %empty { $$ = NULL; }
@@ -48,46 +49,46 @@ programa: %empty { $$ = NULL; }
 comando:
     declaracao PONTOVIR { $$ = $1; }
   | atribuicao PONTOVIR { $$ = $1; }
-  | expressao PONTOVIR { $$ = no_novo(N_EXPR_STMT, NULL, $1, NULL, NULL); }
+  | expressao PONTOVIR { $$ = no_novo(@$.first_line, N_EXPR_STMT, NULL, $1, NULL, NULL); }
   | bloco { $$ = $1; }
   | comando_if { $$ = $1; }
-  | KW_RETURN PONTOVIR { $$ = no_novo(N_RETURN, NULL, NULL, NULL, NULL); }
-  | KW_RETURN expressao PONTOVIR { $$ = no_novo(N_RETURN, NULL, $2, NULL, NULL); }
+  | KW_RETURN PONTOVIR { $$ = no_novo(@$.first_line, N_RETURN, NULL, NULL, NULL, NULL); }
+  | KW_RETURN expressao PONTOVIR { $$ = no_novo(@$.first_line, N_RETURN, NULL, $2, NULL, NULL); }
   | funcao { $$ = $1; }
   ;
-bloco: LCHAVE programa RCHAVE { $$ = no_novo(N_BLOCO, NULL, $2, NULL, NULL); } ;
+bloco: LCHAVE programa RCHAVE { $$ = no_novo(@$.first_line, N_BLOCO, NULL, $2, NULL, NULL); } ;
 comando_if:
     KW_IF LPAREN expressao RPAREN comando %prec THEN
-      { $$ = no_novo(N_IF, NULL, $3, $5, NULL); }
+      { $$ = no_novo(@$.first_line, N_IF, NULL, $3, $5, NULL); }
   | KW_IF LPAREN expressao RPAREN comando KW_ELSE comando
-      { $$ = no_novo(N_IF, NULL, $3, $5, $7); }
+      { $$ = no_novo(@$.first_line, N_IF, NULL, $3, $5, $7); }
   ;
 
 /* Declaracoes de variaveis e atribuicao */
-declaracao: tipo lista_declaradores { $$ = no_novo(N_DECL, NULL, $1, $2, NULL); } ;
+declaracao: tipo lista_declaradores { $$ = no_novo(@$.first_line, N_DECL, NULL, $1, $2, NULL); } ;
 tipo:
-    KW_INT { $$ = no_novo(N_TIPO, "int", NULL, NULL, NULL); }
-  | KW_FLOAT { $$ = no_novo(N_TIPO, "float", NULL, NULL, NULL); }
-  | KW_DOUBLE { $$ = no_novo(N_TIPO, "double", NULL, NULL, NULL); }
-  | KW_CHAR { $$ = no_novo(N_TIPO, "char", NULL, NULL, NULL); }
-  | KW_STRING { $$ = no_novo(N_TIPO, "string", NULL, NULL, NULL); }
+    KW_INT { $$ = no_novo(@$.first_line, N_TIPO, "int", NULL, NULL, NULL); }
+  | KW_FLOAT { $$ = no_novo(@$.first_line, N_TIPO, "float", NULL, NULL, NULL); }
+  | KW_DOUBLE { $$ = no_novo(@$.first_line, N_TIPO, "double", NULL, NULL, NULL); }
+  | KW_CHAR { $$ = no_novo(@$.first_line, N_TIPO, "char", NULL, NULL, NULL); }
+  | KW_STRING { $$ = no_novo(@$.first_line, N_TIPO, "string", NULL, NULL, NULL); }
   ;
 lista_declaradores:
     declarador { $$ = $1; }
   | lista_declaradores VIRGULA declarador { $$ = no_lista_add($1, $3); }
   ;
 declarador:
-    IDENT { $$ = no_novo(N_DECLARADOR, $1, NULL, NULL, NULL); free($1); }
-  | IDENT ASSIGN expressao { $$ = no_novo(N_DECLARADOR, $1, $3, NULL, NULL); free($1); }
+    IDENT { $$ = no_novo(@$.first_line, N_DECLARADOR, $1, NULL, NULL, NULL); free($1); }
+  | IDENT ASSIGN expressao { $$ = no_novo(@$.first_line, N_DECLARADOR, $1, $3, NULL, NULL); free($1); }
   ;
-atribuicao: IDENT ASSIGN expressao { $$ = no_novo(N_ATRIB, $1, $3, NULL, NULL); free($1); } ;
+atribuicao: IDENT ASSIGN expressao { $$ = no_novo(@$.first_line, N_ATRIB, $1, $3, NULL, NULL); free($1); } ;
 
 /* Definicao de funcoes */
 funcao:
     tipo IDENT LPAREN parametros RPAREN bloco
-      { $$ = no_novo(N_FUNCAO, $2, $1, $4, $6); free($2); }
+      { $$ = no_novo(@$.first_line, N_FUNCAO, $2, $1, $4, $6); free($2); }
   | KW_VOID IDENT LPAREN parametros RPAREN bloco
-      { $$ = no_novo(N_FUNCAO, $2, no_novo(N_TIPO, "void", NULL, NULL, NULL), $4, $6);
+      { $$ = no_novo(@$.first_line, N_FUNCAO, $2, no_novo(@$.first_line, N_TIPO, "void", NULL, NULL, NULL), $4, $6);
         free($2); }
   ;
 parametros: %empty { $$ = NULL; } | KW_VOID { $$ = NULL; } | lista_parametros { $$ = $1; } ;
@@ -95,32 +96,32 @@ lista_parametros:
     parametro { $$ = $1; }
   | lista_parametros VIRGULA parametro { $$ = no_lista_add($1, $3); }
   ;
-parametro: tipo IDENT { $$ = no_novo(N_PARAM, $2, $1, NULL, NULL); free($2); } ;
+parametro: tipo IDENT { $$ = no_novo(@$.first_line, N_PARAM, $2, $1, NULL, NULL); free($2); } ;
 
 /* Expressoes */
 expressao:
-    NUMBER { $$ = no_num($1); }
-  | CHARLIT { $$ = no_char($1); }
-  | STRINGLIT { $$ = no_novo(N_STRING, $1, NULL, NULL, NULL); free($1); }
-  | IDENT { $$ = no_novo(N_ID, $1, NULL, NULL, NULL); free($1); }
+    NUMBER { $$ = no_num(@$.first_line, $1); }
+  | CHARLIT { $$ = no_char(@$.first_line, $1); }
+  | STRINGLIT { $$ = no_novo(@$.first_line, N_STRING, $1, NULL, NULL, NULL); free($1); }
+  | IDENT { $$ = no_novo(@$.first_line, N_ID, $1, NULL, NULL, NULL); free($1); }
   | LPAREN expressao RPAREN { $$ = $2; }
-  | PLUS expressao %prec UPLUS { $$ = no_novo(N_UNOP, "+", $2, NULL, NULL); }
-  | MINUS expressao %prec UMINUS { $$ = no_novo(N_UNOP, "-", $2, NULL, NULL); }
-  | INCRE IDENT { $$ = no_novo(N_PREINC, "++", no_novo(N_ID, $2, NULL, NULL, NULL), NULL, NULL); free($2); }
-  | DECRE IDENT { $$ = no_novo(N_PREINC, "--", no_novo(N_ID, $2, NULL, NULL, NULL), NULL, NULL); free($2); }
-  | IDENT INCRE { $$ = no_novo(N_POSINC, "++", no_novo(N_ID, $1, NULL, NULL, NULL), NULL, NULL); free($1); }
-  | IDENT DECRE { $$ = no_novo(N_POSINC, "--", no_novo(N_ID, $1, NULL, NULL, NULL), NULL, NULL); free($1); }
-  | expressao PLUS expressao { $$ = no_novo(N_BINOP, "+", $1, $3, NULL); }
-  | expressao MINUS expressao { $$ = no_novo(N_BINOP, "-", $1, $3, NULL); }
-  | expressao TIMES expressao { $$ = no_novo(N_BINOP, "*", $1, $3, NULL); }
-  | expressao DIVIDE expressao { $$ = no_novo(N_BINOP, "/", $1, $3, NULL); }
-  | expressao MOD expressao { $$ = no_novo(N_BINOP, "%", $1, $3, NULL); }
-  | expressao MENOR expressao { $$ = no_novo(N_BINOP, "<", $1, $3, NULL); }
-  | expressao MENEQ expressao { $$ = no_novo(N_BINOP, "<=", $1, $3, NULL); }
-  | expressao MAIOR expressao { $$ = no_novo(N_BINOP, ">", $1, $3, NULL); }
-  | expressao MAIOREQ expressao { $$ = no_novo(N_BINOP, ">=", $1, $3, NULL); }
-  | expressao EQ expressao { $$ = no_novo(N_BINOP, "==", $1, $3, NULL); }
-  | expressao DIFER expressao { $$ = no_novo(N_BINOP, "!=", $1, $3, NULL); }
+  | PLUS expressao %prec UPLUS { $$ = no_novo(@$.first_line, N_UNOP, "+", $2, NULL, NULL); }
+  | MINUS expressao %prec UMINUS { $$ = no_novo(@$.first_line, N_UNOP, "-", $2, NULL, NULL); }
+  | INCRE IDENT { $$ = no_novo(@$.first_line, N_PREINC, "++", no_novo(@$.first_line, N_ID, $2, NULL, NULL, NULL), NULL, NULL); free($2); }
+  | DECRE IDENT { $$ = no_novo(@$.first_line, N_PREINC, "--", no_novo(@$.first_line, N_ID, $2, NULL, NULL, NULL), NULL, NULL); free($2); }
+  | IDENT INCRE { $$ = no_novo(@$.first_line, N_POSINC, "++", no_novo(@$.first_line, N_ID, $1, NULL, NULL, NULL), NULL, NULL); free($1); }
+  | IDENT DECRE { $$ = no_novo(@$.first_line, N_POSINC, "--", no_novo(@$.first_line, N_ID, $1, NULL, NULL, NULL), NULL, NULL); free($1); }
+  | expressao PLUS expressao { $$ = no_novo(@$.first_line, N_BINOP, "+", $1, $3, NULL); }
+  | expressao MINUS expressao { $$ = no_novo(@$.first_line, N_BINOP, "-", $1, $3, NULL); }
+  | expressao TIMES expressao { $$ = no_novo(@$.first_line, N_BINOP, "*", $1, $3, NULL); }
+  | expressao DIVIDE expressao { $$ = no_novo(@$.first_line, N_BINOP, "/", $1, $3, NULL); }
+  | expressao MOD expressao { $$ = no_novo(@$.first_line, N_BINOP, "%", $1, $3, NULL); }
+  | expressao MENOR expressao { $$ = no_novo(@$.first_line, N_BINOP, "<", $1, $3, NULL); }
+  | expressao MENEQ expressao { $$ = no_novo(@$.first_line, N_BINOP, "<=", $1, $3, NULL); }
+  | expressao MAIOR expressao { $$ = no_novo(@$.first_line, N_BINOP, ">", $1, $3, NULL); }
+  | expressao MAIOREQ expressao { $$ = no_novo(@$.first_line, N_BINOP, ">=", $1, $3, NULL); }
+  | expressao EQ expressao { $$ = no_novo(@$.first_line, N_BINOP, "==", $1, $3, NULL); }
+  | expressao DIFER expressao { $$ = no_novo(@$.first_line, N_BINOP, "!=", $1, $3, NULL); }
   ;
 %%
 
