@@ -7,10 +7,10 @@ TARGET := $(BUILD_DIR)/analisador
 .PHONY: all run test clean
 all: $(TARGET)
 
-$(TARGET): $(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/lex.yy.c | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -I$(BUILD_DIR) $^ -o $@
+$(TARGET): $(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/lex.yy.c $(SRC_DIR)/ast.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -I$(BUILD_DIR) -I$(SRC_DIR) $^ -o $@
 
-$(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/parser.tab.h: $(SRC_DIR)/parser.y | $(BUILD_DIR)
+$(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/parser.tab.h: $(SRC_DIR)/parser.y $(SRC_DIR)/ast.h | $(BUILD_DIR)
 	bison -Wall -d -o $(BUILD_DIR)/parser.tab.c $<
 
 $(BUILD_DIR)/lex.yy.c: $(SRC_DIR)/analisador-lexico/scanner.l $(BUILD_DIR)/parser.tab.h | $(BUILD_DIR)
