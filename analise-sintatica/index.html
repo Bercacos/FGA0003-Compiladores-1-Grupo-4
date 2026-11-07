@@ -631,10 +631,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#objetivo-atual" class="md-nav__link">
+  <a href="#comparacao-com-o-escopo-ate-while" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Objetivo atual
+        Comparação com o escopo até while
       
     </span>
   </a>
@@ -642,10 +642,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#construcoes-aceitas" class="md-nav__link">
+  <a href="#gramatica-das-novas-instrucoes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Construções aceitas
+        Gramática das novas instruções
       
     </span>
   </a>
@@ -664,10 +664,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#esboco-da-gramatica" class="md-nav__link">
+  <a href="#exemplo-integrado" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Esboço da gramática
+        Exemplo integrado
       
     </span>
   </a>
@@ -675,21 +675,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mensagens-de-erro" class="md-nav__link">
+  <a href="#validacao-e-limites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mensagens de erro
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#o-que-ainda-nao-faz-parte-desta-etapa" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        O que ainda não faz parte desta etapa
+        Validação e limites
       
     </span>
   </a>
@@ -866,10 +855,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#objetivo-atual" class="md-nav__link">
+  <a href="#comparacao-com-o-escopo-ate-while" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Objetivo atual
+        Comparação com o escopo até while
       
     </span>
   </a>
@@ -877,10 +866,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#construcoes-aceitas" class="md-nav__link">
+  <a href="#gramatica-das-novas-instrucoes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Construções aceitas
+        Gramática das novas instruções
       
     </span>
   </a>
@@ -899,10 +888,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#esboco-da-gramatica" class="md-nav__link">
+  <a href="#exemplo-integrado" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Esboço da gramática
+        Exemplo integrado
       
     </span>
   </a>
@@ -910,21 +899,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#mensagens-de-erro" class="md-nav__link">
+  <a href="#validacao-e-limites" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mensagens de erro
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#o-que-ainda-nao-faz-parte-desta-etapa" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        O que ainda não faz parte desta etapa
+        Validação e limites
       
     </span>
   </a>
@@ -957,60 +935,85 @@
 
 
 <h1 id="analise-sintatica">Análise sintática<a class="headerlink" href="#analise-sintatica" title="Permanent link">&para;</a></h1>
-<p>A análise sintática está em <code>src/parser.y</code> e usa <strong>Bison</strong> com <code>%define parse.error detailed</code>.</p>
-<h2 id="objetivo-atual">Objetivo atual<a class="headerlink" href="#objetivo-atual" title="Permanent link">&para;</a></h2>
-<p>Validar se o fluxo de tokens forma um programa sintaticamente correto no subconjunto de C definido pelo grupo. Nesta etapa <strong>não há AST nem execução</strong>.</p>
-<h2 id="construcoes-aceitas">Construções aceitas<a class="headerlink" href="#construcoes-aceitas" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Programa como sequência de comandos (também aceita programa vazio)</li>
-<li>Declarações com tipos <code>int</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>string</code></li>
-<li>Vários declaradores na mesma linha (<code>int a = 1, b = 2;</code>)</li>
-<li>Atribuições (<code>x = expr;</code>)</li>
-<li>Expressões aritméticas e relacionais com precedência e associatividade</li>
-<li>Parênteses, unários <code>+</code>/<code>-</code>, pré/pós <code>++</code>/<code>--</code></li>
-<li>Blocos <code>{ ... }</code></li>
-<li><code>if</code> e <code>if/else</code> (incluindo aninhamento, com precedência <code>%prec THEN</code> / <code>KW_ELSE</code>)</li>
-<li>Definição de funções com parâmetros tipados, sem parâmetros ou <code>(void)</code></li>
-<li><code>return;</code> e <code>return expressao;</code></li>
-</ul>
+<p>O parser está em <code>src/parser.y</code> e usa Bison. O analisador valida a sintaxe; ainda não constrói AST, verifica tipos ou executa instruções.</p>
+<h2 id="comparacao-com-o-escopo-ate-while">Comparação com o escopo até <code>while</code><a class="headerlink" href="#comparacao-com-o-escopo-ate-while" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Requisito</th>
+<th>Situação anterior</th>
+<th>Alteração</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tipos básicos</td>
+<td><code>int</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>string</code></td>
+<td>Mantidos</td>
+</tr>
+<tr>
+<td>Variáveis (<code>var</code> na lista de requisitos)</td>
+<td>Declarações, inicializações, atribuições e múltiplos declaradores</td>
+<td>Mantidos; declarações usam tipos explícitos, sem palavra-chave <code>var</code></td>
+</tr>
+<tr>
+<td>Literais</td>
+<td>Inteiros decimais, decimais com dígitos antes/depois do ponto, caracteres e strings</td>
+<td>Acrescentados <code>.5</code>, <code>1.</code>, expoentes e sufixos de ponto flutuante</td>
+</tr>
+<tr>
+<td>Operadores</td>
+<td>Aritméticos, relacionais, igualdade, <code>=</code>, <code>++</code>, <code>--</code></td>
+<td>Acrescentados <code>&amp;&amp;</code>, <code>||</code>, <code>!</code></td>
+</tr>
+<tr>
+<td>Blocos</td>
+<td>Blocos vazios e aninhados</td>
+<td>Mantidos</td>
+</tr>
+<tr>
+<td><code>if</code>/<code>else</code></td>
+<td>Com e sem chaves; aninhados</td>
+<td>Mantidos; agora também aceitam comando vazio <code>;</code></td>
+</tr>
+<tr>
+<td><code>while</code></td>
+<td>Token no léxico, sem produção sintática</td>
+<td>Implementado com condição, bloco ou comando único, incluindo <code>;</code></td>
+</tr>
+<tr>
+<td><code>print</code></td>
+<td>Ausente</td>
+<td>Implementado <code>print(expressao, ...);</code>, com pelo menos um argumento</td>
+</tr>
+</tbody>
+</table>
+<p><code>print</code> é uma extensão deste subconjunto de C, assim como <code>string</code>. Não é uma chamada de <code>printf</code> da biblioteca padrão. Funções e <code>return</code>, já existentes, foram preservados.</p>
+<h2 id="gramatica-das-novas-instrucoes">Gramática das novas instruções<a class="headerlink" href="#gramatica-das-novas-instrucoes" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>comando         : ... | ; | comando_while | comando_print ;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>comando_while   : while ( expressao ) comando
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>comando_print   : print ( argumentos_print )
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>argumentos_print: expressao | argumentos_print , expressao
+</code></pre></div>
+<p>O <code>else</code> se associa ao <code>if</code> mais próximo que ainda não tem <code>else</code>, inclusive quando há um <code>while</code> entre eles. <code>while</code> aceita aninhamento, corpo vazio e instruções sem chaves.</p>
 <h2 id="precedencia-dos-operadores">Precedência dos operadores<a class="headerlink" href="#precedencia-dos-operadores" title="Permanent link">&para;</a></h2>
-<p>Do menor para o maior nível de precedência:</p>
-<ol>
-<li><code>==</code>, <code>!=</code></li>
-<li><code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code></li>
-<li><code>+</code>, <code>-</code></li>
-<li><code>*</code>, <code>/</code>, <code>%</code></li>
-<li>unários <code>+</code> / <code>-</code></li>
-<li>resolução de ambiguidade do <code>else</code> (<code>THEN</code> / <code>KW_ELSE</code>)</li>
-</ol>
-<h2 id="esboco-da-gramatica">Esboço da gramática<a class="headerlink" href="#esboco-da-gramatica" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>programa  → ε | programa comando
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>comando   → declaração ; | atribuição ; | expressão ; | bloco
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>          | if | return ; | return expressão ; | função
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>bloco     → { programa }
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>if        → if ( expressão ) comando
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>          | if ( expressão ) comando else comando
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>função    → tipo IDENT ( parâmetros ) bloco
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>          | void IDENT ( parâmetros ) bloco
+<p>Da menor para a maior: <code>||</code>; <code>&amp;&amp;</code>; <code>==</code> e <code>!=</code>; <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>; <code>+</code> e <code>-</code>; <code>*</code>, <code>/</code>, <code>%</code>; unários <code>+</code>, <code>-</code>, <code>!</code>. Parênteses permitem agrupamento explícito. Incremento e decremento continuam restritos a identificadores.</p>
+<h2 id="exemplo-integrado">Exemplo integrado<a class="headerlink" href="#exemplo-integrado" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">3</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="s">"valor"</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="n">print</span><span class="p">(</span><span class="s">"pulado"</span><span class="p">);</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
 </code></pre></div>
-<h2 id="mensagens-de-erro">Mensagens de erro<a class="headerlink" href="#mensagens-de-erro" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Erro sintatico na linha N, proximo a 'token': mensagem
-</code></pre></div>
-<p>O <code>main</code> do parser:</p>
-<ul>
-<li>lê um arquivo passado por argumento ou a entrada padrão</li>
-<li>chama <code>yyparse()</code></li>
-<li>imprime <code>Analise sintatica concluida com sucesso.</code> quando o código é aceito</li>
-</ul>
-<h2 id="o-que-ainda-nao-faz-parte-desta-etapa">O que ainda não faz parte desta etapa<a class="headerlink" href="#o-que-ainda-nao-faz-parte-desta-etapa" title="Permanent link">&para;</a></h2>
-<ul>
-<li><code>while</code>, <code>for</code>, <code>switch</code>, ponteiros, arrays e structs</li>
-<li>Construção de AST nas ações semânticas</li>
-<li>Tabela de símbolos / verificação de tipos</li>
-<li>Chamada de função em expressão (só a <strong>definição</strong> está na gramática)</li>
-<li>Interpretação do programa</li>
-</ul>
-<p>Esses itens entram nas sprints de semântica e interpretação, conforme o guia do professor.</p>
+<p>Este código é reconhecido sintaticamente; <code>print</code> e <code>while</code> ainda não são executados.</p>
+<h2 id="validacao-e-limites">Validação e limites<a class="headerlink" href="#validacao-e-limites" title="Permanent link">&para;</a></h2>
+<p><code>make test</code> reúne as suítes principal, adicional e de escopo (<code>tests/test_scope.sh</code>). A nova suíte cobre aceitação e rejeição, integração com o léxico, aninhamento e entradas malformadas.</p>
+<p>A execução desta atualização está pendente: o ambiente de edição bloqueou o WSL e o Bash do Windows. A existência dos scripts não comprova a conclusão da Issue 1 nem substitui sua execução.</p>
+<p>Fora deste escopo: <code>for</code>, <code>do/while</code>, <code>switch</code>, ponteiros, arrays, structs, chamadas gerais de função e biblioteca padrão. Literais inteiros hexadecimais, sufixos inteiros e operadores bit a bit não foram incluídos nesta extensão. Análise semântica e interpretação são etapas posteriores.</p>
 
 
 

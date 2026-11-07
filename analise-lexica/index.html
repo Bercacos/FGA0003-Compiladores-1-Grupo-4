@@ -604,18 +604,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#o-que-o-scanner-reconhece" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        O que o scanner reconhece
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="O que o scanner reconhece">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#palavras-reservadas" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -625,8 +613,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#identificadores-e-literais" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -636,8 +624,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#operadores-e-pontuacao" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -647,50 +635,12 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#itens-ignorados" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Itens ignorados
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
-  <a href="#tratamento-de-erros" class="md-nav__link">
+  <a href="#espacos-comentarios-e-erros" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tratamento de erros
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#opcoes-flex-usadas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Opções Flex usadas
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limitacoes-conhecidas-desta-etapa" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limitações conhecidas desta etapa
+        Espaços, comentários e erros
       
     </span>
   </a>
@@ -894,18 +844,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#o-que-o-scanner-reconhece" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        O que o scanner reconhece
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="O que o scanner reconhece">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#palavras-reservadas" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -915,8 +853,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#identificadores-e-literais" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -926,8 +864,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#operadores-e-pontuacao" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -937,50 +875,12 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#itens-ignorados" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Itens ignorados
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
       
         <li class="md-nav__item">
-  <a href="#tratamento-de-erros" class="md-nav__link">
+  <a href="#espacos-comentarios-e-erros" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tratamento de erros
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#opcoes-flex-usadas" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Opções Flex usadas
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#limitacoes-conhecidas-desta-etapa" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limitações conhecidas desta etapa
+        Espaços, comentários e erros
       
     </span>
   </a>
@@ -1013,78 +913,56 @@
 
 
 <h1 id="analise-lexica">Análise léxica<a class="headerlink" href="#analise-lexica" title="Permanent link">&para;</a></h1>
-<p>A análise léxica está em <code>src/analisador-lexico/scanner.l</code> e usa <strong>Flex</strong>. O scanner devolve tokens definidos em conjunto com o Bison (<code>parser.tab.h</code>).</p>
-<h2 id="o-que-o-scanner-reconhece">O que o scanner reconhece<a class="headerlink" href="#o-que-o-scanner-reconhece" title="Permanent link">&para;</a></h2>
-<h3 id="palavras-reservadas">Palavras reservadas<a class="headerlink" href="#palavras-reservadas" title="Permanent link">&para;</a></h3>
-<p><code>if</code>, <code>while</code>, <code>for</code>, <code>else</code>, <code>return</code>, <code>int</code>, <code>float</code>, <code>char</code>, <code>string</code>, <code>double</code>, <code>void</code></p>
-<blockquote>
-<p>Observação: <code>while</code> e <code>for</code> já são tokens léxicos, mas ainda <strong>não possuem regras sintáticas</strong> no parser.</p>
-</blockquote>
-<h3 id="identificadores-e-literais">Identificadores e literais<a class="headerlink" href="#identificadores-e-literais" title="Permanent link">&para;</a></h3>
+<p>O scanner está em <code>src/analisador-lexico/scanner.l</code>, usa Flex e devolve os tokens declarados pelo Bison em <code>parser.tab.h</code>.</p>
+<h2 id="palavras-reservadas">Palavras reservadas<a class="headerlink" href="#palavras-reservadas" title="Permanent link">&para;</a></h2>
+<p><code>if</code>, <code>else</code>, <code>while</code>, <code>print</code>, <code>return</code>, <code>int</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>string</code>, <code>void</code>. O token <code>for</code> continua reservado no léxico, mas a estrutura está fora do escopo do parser.</p>
+<p><code>var</code> na lista de requisitos é tratado como referência a variáveis: a linguagem usa declarações como <code>int x = 1;</code>, sem inferência de tipos por uma palavra-chave <code>var</code>.</p>
+<h2 id="identificadores-e-literais">Identificadores e literais<a class="headerlink" href="#identificadores-e-literais" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Classe</th>
-<th>Padrão / forma</th>
+<th>Formas reconhecidas</th>
 <th>Token</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Identificador</td>
-<td><code>[a-zA-Z_][a-zA-Z0-9_]*</code></td>
+<td>Letras, dígitos e <code>_</code>, sem começar por dígito</td>
 <td><code>IDENT</code></td>
 </tr>
 <tr>
 <td>Número</td>
-<td><code>[0-9]+(\.[0-9]+)?</code></td>
+<td>Inteiros decimais e ponto flutuante, como <code>42</code>, <code>1.5</code>, <code>.5</code>, <code>1.</code>, <code>2e-3</code>, <code>1.5f</code></td>
 <td><code>NUMBER</code></td>
 </tr>
 <tr>
 <td>String</td>
-<td><code>"..."</code> com escapes</td>
+<td>Aspas duplas, com escapes e sem quebra de linha literal</td>
 <td><code>STRINGLIT</code></td>
 </tr>
 <tr>
 <td>Caractere</td>
-<td><code>'x'</code> com escape simples</td>
+<td>Um caractere ou escape entre aspas simples</td>
 <td><code>CHARLIT</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="operadores-e-pontuacao">Operadores e pontuação<a class="headerlink" href="#operadores-e-pontuacao" title="Permanent link">&para;</a></h3>
+<p>O sinal é um operador separado. Strings e caracteres preservam o reconhecimento de escapes existente; sua interpretação cabe às etapas seguintes.</p>
+<h2 id="operadores-e-pontuacao">Operadores e pontuação<a class="headerlink" href="#operadores-e-pontuacao" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Aritméticos: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code></li>
-<li>Relacionais/igualdade: <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code></li>
+<li>Relacionais e igualdade: <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code>, <code>==</code>, <code>!=</code></li>
+<li>Lógicos: <code>&amp;&amp;</code>, <code>||</code>, <code>!</code></li>
 <li>Atribuição e incremento: <code>=</code>, <code>++</code>, <code>--</code></li>
-<li>Delimitadores: <code>( ) { } [ ] ; ,</code></li>
+<li>Delimitadores: <code>( ) { } [ ] ; ,</code> (colchetes não têm regra sintática)</li>
 </ul>
-<h3 id="itens-ignorados">Itens ignorados<a class="headerlink" href="#itens-ignorados" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Espaços em branco (<code>espaço</code>, tab, CR, LF)</li>
-<li>Comentários de linha (<code>// ...</code>)</li>
-<li>Comentários de bloco (<code>/* ... */</code>)</li>
-<li>Diretivas de pré-processador no início da linha (<code>#include</code>, <code>#define</code>, ...)</li>
-</ul>
-<h2 id="tratamento-de-erros">Tratamento de erros<a class="headerlink" href="#tratamento-de-erros" title="Permanent link">&para;</a></h2>
-<p>Caracteres não reconhecidos geram mensagem no <code>stderr</code> com o número da linha:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Erro lexico na linha N: caractere nao reconhecido '...'
-</code></pre></div>
-<p>O caractere é devolvido ao parser, que em geral também falha em seguida.</p>
-<h2 id="opcoes-flex-usadas">Opções Flex usadas<a class="headerlink" href="#opcoes-flex-usadas" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="o">%</span><span class="n">option</span><span class="w"> </span><span class="n">yylineno</span><span class="w"> </span><span class="n">noyywrap</span><span class="w"> </span><span class="n">noinput</span><span class="w"> </span><span class="n">nounput</span>
-</code></pre></div>
-<ul>
-<li><code>yylineno</code> — rastreia a linha para mensagens de erro</li>
-<li><code>noyywrap</code> — um único arquivo/fluxo de entrada</li>
-<li><code>noinput</code> / <code>nounput</code> — evitam avisos de funções não usadas</li>
-</ul>
-<h2 id="limitacoes-conhecidas-desta-etapa">Limitações conhecidas desta etapa<a class="headerlink" href="#limitacoes-conhecidas-desta-etapa" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Comentário de bloco sem fechamento não gera mensagem léxica específica; a falha aparece depois no parser</li>
-<li>Não há modo de impressão da lista de tokens (útil para depuração)</li>
-<li><code>while</code>/<code>for</code> reconhecidos no léxico ainda não são aceitos na gramática</li>
-</ul>
+<p>As palavras reservadas são reconhecidas antes de identificadores; nomes como <code>print_total</code> continuam identificadores.</p>
+<h2 id="espacos-comentarios-e-erros">Espaços, comentários e erros<a class="headerlink" href="#espacos-comentarios-e-erros" title="Permanent link">&para;</a></h2>
+<p>Espaços, comentários <code>//</code> e <code>/* ... */</code> e diretivas iniciadas por <code>#</code> no começo da linha são ignorados. Diretivas não são expandidas: não há pré-processador C.</p>
+<p>O estado exclusivo <code>COMENTARIO</code> permite detectar fim de arquivo antes de <code>*/</code>. Nesse caso o scanner emite uma mensagem de erro e devolve <code>INVALID</code>. Caracteres desconhecidos também devolvem <code>INVALID</code>, garantindo rejeição pelo parser. Strings e caracteres com quebra de linha literal são rejeitados.</p>
+<p>A opção <code>yylineno</code> mantém a linha para os diagnósticos. O programa termina com status diferente de zero em caso de erro; ainda não há recuperação avançada nem modo de listagem de tokens.</p>
 
 
 
