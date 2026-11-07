@@ -44,22 +44,25 @@ static void abrir_funcao(const char *nome, Tipo retorno, int linha) {
 %define parse.error detailed
 %union { int ival; double dval; char *sval; Tipo tipo; }
 
-%token KW_IF KW_WHILE KW_FOR KW_ELSE KW_RETURN
+%token KW_IF KW_WHILE KW_FOR KW_ELSE KW_RETURN KW_PRINT
 %token KW_INT KW_FLOAT KW_CHAR KW_STRING KW_DOUBLE KW_VOID
 %token LPAREN RPAREN LCHAVE RCHAVE LCOLCH RCOLCH
 %token MENEQ MAIOREQ DIFER EQ INCRE DECRE ASSIGN MENOR MAIOR
 %token PONTOVIR VIRGULA PLUS MINUS TIMES DIVIDE MOD
+%token AND OR NOT INVALID
 %token <sval> IDENT STRINGLIT
 %token <dval> NUMBER
 %token <ival> CHARLIT
 %destructor { free($$); } <sval>
 %type <tipo> tipo
 
+%left OR
+%left AND
 %left EQ DIFER
 %left MENOR MENEQ MAIOR MAIOREQ
 %left PLUS MINUS
 %left TIMES DIVIDE MOD
-%precedence UPLUS UMINUS
+%precedence UPLUS UMINUS NOT
 %precedence THEN
 %precedence KW_ELSE
 
@@ -69,11 +72,14 @@ static void abrir_funcao(const char *nome, Tipo retorno, int linha) {
 /* Estrutura do programa e comandos */
 programa: %empty | programa comando ;
 comando:
-    declaracao PONTOVIR
+    PONTOVIR
+  | declaracao PONTOVIR
   | atribuicao PONTOVIR
   | expressao PONTOVIR
   | bloco
   | comando_if
+  | comando_while
+  | comando_print PONTOVIR
   | KW_RETURN PONTOVIR
   | KW_RETURN expressao PONTOVIR
   | funcao
@@ -85,6 +91,10 @@ comando_if:
     KW_IF LPAREN expressao RPAREN comando %prec THEN
   | KW_IF LPAREN expressao RPAREN comando KW_ELSE comando
   ;
+
+comando_while: KW_WHILE LPAREN expressao RPAREN comando ;
+comando_print: KW_PRINT LPAREN argumentos_print RPAREN ;
+argumentos_print: expressao | argumentos_print VIRGULA expressao ;
 
 /* Declaracoes de variaveis e atribuicao */
 declaracao: tipo lista_declaradores ;
@@ -124,6 +134,7 @@ expressao:
   | LPAREN expressao RPAREN
   | PLUS expressao %prec UPLUS
   | MINUS expressao %prec UMINUS
+  | NOT expressao
   | INCRE IDENT { free($2); }
   | DECRE IDENT { free($2); }
   | IDENT INCRE { free($1); }
@@ -139,6 +150,8 @@ expressao:
   | expressao MAIOREQ expressao
   | expressao EQ expressao
   | expressao DIFER expressao
+  | expressao AND expressao
+  | expressao OR expressao
   ;
 %%
 
