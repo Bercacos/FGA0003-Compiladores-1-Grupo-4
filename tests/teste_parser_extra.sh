@@ -34,7 +34,7 @@ testar aceita 'todos os tipos declarados' 'int a; float b; double c; char d; str
 testar aceita 'multiplos declaradores e atribuicao' 'int a = 1, b = a + 2; b = b * 3;'
 testar aceita 'operadores e parenteses' 'float x = (1 + 2) * 3 / 4 % 2;'
 testar aceita 'comparacoes' 'int x = 1 < 2 == 3 >= 4;'
-testar aceita 'incremento e decremento' '++x; --x; x++; x--;'
+testar aceita 'incremento e decremento' 'int x; ++x; --x; x++; x--;'
 testar aceita 'blocos aninhados' '{ int x = 1; { x = x + 1; } }'
 testar aceita 'comentario de linha' $'// comentario\nint x = 1;'
 testar aceita 'comentario de bloco multilinha' $'/* comentario\nem duas linhas */\nint x = 1;'

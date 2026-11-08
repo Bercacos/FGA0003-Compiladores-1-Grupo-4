@@ -6,7 +6,7 @@
 static const char *nomes[] = {
     [N_PROGRAMA] = "Programa", [N_BLOCO] = "Bloco", [N_DECL] = "Decl",
     [N_DECLARADOR] = "Declarador", [N_TIPO] = "Tipo", [N_ATRIB] = "Atrib",
-    [N_EXPR_STMT] = "ExprStmt", [N_IF] = "If", [N_RETURN] = "Return",
+    [N_EXPR_STMT] = "ExprStmt", [N_IF] = "If", [N_WHILE] = "While", [N_PRINT] = "Print", [N_RETURN] = "Return",
     [N_FUNCAO] = "Funcao", [N_PARAM] = "Param", [N_BINOP] = "BinOp",
     [N_UNOP] = "UnOp", [N_PREINC] = "PreInc", [N_POSINC] = "PosInc",
     [N_NUM] = "Num", [N_CHAR] = "Char", [N_STRING] = "String", [N_ID] = "Id",
@@ -57,6 +57,8 @@ No *no_novo(int linha, TipoNo tipo_no, const char *texto, No *a, No *b, No *c) {
 No *no_num(int linha, double valor) {
     No *no = no_novo(linha, N_NUM, NULL, NULL, NULL, NULL);
     no->num = valor;
+    /* O scanner entrega so o valor: inteiro se nao tem parte fracionaria. */
+    no->tipo = (valor == (double)(long long)valor) ? TIPO_INT : TIPO_DOUBLE;
     return no;
 }
 
@@ -117,4 +119,36 @@ void ast_liberar(No *no) {
         free(no);
         no = prox;
     }
+}
+
+int tipo_numerico(Tipo tipo) {
+    return tipo == TIPO_INT || tipo == TIPO_FLOAT || tipo == TIPO_DOUBLE || tipo == TIPO_CHAR;
+}
+
+int tipos_compativeis(Tipo destino, Tipo origem) {
+    if (tipo_numerico(destino) && tipo_numerico(origem)) return 1;
+    return destino == TIPO_STRING && origem == TIPO_STRING;
+}
+
+Tipo tipo_resultado_binop(const char *op, Tipo a, Tipo b) {
+    if (a == TIPO_ERRO || b == TIPO_ERRO) return TIPO_ERRO;
+    int igualdade = !strcmp(op, "==") || !strcmp(op, "!=");
+    int comparacao = igualdade || !strcmp(op, "<") || !strcmp(op, "<=") ||
+                     !strcmp(op, ">") || !strcmp(op, ">=");
+    int logico = !strcmp(op, "&&") || !strcmp(op, "||");
+    int real = a == TIPO_FLOAT || a == TIPO_DOUBLE || b == TIPO_FLOAT || b == TIPO_DOUBLE;
+    int ok = (tipo_numerico(a) && tipo_numerico(b)) ||
+             (igualdade && a == TIPO_STRING && b == TIPO_STRING);
+    if (ok && !strcmp(op, "%") && real) ok = 0;   /* % so para inteiros */
+    if (!ok) return TIPO_ERRO;
+    if (comparacao || logico) return TIPO_INT;
+    if (a == TIPO_DOUBLE || b == TIPO_DOUBLE) return TIPO_DOUBLE;
+    if (a == TIPO_FLOAT || b == TIPO_FLOAT) return TIPO_FLOAT;
+    return TIPO_INT;
+}
+
+Tipo tipo_resultado_unop(const char *op, Tipo a) {
+    if (a == TIPO_ERRO || !tipo_numerico(a)) return TIPO_ERRO;
+    if (!strcmp(op, "!") || a == TIPO_CHAR) return TIPO_INT;
+    return a;
 }

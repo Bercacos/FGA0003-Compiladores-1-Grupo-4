@@ -50,7 +50,7 @@ Em caso de erro, o programa imprime mensagem léxica e/ou sintática com indica�
 
 ## Testes
 
-Suíte principal:
+Todas as suítes (principal, adicional e escopo até `while`):
 
 ```bash
 make test

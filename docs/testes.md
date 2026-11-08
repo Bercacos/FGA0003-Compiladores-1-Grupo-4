@@ -53,3 +53,11 @@ Os novos casos verificam `if` simples, `if-else`, `if` aninhado, funções com p
 | `if () { int x = 1; }` | Rejeitar | Erro sintático: `unexpected RPAREN` |
 | `int soma(int a, int b) { return a + b; }` | Aceitar | `Analise sintatica concluida com sucesso.` |
 | `int soma(int a,) { return a; }` | Rejeitar | Erro sintático: `unexpected RPAREN` |
+
+## Extensão do escopo até `while`
+
+A suíte `tests/test_scope.sh` adiciona 47 casos de aceitação e rejeição para `while`, `print`, operadores lógicos, comandos vazios e integração com tipos, literais, blocos e `if/else`. Inclui decimais com expoentes, comentários sem fechamento e strings com quebra de linha literal.
+
+`make test` agora executa as três suítes: os 7 testes principais, os 30 adicionais existentes e os 47 novos casos (84 ao todo). As alterações locais anteriores na suíte adicional foram preservadas.
+
+**Execução pendente nesta atualização:** o ambiente não permitiu iniciar WSL nem Bash do Windows. Os resultados históricos acima se referem à versão anterior. Não há confirmação de que os 84 testes passaram, nem da conclusão da Issue 1. Antes de fechar a issue, executar `make test` em Linux/WSL com Flex, Bison e GCC instalados.

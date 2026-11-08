@@ -16,10 +16,10 @@ testa_invalido() {
         falhas=$((falhas + 1))
     fi
 }
-testa_valido 'int x = y + z;'
+testa_valido 'int y, z; int x = y + z;'
 testa_valido 'int x = 2 + 3 * 4; float y = (x - 1) / 2;'
 testa_valido 'int a = 1, b = a + 2; b = b % 2;'
-testa_valido '++x; y--;'
+testa_valido 'int x, y; ++x; y--;'
 testa_invalido 'int x = ;'
 testa_invalido 'int x = 1'
 testa_invalido 'x = (2 + 3;'

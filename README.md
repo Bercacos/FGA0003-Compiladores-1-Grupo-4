@@ -17,7 +17,7 @@ mkdocs serve
 
 ## Estado atual
 
-O front-end léxico-sintático reconhece declarações (`int`, `float`, `double`, `char`, `string`), atribuições, expressões com precedência, blocos, `if`/`else`, definições de funções e `return`.
+O front-end léxico-sintático reconhece declarações (`int`, `float`, `double`, `char`, `string`), atribuições, expressões com precedência, blocos, `if`/`else`, `while`, `print`, operadores lógicos, definições de funções e `return`.
 
 Ainda **não** há AST, análise semântica nem execução do programa: o binário só aceita ou rejeita a entrada.
 
