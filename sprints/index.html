@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -320,6 +320,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../ast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  AST
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../tabela-de-simbolos/" class="md-tabs__link">
         
   
@@ -598,6 +617,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../ast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../tabela-de-simbolos/" class="md-nav__link">
         
   
@@ -756,10 +802,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sprint-4-ast-e-semantica-proxima" class="md-nav__link">
+  <a href="#sprint-4-ast-e-semantica-inicial" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sprint 4 — AST e semântica (próxima)
+        Sprint 4 — AST e semântica inicial
       
     </span>
   </a>
@@ -932,10 +978,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sprint-4-ast-e-semantica-proxima" class="md-nav__link">
+  <a href="#sprint-4-ast-e-semantica-inicial" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sprint 4 — AST e semântica (próxima)
+        Sprint 4 — AST e semântica inicial
       
     </span>
   </a>
@@ -1025,12 +1071,12 @@
 <tr>
 <td>3</td>
 <td>Parser completo (variáveis, expressões, <code>if</code>, funções) + testes</td>
-<td>Concluída (AST ainda pendente)</td>
+<td>Concluída</td>
 </tr>
 <tr>
 <td>4</td>
 <td>AST + semântica inicial + preparação P2</td>
-<td>Em andamento / próxima</td>
+<td>Concluída</td>
 </tr>
 <tr>
 <td>5</td>
@@ -1089,7 +1135,7 @@
 <ul>
 <li>A Sprint 3 do guia também pede AST; no Grupo 4 a AST ficou para a Sprint 4, para estabilizar antes o reconhecimento sintático.</li>
 </ul>
-<h2 id="sprint-4-ast-e-semantica-proxima">Sprint 4 — AST e semântica (próxima)<a class="headerlink" href="#sprint-4-ast-e-semantica-proxima" title="Permanent link">&para;</a></h2>
+<h2 id="sprint-4-ast-e-semantica-inicial">Sprint 4 — AST e semântica inicial<a class="headerlink" href="#sprint-4-ast-e-semantica-inicial" title="Permanent link">&para;</a></h2>
 <p><strong>Objetivos</strong></p>
 <ul>
 <li>Criar nós de AST nas ações do Bison</li>
@@ -1097,11 +1143,12 @@
 <li>Melhorar mensagens de erro</li>
 <li>Preparar o Ponto de Controle P2</li>
 </ul>
-<p><strong>Entregas esperadas</strong></p>
+<p><strong>Entregas realizadas</strong></p>
 <ul>
-<li>Estruturas <code>ast.h</code> / <code>ast.c</code> (ou equivalente)</li>
-<li>Tabela de símbolos inicial</li>
-<li>Testes semânticos além dos testes só sintáticos</li>
+<li>AST construída pelo parser e definida em <code>src/ast.c</code> e <code>src/ast.h</code></li>
+<li>Tabela de símbolos em <code>src/tabela.c</code> e <code>src/tabela.h</code></li>
+<li>Verificações iniciais de identificadores, tipos e escopos</li>
+<li>Testes automatizados da tabela, da semântica e da estrutura da AST</li>
 </ul>
 <h2 id="sprint-5-interpretacao">Sprint 5 — Interpretação<a class="headerlink" href="#sprint-5-interpretacao" title="Permanent link">&para;</a></h2>
 <p><strong>Objetivos</strong></p>
@@ -1203,7 +1250,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

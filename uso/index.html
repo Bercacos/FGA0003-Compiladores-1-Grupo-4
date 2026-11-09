@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -322,6 +322,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../ast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  AST
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../tabela-de-simbolos/" class="md-tabs__link">
         
   
@@ -594,10 +613,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#limpar-artefatos" class="md-nav__link">
+  <a href="#pre-visualizar-a-documentacao" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Limpar artefatos
+        Pré-visualizar a documentação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limpar-arquivos-gerados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limpar arquivos gerados
       
     </span>
   </a>
@@ -681,6 +711,33 @@
     
   
     Análise sintática
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AST
   
 
     
@@ -899,10 +956,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#limpar-artefatos" class="md-nav__link">
+  <a href="#pre-visualizar-a-documentacao" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Limpar artefatos
+        Pré-visualizar a documentação
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limpar-arquivos-gerados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limpar arquivos gerados
       
     </span>
   </a>
@@ -936,39 +1004,37 @@
 
 <h1 id="como-usar">Como usar<a class="headerlink" href="#como-usar" title="Permanent link">&para;</a></h1>
 <h2 id="pre-requisitos">Pré-requisitos<a class="headerlink" href="#pre-requisitos" title="Permanent link">&para;</a></h2>
-<p>No Linux ou WSL:</p>
+<p>No Linux ou WSL, instale as ferramentas necessárias:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>build-essential<span class="w"> </span>flex<span class="w"> </span>bison<span class="w"> </span>make<span class="w"> </span>python3-pip
 </code></pre></div>
-<p>Para pré-visualizar a documentação localmente:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>mkdocs<span class="w"> </span>serve
-</code></pre></div>
 <h2 id="compilar">Compilar<a class="headerlink" href="#compilar" title="Permanent link">&para;</a></h2>
-<p>Na raiz do repositório:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>make
+<p>Na raiz do repositório, execute:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make
 </code></pre></div>
-<p>Isso gera o binário <code>build/analisador</code> a partir de <code>src/analisador-lexico/scanner.l</code> e <code>src/parser.y</code>.</p>
+<p>Esse comando gera <code>build/analisador</code> usando o analisador léxico (<code>src/analisador-lexico/scanner.l</code>), o parser (<code>src/parser.y</code>), a AST (<code>src/ast.c</code>) e a tabela de símbolos (<code>src/tabela.c</code>).</p>
 <h2 id="executar">Executar<a class="headerlink" href="#executar" title="Permanent link">&para;</a></h2>
-<p>Arquivo de entrada:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>./build/analisador<span class="w"> </span>examples/variaveis.c
+<p>Para analisar um arquivo:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>./build/analisador<span class="w"> </span>examples/variaveis.c
 </code></pre></div>
-<p>Entrada via stdin:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">'int x = y + z;'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>./build/analisador
+<p>Para fornecer o programa diretamente pelo terminal:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'%s\n'</span><span class="w"> </span><span class="s1">'int y = 1; int z = 2; int x = y + z;'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>./build/analisador
 </code></pre></div>
-<p>Saída esperada em caso de sucesso:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Analise sintatica concluida com sucesso.
-</code></pre></div>
-<p>Em caso de erro, o programa imprime mensagem léxica e/ou sintática com indicação de linha e retorna código de saída diferente de zero.</p>
+<p>Quando a entrada é aceita, o analisador imprime <code>Analise sintatica concluida com sucesso.</code>, a árvore sintática abstrata e a tabela de símbolos. Se encontrar um erro léxico, sintático ou semântico, informa o problema e retorna um código de saída diferente de zero.</p>
+<p>O analisador ainda não executa as instruções do programa recebido.</p>
 <h2 id="testes">Testes<a class="headerlink" href="#testes" title="Permanent link">&para;</a></h2>
-<p>Todas as suítes (principal, adicional e escopo até <code>while</code>):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>make<span class="w"> </span><span class="nb">test</span>
+<p>Para executar todas as suítes, incluindo os testes da AST, da tabela de símbolos e da análise semântica:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>make<span class="w"> </span><span class="nb">test</span>
 </code></pre></div>
-<p>Suíte adicional (inclui <code>if</code>, funções e <code>return</code>):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>bash<span class="w"> </span>tests/teste_parser_extra.sh<span class="w"> </span>./build/analisador
+<p>Para executar apenas os quatro testes estruturais da AST:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>bash<span class="w"> </span>tests/test_ast.sh<span class="w"> </span>./build/analisador
 </code></pre></div>
-<h2 id="limpar-artefatos">Limpar artefatos<a class="headerlink" href="#limpar-artefatos" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>make<span class="w"> </span>clean
+<h2 id="pre-visualizar-a-documentacao">Pré-visualizar a documentação<a class="headerlink" href="#pre-visualizar-a-documentacao" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>mkdocs<span class="w"> </span>serve
+</code></pre></div>
+<h2 id="limpar-arquivos-gerados">Limpar arquivos gerados<a class="headerlink" href="#limpar-arquivos-gerados" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make<span class="w"> </span>clean
 </code></pre></div>
 
 
@@ -1028,7 +1094,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -320,6 +320,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../ast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  AST
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../tabela-de-simbolos/" class="md-tabs__link">
         
   
@@ -579,6 +598,33 @@
     
   
     Análise sintática
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AST
   
 
     
@@ -989,7 +1035,7 @@
 <li>expressões, atribuições e blocos</li>
 <li><code>if</code>/<code>else</code>, funções e <code>return</code></li>
 </ul>
-<p>Fora do escopo atual: ponteiros, estruturas, arrays, <code>for</code>, <code>do/while</code>, <code>switch</code> e biblioteca padrão. O escopo inclui <code>while</code>, <code>print</code> e operadores lógicos.</p>
+<p>Fora do escopo atual: ponteiros, estruturas, arrays, <code>for</code>, <code>do/while</code>, <code>switch</code> e biblioteca padrão. O escopo inclui <code>while</code>, <code>print</code>, operadores lógicos e chamadas gerais de função.</p>
 <h2 id="3-ferramentas-flex-bison-c-make">3. Ferramentas: Flex + Bison + C + Make<a class="headerlink" href="#3-ferramentas-flex-bison-c-make" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1033,15 +1079,11 @@
 <li>o site fica acessível em <a href="https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/">bercacos.github.io/FGA0003-Compiladores-1-Grupo-4</a></li>
 </ul>
 <h2 id="6-estrategia-de-testes">6. Estratégia de testes<a class="headerlink" href="#6-estrategia-de-testes" title="Permanent link">&para;</a></h2>
-<p>Testes em shell (<code>tests/test_parser.sh</code> e <code>tests/teste_parser_extra.sh</code>) verificam apenas o código de saída do analisador:</p>
-<ul>
-<li>entrada válida → exit 0</li>
-<li>entrada inválida → exit ≠ 0</li>
-</ul>
-<p>É uma suíte simples, alinhada à etapa atual (ainda sem semântica/execução), e fácil de rodar no WSL.</p>
+<p><code>make test</code> reúne testes de aceitação e rejeição de programas, verificações de tipos e escopos, testes unitários e de integração da tabela de símbolos e testes da estrutura impressa da AST.</p>
+<p>Os testes automatizados são complementados por variações manuais das entradas, usadas para observar mensagens de erro, hierarquia da árvore e símbolos registrados. Todas as suítes executadas nesta versão passaram no WSL.</p>
 <h2 id="7-tratamento-de-erros">7. Tratamento de erros<a class="headerlink" href="#7-tratamento-de-erros" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Léxico: mensagem própria + devolução do caractere inválido</li>
+<li>Léxico: mensagem própria e devolução do token INVALID para entradas não reconhecidas ou malformadas</li>
 <li>Sintático: <code>parse.error detailed</code> do Bison + <code>yyerror</code> com linha e lexema próximo</li>
 </ul>
 <p>Ainda não há recuperação sofisticada (panic mode avançado); a prioridade foi diagnosticar a falha e abortar a análise.</p>
@@ -1103,7 +1145,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

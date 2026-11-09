@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -308,6 +308,25 @@
     
   
   Análise sintática
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="ast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  AST
 
       </a>
     </li>
@@ -698,6 +717,33 @@
   
   
     <li class="md-nav__item">
+      <a href="ast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="tabela-de-simbolos/" class="md-nav__link">
         
   
@@ -956,36 +1002,36 @@
 <tr>
 <td>Ambiente e repositório</td>
 <td>Concluído</td>
-<td><code>Makefile</code>, Flex/Bison e GitHub Pages (MkDocs)</td>
+<td><code>Makefile</code>, Flex/Bison e GitHub Pages com MkDocs</td>
 </tr>
 <tr>
 <td>Análise léxica</td>
-<td>Concluído</td>
+<td>Implementada e testada</td>
 <td>Tokens, literais, operadores, comentários e erros léxicos</td>
 </tr>
 <tr>
 <td>Análise sintática</td>
-<td>Implementado; validação pendente</td>
+<td>Implementada e testada</td>
 <td>Declarações, expressões, blocos, <code>if</code>/<code>else</code>, <code>while</code>, <code>print</code>, funções e <code>return</code></td>
 </tr>
 <tr>
 <td>AST</td>
-<td>Pendente</td>
-<td>Ainda não há construção de árvore sintática abstrata</td>
+<td>Implementada e testada</td>
+<td>Representa as construções reconhecidas e imprime a árvore</td>
 </tr>
 <tr>
 <td>Análise semântica</td>
-<td>Pendente</td>
-<td>Sem tabela de símbolos nem checagem de tipos</td>
+<td>Verificações iniciais implementadas e testadas</td>
+<td>Tabela de símbolos, escopos, declarações e compatibilidade básica de tipos</td>
 </tr>
 <tr>
 <td>Interpretação</td>
 <td>Pendente</td>
-<td>O programa apenas aceita ou rejeita a entrada</td>
+<td>As instruções analisadas ainda não são executadas</td>
 </tr>
 </tbody>
 </table>
-<p>Nesta versão, o binário <code>build/analisador</code> confirma se o código-fonte é léxica e sintaticamente válido. Ele <strong>ainda não executa</strong> o programa.</p>
+<p>Nesta versão, <code>build/analisador</code> analisa o código-fonte e imprime a AST e a tabela de símbolos. Ele ainda não executa o programa.</p>
 <h2 id="equipe">Equipe<a class="headerlink" href="#equipe" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1019,6 +1065,8 @@
 <li><a href="estrutura/">Estrutura do projeto</a></li>
 <li><a href="analise-lexica/">Análise léxica</a></li>
 <li><a href="analise-sintatica/">Análise sintática</a></li>
+<li><a href="ast/">AST</a></li>
+<li><a href="tabela-de-simbolos/">Tabela de símbolos</a></li>
 <li><a href="decisoes-tecnicas/">Decisões técnicas</a></li>
 <li><a href="sprints/">Planejamento das sprints</a></li>
 <li><a href="problemas-e-solucoes/">Problemas e soluções</a></li>
@@ -1088,7 +1136,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

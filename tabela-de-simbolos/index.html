@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/tabela-de-simbolos/">
       
       
-        <link rel="prev" href="../analise-sintatica/">
+        <link rel="prev" href="../ast/">
       
       
         <link rel="next" href="../decisoes-tecnicas/">
@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -318,6 +318,25 @@
   
   
   
+  
+    <li class="md-tabs__item">
+      <a href="../ast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  AST
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
     
   
   
@@ -579,6 +598,33 @@
     
   
     Análise sintática
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AST
   
 
     
@@ -1037,8 +1083,9 @@
 </table>
 <h2 id="integracao-com-o-parser">Integração com o parser<a class="headerlink" href="#integracao-com-o-parser" title="Permanent link">&para;</a></h2>
 <p>As declarações alimentam a tabela nas reduções do Bison (<code>declarador</code>, <code>parametro</code>, <code>cabecalho_funcao</code>) e <code>bloco</code> abre/fecha escopo. A linha vem de <code>@N.first_line</code>, preenchido pelo <code>YY_USER_ACTION</code> do <code>scanner.l</code>. Redeclaração gera <code>Erro semantico na linha N: ...</code> e o programa termina com código ≠ 0.</p>
-<p>Uso de identificador <strong>não declarado</strong> ainda não é rejeitado: <code>tabela_buscar</code> já está pronta para a análise semântica da próxima etapa.</p>
+<p>O uso de um identificador não declarado gera erro semântico. A busca começa no escopo atual e percorre os escopos externos; se não encontrar o nome, o analisador informa o erro e termina com código de saída diferente de zero.</p>
 <h2 id="exemplo">Exemplo<a class="headerlink" href="#exemplo" title="Permanent link">&para;</a></h2>
+<p>trecho abaixo destaca a tabela de símbolos; a AST impressa pelo analisador foi omitida.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'int a = 10;\nint b = 20;\nint soma = a + b * 2;\n'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>./build/analisador
 </code></pre></div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Analise sintatica concluida com sucesso.
@@ -1109,7 +1156,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

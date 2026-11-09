@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -320,6 +320,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../ast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  AST
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../tabela-de-simbolos/" class="md-tabs__link">
         
   
@@ -598,6 +617,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../ast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../tabela-de-simbolos/" class="md-nav__link">
         
   
@@ -783,10 +829,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-tokens-lexicos-ainda-sem-regra-sintatica" class="md-nav__link">
+  <a href="#5-token-for-sem-regra-sintatica" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Tokens léxicos ainda sem regra sintática
+        5. Token for sem regra sintática
       
     </span>
   </a>
@@ -794,10 +840,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-escopo-da-documentacao-vs-codigo" class="md-nav__link">
+  <a href="#6-documentacao-acompanhando-o-codigo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Escopo da documentação vs. código
+        6. Documentação acompanhando o código
       
     </span>
   </a>
@@ -805,10 +851,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-limite-da-etapa-atual" class="md-nav__link">
+  <a href="#7-analise-nao-e-execucao" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Limite da etapa atual
+        7. Análise não é execução
       
     </span>
   </a>
@@ -921,10 +967,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5-tokens-lexicos-ainda-sem-regra-sintatica" class="md-nav__link">
+  <a href="#5-token-for-sem-regra-sintatica" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. Tokens léxicos ainda sem regra sintática
+        5. Token for sem regra sintática
       
     </span>
   </a>
@@ -932,10 +978,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-escopo-da-documentacao-vs-codigo" class="md-nav__link">
+  <a href="#6-documentacao-acompanhando-o-codigo" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Escopo da documentação vs. código
+        6. Documentação acompanhando o código
       
     </span>
   </a>
@@ -943,10 +989,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-limite-da-etapa-atual" class="md-nav__link">
+  <a href="#7-analise-nao-e-execucao" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Limite da etapa atual
+        7. Análise não é execução
       
     </span>
   </a>
@@ -994,17 +1040,17 @@
 <p><strong>Problema.</strong> Expressões como <code>2 + 3 * 4</code> ou comparações encadeadas precisam de ordem estável.</p>
 <p><strong>Solução.</strong> Declarações <code>%left</code> no <code>parser.y</code> para igualdade, relacionais, soma e produto, além de <code>%precedence</code> para unários.</p>
 <h2 id="4-comentario-de-bloco-sem-fechamento">4. Comentário de bloco sem fechamento<a class="headerlink" href="#4-comentario-de-bloco-sem-fechamento" title="Permanent link">&para;</a></h2>
-<p><strong>Problema.</strong> A entrada <code>int x = 8 /* comentario sem fim;</code> é rejeitada, mas a mensagem aponta erro sintático próximo de <code>*</code>, não “comentário não terminado”.</p>
-<p><strong>Solução parcial.</strong> Mantivemos a rejeição (comportamento correto) e documentamos o caso em <a href="../testes/">Testes</a> como ponto de melhoria. Melhoria futura: regra léxica/<code>&lt;&lt;EOF&gt;&gt;</code> que reporte comentário aberto.</p>
-<h2 id="5-tokens-lexicos-ainda-sem-regra-sintatica">5. Tokens léxicos ainda sem regra sintática<a class="headerlink" href="#5-tokens-lexicos-ainda-sem-regra-sintatica" title="Permanent link">&para;</a></h2>
-<p><strong>Problema.</strong> <code>while</code> e <code>for</code> já existem no scanner, mas o parser ainda não os aceita — o que pode confundir quem testa essas construções.</p>
-<p><strong>Solução.</strong> Deixar os tokens preparados no léxico (evita retrabalho) e documentar claramente que laços entram em sprint futura. Testes atuais não esperam aceitação de <code>while</code>/<code>for</code>.</p>
-<h2 id="6-escopo-da-documentacao-vs-codigo">6. Escopo da documentação vs. código<a class="headerlink" href="#6-escopo-da-documentacao-vs-codigo" title="Permanent link">&para;</a></h2>
-<p><strong>Problema.</strong> O GitHub Pages foi publicado cedo, mas a página inicial ficou com a seção <strong>Estado atual</strong> vazia e sem as seções exigidas pelo enunciado (estrutura, decisões, sprints, problemas/soluções).</p>
-<p><strong>Solução.</strong> Reorganizar a wiki MkDocs com páginas dedicadas a cada requisito do professor e preencher o estado real do interpretador (léxico/sintático prontos; AST/semântica/execução pendentes).</p>
-<h2 id="7-limite-da-etapa-atual">7. Limite da etapa atual<a class="headerlink" href="#7-limite-da-etapa-atual" title="Permanent link">&para;</a></h2>
-<p><strong>Problema.</strong> É fácil interpretar “análise concluída com sucesso” como se o programa tivesse sido executado.</p>
-<p><strong>Solução.</strong> Deixar explícito no README e na documentação que o analisador <strong>apenas valida</strong> a entrada. Execução só existirá após AST + interpretador.</p>
+<p><strong>Problema.</strong> Inicialmente, um comentário sem <code>*/</code> era rejeitado com uma mensagem sintática próxima de <code>*</code>, que não explicava a causa.</p>
+<p><strong>Solução.</strong> O analisador léxico passou a informar <code>comentario de bloco nao encerrado</code>. A entrada continua sendo rejeitada, agora com uma mensagem que identifica o problema.</p>
+<h2 id="5-token-for-sem-regra-sintatica">5. Token <code>for</code> sem regra sintática<a class="headerlink" href="#5-token-for-sem-regra-sintatica" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> O scanner reconhece <code>for</code>, embora essa construção não tenha regra no parser.</p>
+<p><strong>Solução.</strong> <code>while</code> foi implementado; <code>for</code> permanece fora do escopo atual. Os testes esperam que um programa com <code>for</code> seja rejeitado.</p>
+<h2 id="6-documentacao-acompanhando-o-codigo">6. Documentação acompanhando o código<a class="headerlink" href="#6-documentacao-acompanhando-o-codigo" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> A documentação foi criada em etapas e algumas páginas ainda descreviam a AST e a análise semântica como pendentes após sua implementação.</p>
+<p><strong>Solução.</strong> As páginas de estrutura, análise, tabela de símbolos e testes foram atualizadas para apresentar o estado atual do projeto.</p>
+<h2 id="7-analise-nao-e-execucao">7. Análise não é execução<a class="headerlink" href="#7-analise-nao-e-execucao" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> A mensagem “Analise sintatica concluida com sucesso” pode ser confundida com a execução do programa recebido.</p>
+<p><strong>Solução.</strong> A documentação explica que o analisador constrói e imprime a AST e a tabela de símbolos, mas ainda não executa as instruções.</p>
 
 
 
@@ -1063,7 +1109,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

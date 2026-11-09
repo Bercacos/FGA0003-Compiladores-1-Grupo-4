@@ -16,14 +16,14 @@
         <link rel="prev" href="../analise-lexica/">
       
       
-        <link rel="next" href="../tabela-de-simbolos/">
+        <link rel="next" href="../ast/">
       
       
         
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -310,6 +310,25 @@
     
   
   Análise sintática
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  AST
 
       </a>
     </li>
@@ -700,6 +719,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../ast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../tabela-de-simbolos/" class="md-nav__link">
         
   
@@ -935,7 +981,7 @@
 
 
 <h1 id="analise-sintatica">Análise sintática<a class="headerlink" href="#analise-sintatica" title="Permanent link">&para;</a></h1>
-<p>O parser está em <code>src/parser.y</code> e usa Bison. O analisador valida a sintaxe; ainda não constrói AST, verifica tipos ou executa instruções.</p>
+<p>O parser está em <code>src/parser.y</code> e usa Bison. Ele valida a sintaxe, constrói a AST e realiza verificações de tipos e escopos com a tabela de símbolos. As instruções analisadas ainda não são executadas.</p>
 <h2 id="comparacao-com-o-escopo-ate-while">Comparação com o escopo até <code>while</code><a class="headerlink" href="#comparacao-com-o-escopo-ate-while" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1011,9 +1057,8 @@
 </code></pre></div>
 <p>Este código é reconhecido sintaticamente; <code>print</code> e <code>while</code> ainda não são executados.</p>
 <h2 id="validacao-e-limites">Validação e limites<a class="headerlink" href="#validacao-e-limites" title="Permanent link">&para;</a></h2>
-<p><code>make test</code> reúne as suítes principal, adicional e de escopo (<code>tests/test_scope.sh</code>). A nova suíte cobre aceitação e rejeição, integração com o léxico, aninhamento e entradas malformadas.</p>
-<p>A execução desta atualização está pendente: o ambiente de edição bloqueou o WSL e o Bash do Windows. A existência dos scripts não comprova a conclusão da Issue 1 nem substitui sua execução.</p>
-<p>Fora deste escopo: <code>for</code>, <code>do/while</code>, <code>switch</code>, ponteiros, arrays, structs, chamadas gerais de função e biblioteca padrão. Literais inteiros hexadecimais, sufixos inteiros e operadores bit a bit não foram incluídos nesta extensão. Análise semântica e interpretação são etapas posteriores.</p>
+<p><code>make test</code> executa as suítes do parser, escopo, tabela de símbolos, análise semântica e AST. Todas passaram no WSL. A suíte de escopo inclui casos válidos e inválidos para <code>while</code>, <code>print</code>, operadores lógicos e integração com as demais construções.</p>
+<p>Fora do escopo atual estão <code>for</code>, <code>do/while</code>, <code>switch</code>, ponteiros, arrays, structs, chamadas gerais de função e biblioteca padrão. A execução das instruções pelo interpretador ainda não foi implementada.</p>
 
 
 
@@ -1072,7 +1117,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

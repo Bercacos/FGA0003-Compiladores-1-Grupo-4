@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#testes-dos-analisadores-lexico-e-sintatico" class="md-skip">
+        <a href="#testes-do-analisador-da-ast-e-da-tabela-de-simbolos" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -306,6 +306,25 @@
     
   
   Análise sintática
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ast/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  AST
 
       </a>
     </li>
@@ -596,6 +615,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../ast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AST
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../tabela-de-simbolos/" class="md-nav__link">
         
   
@@ -808,17 +854,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#ponto-de-melhoria" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ponto de melhoria
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -851,6 +886,17 @@
     <span class="md-ellipsis">
       
         Extensão do escopo até while
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testes-da-ast-e-da-tabela-de-simbolos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testes da AST e da tabela de símbolos
       
     </span>
   </a>
@@ -936,17 +982,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#ponto-de-melhoria" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ponto de melhoria
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -985,6 +1020,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#testes-da-ast-e-da-tabela-de-simbolos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testes da AST e da tabela de símbolos
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1010,15 +1056,15 @@
   
 
 
-<h1 id="testes-dos-analisadores-lexico-e-sintatico">Testes dos analisadores léxico e sintático<a class="headerlink" href="#testes-dos-analisadores-lexico-e-sintatico" title="Permanent link">&para;</a></h1>
-<p>Os testes automatizados ficam em <code>tests/test_parser.sh</code> (suíte principal) e <code>tests/teste_parser_extra.sh</code> (suíte ampliada). Como rodar: ver <a href="../uso/">Como usar</a>.</p>
+<h1 id="testes-do-analisador-da-ast-e-da-tabela-de-simbolos">Testes do analisador, da AST e da tabela de símbolos<a class="headerlink" href="#testes-do-analisador-da-ast-e-da-tabela-de-simbolos" title="Permanent link">&para;</a></h1>
+<p>Os testes automatizados estão em <code>tests/</code> e são executados com <code>make test</code>. As instruções de uso estão em <a href="../uso/">Como usar</a>.</p>
 <h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
-<p>Foram realizados testes dos analisadores léxico e sintático do projeto. O objetivo foi verificar se o programa reconhece os elementos da linguagem e aceita ou rejeita as estruturas conforme as regras implementadas nesta etapa.</p>
+<p>Verificar o reconhecimento léxico, a aceitação ou rejeição das construções da linguagem, as verificações de tipos e escopos, a estrutura da AST e os dados da tabela de símbolos. Testes manuais complementam as suítes com variações das entradas.</p>
 <h2 id="testes-realizados">Testes realizados<a class="headerlink" href="#testes-realizados" title="Permanent link">&para;</a></h2>
 <p>Na análise léxica, foram verificados identificadores, palavras reservadas, números, strings, caracteres, operadores, comentários e caracteres não reconhecidos. Também foram observadas as mensagens de erro e a indicação da linha em que o erro ocorre.</p>
 <p>Na análise sintática, foram testadas declarações de variáveis, atribuições, expressões aritméticas e comparações, uso de parênteses, múltiplos declaradores, incremento e decremento e blocos delimitados por chaves. Para cada grupo de construções, foram usadas entradas válidas e inválidas.</p>
 <h2 id="resultados">Resultados<a class="headerlink" href="#resultados" title="Permanent link">&para;</a></h2>
-<p>O projeto foi compilado sem erros. Os sete testes automatizados que já faziam parte do repositório passaram, assim como vinte testes adicionais. Nos testes manuais realizados, os casos válidos foram aceitos e os inválidos foram rejeitados conforme o esperado.</p>
+<p>O projeto compilou sem erros e o comando <code>make test</code> terminou sem falhas no WSL. Passaram as suítes do parser, escopo, tabela de símbolos, análise semântica e AST. Os testes manuais complementaram essas suítes com variações de programas válidos e inválidos, permitindo conferir a árvore impressa e os símbolos registrados.</p>
 <h3 id="exemplos-de-entradas-e-saidas">Exemplos de entradas e saídas<a class="headerlink" href="#exemplos-de-entradas-e-saidas" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1077,15 +1123,13 @@
 <tr>
 <td><code>int x = 8 /* comentario sem fim;</code></td>
 <td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected TIMES</code></td>
+<td>Erro léxico: <code>comentario de bloco nao encerrado</code>; erro sintático: <code>unexpected INVALID</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="ponto-de-melhoria">Ponto de melhoria<a class="headerlink" href="#ponto-de-melhoria" title="Permanent link">&para;</a></h3>
-<p>Foi identificado um ponto de melhoria no tratamento de comentários de bloco sem fechamento. A entrada é rejeitada, mas o programa apresenta um erro sintático relacionado ao símbolo de multiplicação, em vez de informar que o comentário não foi encerrado. A rejeição está correta; a mensagem não descreve claramente a causa do problema.</p>
 <h2 id="limites-dos-testes">Limites dos testes<a class="headerlink" href="#limites-dos-testes" title="Permanent link">&para;</a></h2>
-<p>Os testes desta versão verificam principalmente o reconhecimento léxico e a aceitação ou rejeição da sintaxe. O programa ainda não apresenta a sequência de tokens para inspeção individual nem executa as instruções analisadas.</p>
-<p>Quando forem implementadas a análise semântica e a execução do interpretador, serão necessários testes para declaração e uso de variáveis, compatibilidade de tipos e resultados calculados. Assim, os resultados atuais não devem ser entendidos como validação do interpretador completo.</p>
+<p>Os testes automatizados e manuais verificam o reconhecimento léxico, a sintaxe, a estrutura da AST impressa e a tabela de símbolos. Na tabela, foram conferidos nomes, categorias, tipos, escopos e linhas, além da busca de identificadores, ocultação de variáveis e rejeição de redeclarações.</p>
+<p>Os testes da AST conferem a ordem e a hierarquia dos nós na saída do analisador. O projeto ainda não executa as instruções analisadas; portanto, os testes não verificam resultados da execução do interpretador.</p>
 <h2 id="atualizacao-apos-as-novas-regras-sintaticas">Atualização após as novas regras sintáticas<a class="headerlink" href="#atualizacao-apos-as-novas-regras-sintaticas" title="Permanent link">&para;</a></h2>
 <p>Após a inclusão de <code>if</code>/<code>else</code>, definições de funções e <code>return</code>, a suíte adicional foi atualizada. O teste que antes esperava a rejeição de <code>if</code> passou a esperar sua aceitação, e foram acrescentados dez casos. Na versão atual, a suíte principal passou (7/7) e a adicional passou (30/30).</p>
 <p>Os novos casos verificam <code>if</code> simples, <code>if-else</code>, <code>if</code> aninhado, funções com parâmetros tipados, sem parâmetros e com <code>(void)</code>, e <code>return</code>. Também verificam a rejeição de <code>if</code> sem condição, <code>else</code> isolado, parâmetro sem tipo, vírgula final nos parâmetros e <code>return</code> sem ponto e vírgula.</p>
@@ -1122,8 +1166,35 @@
 </table>
 <h2 id="extensao-do-escopo-ate-while">Extensão do escopo até <code>while</code><a class="headerlink" href="#extensao-do-escopo-ate-while" title="Permanent link">&para;</a></h2>
 <p>A suíte <code>tests/test_scope.sh</code> adiciona 47 casos de aceitação e rejeição para <code>while</code>, <code>print</code>, operadores lógicos, comandos vazios e integração com tipos, literais, blocos e <code>if/else</code>. Inclui decimais com expoentes, comentários sem fechamento e strings com quebra de linha literal.</p>
-<p><code>make test</code> agora executa as três suítes: os 7 testes principais, os 30 adicionais existentes e os 47 novos casos (84 ao todo). As alterações locais anteriores na suíte adicional foram preservadas.</p>
-<p><strong>Execução pendente nesta atualização:</strong> o ambiente não permitiu iniciar WSL nem Bash do Windows. Os resultados históricos acima se referem à versão anterior. Não há confirmação de que os 84 testes passaram, nem da conclusão da Issue 1. Antes de fechar a issue, executar <code>make test</code> em Linux/WSL com Flex, Bison e GCC instalados.</p>
+<h2 id="testes-da-ast-e-da-tabela-de-simbolos">Testes da AST e da tabela de símbolos<a class="headerlink" href="#testes-da-ast-e-da-tabela-de-simbolos" title="Permanent link">&para;</a></h2>
+<p>A suíte <code>tests/test_ast.sh</code>, executada por <code>make test</code>, verifica trechos da árvore impressa. Os testes conferem a hierarquia e a ordem dos nós, além da aceitação dos programas usados como entrada.</p>
+<table>
+<thead>
+<tr>
+<th>Entrada</th>
+<th>Estrutura verificada na AST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int a = 10; int b = 20; int soma = a + b * 2;</code></td>
+<td>A multiplicação aparece como filha da soma, respeitando a precedência.</td>
+</tr>
+<tr>
+<td><code>int x = 1; if (x) { x = x + 2; } else { x = x - 1; }</code></td>
+<td>O <code>If</code> contém a condição e dois blocos, na ordem de <code>if</code> e <code>else</code>.</td>
+</tr>
+<tr>
+<td><code>int soma(int a, int b) { return a + b; }</code></td>
+<td>A função contém o tipo, os parâmetros e o <code>Return</code> com a soma.</td>
+</tr>
+<tr>
+<td><code>int x = 0; while (x &lt; 3) { x = x + 1; }</code></td>
+<td>O <code>While</code> contém a condição e o bloco do corpo.</td>
+</tr>
+</tbody>
+</table>
+<p>A tabela de símbolos é testada isoladamente em <code>tests/test_tabela.c</code> e junto ao analisador em <code>tests/test_tabela.sh</code>. Esses testes verificam inserção e busca de símbolos, nomes, categorias, tipos, escopos, linhas, ocultação de variáveis e rejeição de redeclarações. Todas essas suítes passaram no WSL.</p>
 
 
 
@@ -1182,7 +1253,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.instant", "search.suggest", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>
