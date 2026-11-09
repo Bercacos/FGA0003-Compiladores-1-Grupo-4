@@ -1,6 +1,6 @@
 # Análise sintática
 
-O parser está em `src/parser.y` e usa Bison. O analisador valida a sintaxe; ainda não constrói AST, verifica tipos ou executa instruções.
+O parser está em `src/parser.y` e usa Bison. Ele valida a sintaxe, constrói a AST e realiza verificações de tipos e escopos com a tabela de símbolos. As instruções analisadas ainda não são executadas.
 
 ## Comparação com o escopo até `while`
 
@@ -50,8 +50,6 @@ Este código é reconhecido sintaticamente; `print` e `while` ainda não são ex
 
 ## Validação e limites
 
-`make test` reúne as suítes principal, adicional e de escopo (`tests/test_scope.sh`). A nova suíte cobre aceitação e rejeição, integração com o léxico, aninhamento e entradas malformadas.
+`make test` executa as suítes do parser, escopo, tabela de símbolos, análise semântica e AST. Todas passaram no WSL. A suíte de escopo inclui casos válidos e inválidos para `while`, `print`, operadores lógicos e integração com as demais construções.
 
-A execução desta atualização está pendente: o ambiente de edição bloqueou o WSL e o Bash do Windows. A existência dos scripts não comprova a conclusão da Issue 1 nem substitui sua execução.
-
-Fora deste escopo: `for`, `do/while`, `switch`, ponteiros, arrays, structs, chamadas gerais de função e biblioteca padrão. Literais inteiros hexadecimais, sufixos inteiros e operadores bit a bit não foram incluídos nesta extensão. Análise semântica e interpretação são etapas posteriores.
+Fora do escopo atual estão `for`, `do/while`, `switch`, ponteiros, arrays, structs, chamadas gerais de função e biblioteca padrão. A execução das instruções pelo interpretador ainda não foi implementada.

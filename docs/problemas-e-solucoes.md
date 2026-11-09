@@ -29,24 +29,24 @@ e a produção do `if` sem `else` marcada com `%prec THEN`, fazendo o `else` ass
 
 ## 4. Comentário de bloco sem fechamento
 
-**Problema.** A entrada `int x = 8 /* comentario sem fim;` é rejeitada, mas a mensagem aponta erro sintático próximo de `*`, não “comentário não terminado”.
+**Problema.** Inicialmente, um comentário sem `*/` era rejeitado com uma mensagem sintática próxima de `*`, que não explicava a causa.
 
-**Solução parcial.** Mantivemos a rejeição (comportamento correto) e documentamos o caso em [Testes](testes.md) como ponto de melhoria. Melhoria futura: regra léxica/`<<EOF>>` que reporte comentário aberto.
+**Solução.** O analisador léxico passou a informar `comentario de bloco nao encerrado`. A entrada continua sendo rejeitada, agora com uma mensagem que identifica o problema.
 
-## 5. Tokens léxicos ainda sem regra sintática
+## 5. Token `for` sem regra sintática
 
-**Problema.** `while` e `for` já existem no scanner, mas o parser ainda não os aceita — o que pode confundir quem testa essas construções.
+**Problema.** O scanner reconhece `for`, embora essa construção não tenha regra no parser.
 
-**Solução.** Deixar os tokens preparados no léxico (evita retrabalho) e documentar claramente que laços entram em sprint futura. Testes atuais não esperam aceitação de `while`/`for`.
+**Solução.** `while` foi implementado; `for` permanece fora do escopo atual. Os testes esperam que um programa com `for` seja rejeitado.
 
-## 6. Escopo da documentação vs. código
+## 6. Documentação acompanhando o código
 
-**Problema.** O GitHub Pages foi publicado cedo, mas a página inicial ficou com a seção **Estado atual** vazia e sem as seções exigidas pelo enunciado (estrutura, decisões, sprints, problemas/soluções).
+**Problema.** A documentação foi criada em etapas e algumas páginas ainda descreviam a AST e a análise semântica como pendentes após sua implementação.
 
-**Solução.** Reorganizar a wiki MkDocs com páginas dedicadas a cada requisito do professor e preencher o estado real do interpretador (léxico/sintático prontos; AST/semântica/execução pendentes).
+**Solução.** As páginas de estrutura, análise, tabela de símbolos e testes foram atualizadas para apresentar o estado atual do projeto.
 
-## 7. Limite da etapa atual
+## 7. Análise não é execução
 
-**Problema.** É fácil interpretar “análise concluída com sucesso” como se o programa tivesse sido executado.
+**Problema.** A mensagem “Analise sintatica concluida com sucesso” pode ser confundida com a execução do programa recebido.
 
-**Solução.** Deixar explícito no README e na documentação que o analisador **apenas valida** a entrada. Execução só existirá após AST + interpretador.
+**Solução.** A documentação explica que o analisador constrói e imprime a AST e a tabela de símbolos, mas ainda não executa as instruções.

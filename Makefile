@@ -42,6 +42,7 @@ test: $(TARGET)
 	bash tests/teste_parser_extra.sh ./$(TARGET)
 	bash tests/test_scope.sh ./$(TARGET)
 	bash tests/test_semantica.sh ./$(TARGET)
+	bash tests/test_ast.sh ./$(TARGET)
 
 clean:
 	rm -rf $(BUILD_DIR)
