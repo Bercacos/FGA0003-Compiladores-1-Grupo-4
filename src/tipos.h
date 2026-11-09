@@ -7,13 +7,17 @@
  * e, futuramente, pela AST e pela analise semantica.
  */
 
+/* Tipo de dados anotado nos nos da AST e nos simbolos. TIPO_DESCONHECIDO (0) e
+ * o valor inicial; a analise semantica o preenche. */
 typedef enum {
+    TIPO_DESCONHECIDO,
     TIPO_INT,
     TIPO_FLOAT,
     TIPO_DOUBLE,
     TIPO_CHAR,
     TIPO_STRING,
-    TIPO_VOID
+    TIPO_VOID,
+    TIPO_ERRO
 } Tipo;
 
 static inline const char *tipo_para_texto(Tipo tipo) {
@@ -24,6 +28,8 @@ static inline const char *tipo_para_texto(Tipo tipo) {
         case TIPO_CHAR:   return "char";
         case TIPO_STRING: return "string";
         case TIPO_VOID:   return "void";
+        case TIPO_DESCONHECIDO: return "?";
+        case TIPO_ERRO:   return "erro";
     }
     return "?";
 }

@@ -19,14 +19,14 @@ mkdocs serve
 
 O front-end léxico-sintático reconhece declarações (`int`, `float`, `double`, `char`, `string`), atribuições, expressões com precedência, blocos, `if`/`else`, `while`, `print`, operadores lógicos, definições de funções e `return`.
 
-Ainda **não** há AST, análise semântica nem execução do programa: o binário só aceita ou rejeita a entrada.
+A AST, a tabela de símbolos e verificações iniciais de tipos e escopos já estão implementadas. O binário imprime a AST e a tabela; a execução das instruções ainda não foi implementada.
 
 ## Uso no WSL/Linux
 
 ```bash
 make
 ./build/analisador examples/variaveis.c
-echo 'int x = y + z;' | ./build/analisador
+printf '%s\n' 'int y = 1; int z = 2; int x = y + z;' | ./build/analisador
 make test
 bash tests/teste_parser_extra.sh ./build/analisador
 ```
@@ -35,7 +35,7 @@ Requisitos: `flex`, `bison`, `gcc` e `make`.
 
 ## Testes
 
-Os testes dos analisadores léxico e sintático estão descritos em [docs/testes.md](docs/testes.md).
+Os testes do parser, escopo, tabela de símbolos, análise semântica e AST estão descritos em [docs/testes.md](docs/testes.md).
 
 ## Material do professor
 

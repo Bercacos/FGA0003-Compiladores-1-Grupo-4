@@ -17,14 +17,14 @@ A documentação abaixo segue os requisitos do professor ([Trabalho de Compilado
 
 | Etapa | Status | Observação |
 | --- | --- | --- |
-| Ambiente e repositório | Concluído | `Makefile`, Flex/Bison e GitHub Pages (MkDocs) |
-| Análise léxica | Concluído | Tokens, literais, operadores, comentários e erros léxicos |
-| Análise sintática | Implementado; validação pendente | Declarações, expressões, blocos, `if`/`else`, `while`, `print`, funções e `return` |
-| AST | Pendente | Ainda não há construção de árvore sintática abstrata |
-| Análise semântica | Pendente | Sem tabela de símbolos nem checagem de tipos |
-| Interpretação | Pendente | O programa apenas aceita ou rejeita a entrada |
+| Ambiente e repositório | Concluído | `Makefile`, Flex/Bison e GitHub Pages com MkDocs |
+| Análise léxica | Implementada e testada | Tokens, literais, operadores, comentários e erros léxicos |
+| Análise sintática | Implementada e testada | Declarações, expressões, blocos, `if`/`else`, `while`, `print`, funções e `return` |
+| AST | Implementada e testada | Representa as construções reconhecidas e imprime a árvore |
+| Análise semântica | Verificações iniciais implementadas e testadas | Tabela de símbolos, escopos, declarações e compatibilidade básica de tipos |
+| Interpretação | Pendente | As instruções analisadas ainda não são executadas |
 
-Nesta versão, o binário `build/analisador` confirma se o código-fonte é léxica e sintaticamente válido. Ele **ainda não executa** o programa.
+Nesta versão, `build/analisador` analisa o código-fonte e imprime a AST e a tabela de símbolos. Ele ainda não executa o programa.
 
 ## Equipe
 
@@ -41,6 +41,8 @@ Nesta versão, o binário `build/analisador` confirma se o código-fonte é léx
 - [Estrutura do projeto](estrutura.md)
 - [Análise léxica](analise-lexica.md)
 - [Análise sintática](analise-sintatica.md)
+- [AST](ast.md)
+- [Tabela de símbolos](tabela-de-simbolos.md)
 - [Decisões técnicas](decisoes-tecnicas.md)
 - [Planejamento das sprints](sprints.md)
 - [Problemas e soluções](problemas-e-solucoes.md)

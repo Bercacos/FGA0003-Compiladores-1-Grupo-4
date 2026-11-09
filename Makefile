@@ -9,14 +9,16 @@ all: $(TARGET)
 
 TABELA_SRC := $(SRC_DIR)/tabela.c
 TABELA_HDR := $(SRC_DIR)/tabela.h $(SRC_DIR)/tipos.h
+AST_SRC := $(SRC_DIR)/ast.c
+AST_HDR := $(SRC_DIR)/ast.h
 
-$(TARGET): $(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/lex.yy.c $(TABELA_SRC) $(TABELA_HDR) | $(BUILD_DIR)
+$(TARGET): $(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/lex.yy.c $(AST_SRC) $(AST_HDR) $(TABELA_SRC) $(TABELA_HDR) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -I$(BUILD_DIR) -I$(SRC_DIR) $(filter %.c,$^) -o $@
 
 $(BUILD_DIR)/test_tabela: tests/test_tabela.c $(TABELA_SRC) $(TABELA_HDR) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -I$(SRC_DIR) tests/test_tabela.c $(TABELA_SRC) -o $@
 
-$(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/parser.tab.h: $(SRC_DIR)/parser.y | $(BUILD_DIR)
+$(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/parser.tab.h: $(SRC_DIR)/parser.y $(SRC_DIR)/ast.h $(SRC_DIR)/tipos.h | $(BUILD_DIR)
 	bison -Wall -d -o $(BUILD_DIR)/parser.tab.c $<
 
 $(BUILD_DIR)/lex.yy.c: $(SRC_DIR)/analisador-lexico/scanner.l $(BUILD_DIR)/parser.tab.h | $(BUILD_DIR)
@@ -39,6 +41,8 @@ test: $(TARGET)
 	bash tests/test_parser.sh ./$(TARGET)
 	bash tests/teste_parser_extra.sh ./$(TARGET)
 	bash tests/test_scope.sh ./$(TARGET)
+	bash tests/test_semantica.sh ./$(TARGET)
+	bash tests/test_ast.sh ./$(TARGET)
 
 clean:
 	rm -rf $(BUILD_DIR)
