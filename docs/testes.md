@@ -1,10 +1,10 @@
-# Testes dos analisadores léxico e sintático
+# Testes do analisador, da AST e da tabela de símbolos
 
-Os testes automatizados ficam em `tests/test_parser.sh` (suíte principal) e `tests/teste_parser_extra.sh` (suíte ampliada). Como rodar: ver [Como usar](uso.md).
+Os testes automatizados estão em `tests/` e são executados com `make test`. As instruções de uso estão em [Como usar](uso.md).
 
 ## Objetivo
 
-Foram realizados testes dos analisadores léxico e sintático do projeto. O objetivo foi verificar se o programa reconhece os elementos da linguagem e aceita ou rejeita as estruturas conforme as regras implementadas nesta etapa.
+Verificar o reconhecimento léxico, a aceitação ou rejeição das construções da linguagem, as verificações de tipos e escopos, a estrutura da AST e os dados da tabela de símbolos. Testes manuais complementam as suítes com variações das entradas.
 
 ## Testes realizados
 
@@ -14,7 +14,7 @@ Na análise sintática, foram testadas declarações de variáveis, atribuiçõe
 
 ## Resultados
 
-O projeto foi compilado sem erros. Os sete testes automatizados que já faziam parte do repositório passaram, assim como vinte testes adicionais. Nos testes manuais realizados, os casos válidos foram aceitos e os inválidos foram rejeitados conforme o esperado.
+O projeto compilou sem erros e o comando `make test` terminou sem falhas no WSL. Passaram as suítes do parser, escopo, tabela de símbolos, análise semântica e AST. Os testes manuais complementaram essas suítes com variações de programas válidos e inválidos, permitindo conferir a árvore impressa e os símbolos registrados.
 
 ### Exemplos de entradas e saídas
 
@@ -29,17 +29,13 @@ O projeto foi compilado sem erros. Os sete testes automatizados que já faziam p
 | `int x = (2 + 3 * 4;` | Rejeitar | Erro sintático: `unexpected PONTOVIR` |
 | `{ int x = 1; x++;` | Rejeitar | Erro sintático: `unexpected end of file` |
 | `int x = 1; }` | Rejeitar | Erro sintático: `unexpected RCHAVE` |
-| `int x = 8 /* comentario sem fim;` | Rejeitar | Erro sintático: `unexpected TIMES` |
-
-### Ponto de melhoria
-
-Foi identificado um ponto de melhoria no tratamento de comentários de bloco sem fechamento. A entrada é rejeitada, mas o programa apresenta um erro sintático relacionado ao símbolo de multiplicação, em vez de informar que o comentário não foi encerrado. A rejeição está correta; a mensagem não descreve claramente a causa do problema.
+| `int x = 8 /* comentario sem fim;` | Rejeitar | Erro léxico: `comentario de bloco nao encerrado`; erro sintático: `unexpected INVALID` |
 
 ## Limites dos testes
 
-Os testes desta versão verificam principalmente o reconhecimento léxico e a aceitação ou rejeição da sintaxe. O programa ainda não apresenta a sequência de tokens para inspeção individual nem executa as instruções analisadas.
+Os testes automatizados e manuais verificam o reconhecimento léxico, a sintaxe, a estrutura da AST impressa e a tabela de símbolos. Na tabela, foram conferidos nomes, categorias, tipos, escopos e linhas, além da busca de identificadores, ocultação de variáveis e rejeição de redeclarações.
 
-Quando forem implementadas a análise semântica e a execução do interpretador, serão necessários testes para declaração e uso de variáveis, compatibilidade de tipos e resultados calculados. Assim, os resultados atuais não devem ser entendidos como validação do interpretador completo.
+Os testes da AST conferem a ordem e a hierarquia dos nós na saída do analisador. O projeto ainda não executa as instruções analisadas; portanto, os testes não verificam resultados da execução do interpretador.
 
 ## Atualização após as novas regras sintáticas
 
@@ -58,6 +54,15 @@ Os novos casos verificam `if` simples, `if-else`, `if` aninhado, funções com p
 
 A suíte `tests/test_scope.sh` adiciona 47 casos de aceitação e rejeição para `while`, `print`, operadores lógicos, comandos vazios e integração com tipos, literais, blocos e `if/else`. Inclui decimais com expoentes, comentários sem fechamento e strings com quebra de linha literal.
 
-`make test` agora executa as três suítes: os 7 testes principais, os 30 adicionais existentes e os 47 novos casos (84 ao todo). As alterações locais anteriores na suíte adicional foram preservadas.
+## Testes da AST e da tabela de símbolos
 
-**Execução pendente nesta atualização:** o ambiente não permitiu iniciar WSL nem Bash do Windows. Os resultados históricos acima se referem à versão anterior. Não há confirmação de que os 84 testes passaram, nem da conclusão da Issue 1. Antes de fechar a issue, executar `make test` em Linux/WSL com Flex, Bison e GCC instalados.
+A suíte `tests/test_ast.sh`, executada por `make test`, verifica trechos da árvore impressa. Os testes conferem a hierarquia e a ordem dos nós, além da aceitação dos programas usados como entrada.
+
+| Entrada | Estrutura verificada na AST |
+| --- | --- |
+| `int a = 10; int b = 20; int soma = a + b * 2;` | A multiplicação aparece como filha da soma, respeitando a precedência. |
+| `int x = 1; if (x) { x = x + 2; } else { x = x - 1; }` | O `If` contém a condição e dois blocos, na ordem de `if` e `else`. |
+| `int soma(int a, int b) { return a + b; }` | A função contém o tipo, os parâmetros e o `Return` com a soma. |
+| `int x = 0; while (x < 3) { x = x + 1; }` | O `While` contém a condição e o bloco do corpo. |
+
+A tabela de símbolos é testada isoladamente em `tests/test_tabela.c` e junto ao analisador em `tests/test_tabela.sh`. Esses testes verificam inserção e busca de símbolos, nomes, categorias, tipos, escopos, linhas, ocultação de variáveis e rejeição de redeclarações. Todas essas suítes passaram no WSL.

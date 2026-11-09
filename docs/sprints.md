@@ -8,8 +8,8 @@ Planejamento baseado no guia do professor ([Sugestão de Sprints para interpreta
 | --- | --- | --- |
 | 1 | Equipe, ambiente, escopo da linguagem, estrutura do repo | Concluída |
 | 2 | Análise léxica + início do parser + P1 | Concluída |
-| 3 | Parser completo (variáveis, expressões, `if`, funções) + testes | Concluída (AST ainda pendente) |
-| 4 | AST + semântica inicial + preparação P2 | Em andamento / próxima |
+| 3 | Parser completo (variáveis, expressões, `if`, funções) + testes | Concluída |
+| 4 | AST + semântica inicial + preparação P2 | Concluída |
 | 5 | Interpretação da AST + recursos extras | Pendente |
 | 6 | Documentação final, ajustes e entrevista | Em andamento (docs) |
 
@@ -61,7 +61,7 @@ Planejamento baseado no guia do professor ([Sugestão de Sprints para interpreta
 
 - A Sprint 3 do guia também pede AST; no Grupo 4 a AST ficou para a Sprint 4, para estabilizar antes o reconhecimento sintático.
 
-## Sprint 4 — AST e semântica (próxima)
+## Sprint 4 — AST e semântica inicial
 
 **Objetivos**
 
@@ -70,11 +70,12 @@ Planejamento baseado no guia do professor ([Sugestão de Sprints para interpreta
 - Melhorar mensagens de erro
 - Preparar o Ponto de Controle P2
 
-**Entregas esperadas**
+**Entregas realizadas**
 
-- Estruturas `ast.h` / `ast.c` (ou equivalente)
-- Tabela de símbolos inicial
-- Testes semânticos além dos testes só sintáticos
+- AST construída pelo parser e definida em `src/ast.c` e `src/ast.h`
+- Tabela de símbolos em `src/tabela.c` e `src/tabela.h`
+- Verificações iniciais de identificadores, tipos e escopos
+- Testes automatizados da tabela, da semântica e da estrutura da AST
 
 ## Sprint 5 — Interpretação
 

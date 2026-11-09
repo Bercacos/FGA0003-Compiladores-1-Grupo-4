@@ -50,6 +50,7 @@ nav:
   - Estrutura do projeto: estrutura.md
   - Análise léxica: analise-lexica.md
   - Análise sintática: analise-sintatica.md
+  - AST: ast.md
   - Tabela de símbolos: tabela-de-simbolos.md
   - Decisões técnicas: decisoes-tecnicas.md
   - Sprints: sprints.md

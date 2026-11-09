@@ -14,7 +14,7 @@ C foi escolhida por ser familiar ao curso e por ter material de apoio abundante 
 - expressões, atribuições e blocos
 - `if`/`else`, funções e `return`
 
-Fora do escopo atual: ponteiros, estruturas, arrays, `for`, `do/while`, `switch` e biblioteca padrão. O escopo inclui `while`, `print` e operadores lógicos.
+Fora do escopo atual: ponteiros, estruturas, arrays, `for`, `do/while`, `switch` e biblioteca padrão. O escopo inclui `while`, `print`, operadores lógicos e chamadas gerais de função.
 
 ## 3. Ferramentas: Flex + Bison + C + Make
 
@@ -45,16 +45,13 @@ Motivos:
 
 ## 6. Estratégia de testes
 
-Testes em shell (`tests/test_parser.sh` e `tests/teste_parser_extra.sh`) verificam apenas o código de saída do analisador:
+`make test` reúne testes de aceitação e rejeição de programas, verificações de tipos e escopos, testes unitários e de integração da tabela de símbolos e testes da estrutura impressa da AST.
 
-- entrada válida → exit 0
-- entrada inválida → exit ≠ 0
-
-É uma suíte simples, alinhada à etapa atual (ainda sem semântica/execução), e fácil de rodar no WSL.
+Os testes automatizados são complementados por variações manuais das entradas, usadas para observar mensagens de erro, hierarquia da árvore e símbolos registrados. Todas as suítes executadas nesta versão passaram no WSL.
 
 ## 7. Tratamento de erros
 
-- Léxico: mensagem própria + devolução do caractere inválido
+- Léxico: mensagem própria e devolução do token INVALID para entradas não reconhecidas ou malformadas
 - Sintático: `parse.error detailed` do Bison + `yyerror` com linha e lexema próximo
 
 Ainda não há recuperação sofisticada (panic mode avançado); a prioridade foi diagnosticar a falha e abortar a análise.

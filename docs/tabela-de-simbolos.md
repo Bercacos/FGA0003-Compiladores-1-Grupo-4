@@ -35,9 +35,11 @@ Implementada em `src/tabela.c` / `src/tabela.h` (tipos em `src/tipos.h`), seguin
 
 As declarações alimentam a tabela nas reduções do Bison (`declarador`, `parametro`, `cabecalho_funcao`) e `bloco` abre/fecha escopo. A linha vem de `@N.first_line`, preenchido pelo `YY_USER_ACTION` do `scanner.l`. Redeclaração gera `Erro semantico na linha N: ...` e o programa termina com código ≠ 0.
 
-Uso de identificador **não declarado** ainda não é rejeitado: `tabela_buscar` já está pronta para a análise semântica da próxima etapa.
+O uso de um identificador não declarado gera erro semântico. A busca começa no escopo atual e percorre os escopos externos; se não encontrar o nome, o analisador informa o erro e termina com código de saída diferente de zero.
 
 ## Exemplo
+
+trecho abaixo destaca a tabela de símbolos; a AST impressa pelo analisador foi omitida.
 
 ```bash
 printf 'int a = 10;\nint b = 20;\nint soma = a + b * 2;\n' | ./build/analisador
