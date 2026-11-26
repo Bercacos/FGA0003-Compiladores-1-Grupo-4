@@ -30,8 +30,74 @@ static Variavel *buscar_variavel(Ambiente *ambiente, const char *nome) {
     return NULL;
 }
 
+static double converter_numero(Tipo tipo, double numero);
+static int avaliar_texto(const No *no, Ambiente *ambiente, char **resultado);
+
+/* Decodifica um literal de string do fonte (com aspas e escapes). */
+static char *decodificar_string(const char *literal) {
+    size_t tamanho = strlen(literal);
+    char *saida = malloc(tamanho + 1);
+    if (saida == NULL) {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
+    size_t j = 0;
+    for (size_t i = 1; i + 1 < tamanho; i++) {   /* pula as aspas */
+        char c = literal[i];
+        if (c == '\\' && i + 2 < tamanho) {
+            i++;
+            switch (literal[i]) {
+                case 'n': c = '\n'; break;
+                case 't': c = '\t'; break;
+                case 'r': c = '\r'; break;
+                case '0': c = '\0'; break;
+                default:  c = literal[i]; break;
+            }
+        }
+        saida[j++] = c;
+    }
+    saida[j] = '\0';
+    return saida;
+}
+
+/* Variavel com valor, usada por ++ e --. */
+static Variavel *variavel_com_valor(const No *id, Ambiente *ambiente) {
+    Variavel *v = buscar_variavel(ambiente, id->texto);
+    if (v == NULL || !v->inicializada) {
+        fprintf(stderr, "Erro de execucao na linha %d: variavel '%s' sem valor\n",
+                id->linha, id->texto);
+        return NULL;
+    }
+    return v;
+}
+
 static int avaliar_expressao(const No *no, Ambiente *ambiente, double *resultado) {
     if (no == NULL) return 1;
+
+    if (no->tipo_no == N_CHAR) {
+        *resultado = no->num;
+        return 0;
+    }
+
+    if (no->tipo_no == N_UNOP) {
+        double operando;
+        if (avaliar_expressao(no->filho[0], ambiente, &operando) != 0) return 1;
+        if (strcmp(no->texto, "!") == 0) *resultado = operando == 0;
+        else if (strcmp(no->texto, "-") == 0) *resultado = -operando;
+        else *resultado = operando;
+        return 0;
+    }
+
+    /* ++x / --x devolvem o valor novo; x++ / x-- devolvem o antigo. */
+    if (no->tipo_no == N_PREINC || no->tipo_no == N_POSINC) {
+        Variavel *v = variavel_com_valor(no->filho[0], ambiente);
+        if (v == NULL) return 1;
+        double antigo = v->valor.numero;
+        double passo = strcmp(no->texto, "++") == 0 ? 1 : -1;
+        v->valor.numero = converter_numero(v->valor.tipo, antigo + passo);
+        *resultado = no->tipo_no == N_PREINC ? v->valor.numero : antigo;
+        return 0;
+    }
 
     if (no->tipo_no == N_NUM) {
         *resultado = no->num;
@@ -57,6 +123,35 @@ static int avaliar_expressao(const No *no, Ambiente *ambiente, double *resultado
     return 0;
 }
 
+    if (no->tipo_no == N_BINOP &&
+        (strcmp(no->texto, "&&") == 0 || strcmp(no->texto, "||") == 0)) {
+        double esquerda, direita;
+        if (avaliar_expressao(no->filho[0], ambiente, &esquerda) != 0) return 1;
+        int e = esquerda != 0;
+        if ((no->texto[0] == '&' && !e) || (no->texto[0] == '|' && e)) {
+            *resultado = e;     /* curto-circuito: o lado direito nao e avaliado */
+            return 0;
+        }
+        if (avaliar_expressao(no->filho[1], ambiente, &direita) != 0) return 1;
+        *resultado = direita != 0;
+        return 0;
+    }
+
+    /* == e != entre strings (a semantica so permite esses dois). */
+    if (no->tipo_no == N_BINOP && no->filho[0]->tipo == TIPO_STRING) {
+        char *a, *b;
+        if (avaliar_texto(no->filho[0], ambiente, &a) != 0) return 1;
+        if (avaliar_texto(no->filho[1], ambiente, &b) != 0) {
+            free(a);
+            return 1;
+        }
+        int iguais = strcmp(a, b) == 0;
+        free(a);
+        free(b);
+        *resultado = strcmp(no->texto, "==") == 0 ? iguais : !iguais;
+        return 0;
+    }
+
     if (no->tipo_no == N_BINOP) {
         double esquerda, direita;
 
@@ -80,6 +175,26 @@ static int avaliar_expressao(const No *no, Ambiente *ambiente, double *resultado
             if (no->tipo == TIPO_INT)
             *resultado = (long long)*resultado;
 }
+        else if (strcmp(no->texto, "%") == 0) {
+            if ((long long)direita == 0) {
+                fprintf(stderr, "Erro de execucao na linha %d: resto de divisao por zero\n",
+                        no->linha);
+                return 1;
+            }
+            *resultado = (long long)esquerda % (long long)direita;
+        }
+        else if (strcmp(no->texto, "<") == 0)
+            *resultado = esquerda < direita;
+        else if (strcmp(no->texto, "<=") == 0)
+            *resultado = esquerda <= direita;
+        else if (strcmp(no->texto, ">") == 0)
+            *resultado = esquerda > direita;
+        else if (strcmp(no->texto, ">=") == 0)
+            *resultado = esquerda >= direita;
+        else if (strcmp(no->texto, "==") == 0)
+            *resultado = esquerda == direita;
+        else if (strcmp(no->texto, "!=") == 0)
+            *resultado = esquerda != direita;
         else {
             fprintf(stderr, "Erro de execucao na linha %d: operador ainda nao suportado\n",
                     no->linha);
@@ -93,7 +208,39 @@ static int avaliar_expressao(const No *no, Ambiente *ambiente, double *resultado
     return 1;
 }
 
+/* Avalia uma expressao do tipo string (literal ou variavel). O texto devolvido
+ * e uma copia que deve ser liberada por quem chamou. */
+static int avaliar_texto(const No *no, Ambiente *ambiente, char **resultado) {
+    if (no->tipo_no == N_STRING) {
+        *resultado = decodificar_string(no->texto);
+        return 0;
+    }
+    if (no->tipo_no == N_ID) {
+        Variavel *v = buscar_variavel(ambiente, no->texto);
+        if (v == NULL || !v->inicializada) {
+            fprintf(stderr, "Erro de execucao na linha %d: variavel '%s' sem valor\n",
+                    no->linha, no->texto);
+            return 1;
+        }
+        *resultado = strdup(v->valor.texto);
+        if (*resultado == NULL) {
+            perror("strdup");
+            exit(EXIT_FAILURE);
+        }
+        return 0;
+    }
+    fprintf(stderr, "Erro de execucao na linha %d: expressao de string invalida\n", no->linha);
+    return 1;
+}
+
 static int avaliar_valor(const No *no, Ambiente *ambiente, Valor *resultado) {
+    if (no->tipo == TIPO_STRING) {
+        char *texto;
+        if (avaliar_texto(no, ambiente, &texto) != 0) return 1;
+        *resultado = (Valor){ .tipo = TIPO_STRING, .texto = texto };
+        return 0;
+    }
+
     double numero;
    if (avaliar_expressao(no, ambiente, &numero) != 0) return 1;
 
@@ -111,7 +258,7 @@ static double converter_numero(Tipo tipo, double numero) {
 static int executar_declaracao(const No *no, Ambiente *ambiente) {
     Tipo tipo = no->filho[0]->tipo;
 
-    if (!tipo_numerico(tipo)) {
+    if (!tipo_numerico(tipo) && tipo != TIPO_STRING) {
         fprintf(stderr, "Erro de execucao na linha %d: tipo ainda nao suportado\n",
                 no->linha);
         return 1;
@@ -136,7 +283,8 @@ static int executar_declaracao(const No *no, Ambiente *ambiente) {
             if (avaliar_valor(declarador->filho[0], ambiente, &inicial) != 0)
                 return 1;
 
-            v->valor.numero = converter_numero(tipo, inicial.numero);
+            if (tipo == TIPO_STRING) v->valor.texto = inicial.texto;
+            else v->valor.numero = converter_numero(tipo, inicial.numero);
             v->inicializada = 1;
         }
     }
@@ -152,7 +300,7 @@ static int executar_atribuicao(const No *no, Ambiente *ambiente) {
         return 1;
     }
 
-    if (!tipo_numerico(v->valor.tipo)) {
+    if (!tipo_numerico(v->valor.tipo) && v->valor.tipo != TIPO_STRING) {
         fprintf(stderr, "Erro de execucao na linha %d: tipo ainda nao suportado\n",
                 no->linha);
         return 1;
@@ -160,6 +308,13 @@ static int executar_atribuicao(const No *no, Ambiente *ambiente) {
 
     Valor novo;
     if (avaliar_valor(no->filho[0], ambiente, &novo) != 0) return 1;
+
+    if (v->valor.tipo == TIPO_STRING) {
+        free((char *)v->valor.texto);
+        v->valor.texto = novo.texto;
+        v->inicializada = 1;
+        return 0;
+    }
 
     v->valor.numero = converter_numero(v->valor.tipo, novo.numero);
     v->inicializada = 1;
@@ -171,6 +326,7 @@ static void liberar_ambiente(Ambiente *ambiente) {
 
     while (atual != NULL) {
         Variavel *proxima = atual->proxima;
+        free((char *)atual->valor.texto);
         free(atual);
         atual = proxima;
     }
@@ -197,6 +353,19 @@ static int executar_comando(const No *comando, Ambiente *ambiente) {
         case N_ATRIB:
             return executar_atribuicao(comando, ambiente);
 
+        case N_EXPR_STMT: {
+            /* Ex.: "i++;" - avalia pelo efeito colateral e descarta o valor. */
+            Valor descartado;
+            if (avaliar_valor(comando->filho[0], ambiente, &descartado) != 0) return 1;
+            if (descartado.tipo == TIPO_STRING) free((char *)descartado.texto);
+            return 0;
+        }
+
+        case N_FUNCAO:
+            /* Funcoes ficaram fora do escopo: a definicao e verificada pela
+             * semantica, mas nao ha chamada de funcao na linguagem. */
+            return 0;
+
         case N_PRINT: {
             if (comando->filho[0] == NULL) return 1;
 
@@ -205,7 +374,16 @@ static int executar_comando(const No *comando, Ambiente *ambiente) {
                 Valor valor;
                 if (avaliar_valor(arg, ambiente, &valor) != 0) return 1;
                 if (!primeiro) putchar(' ');
-                printf("%g", valor.numero);
+                if (valor.tipo == TIPO_STRING) {
+                    fputs(valor.texto, stdout);
+                    free((char *)valor.texto);
+                } else if (valor.tipo == TIPO_INT) {
+                    printf("%lld", (long long)valor.numero);
+                } else if (valor.tipo == TIPO_CHAR) {
+                    putchar((int)valor.numero);
+                } else {
+                    printf("%g", valor.numero);
+                }
                 primeiro = 0;
             }
             putchar('\n');

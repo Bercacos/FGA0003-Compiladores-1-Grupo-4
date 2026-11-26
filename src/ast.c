@@ -57,8 +57,15 @@ No *no_novo(int linha, TipoNo tipo_no, const char *texto, No *a, No *b, No *c) {
 No *no_num(int linha, double valor) {
     No *no = no_novo(linha, N_NUM, NULL, NULL, NULL, NULL);
     no->num = valor;
-    /* O scanner entrega so o valor: inteiro se nao tem parte fracionaria. */
-    no->tipo = (valor == (double)(long long)valor) ? TIPO_INT : TIPO_DOUBLE;
+    /* Literal inteiro (sem ponto nem expoente); reais usam no_real(). */
+    no->tipo = TIPO_INT;
+    return no;
+}
+
+No *no_real(int linha, double valor) {
+    No *no = no_novo(linha, N_NUM, NULL, NULL, NULL, NULL);
+    no->num = valor;
+    no->tipo = TIPO_DOUBLE;
     return no;
 }
 

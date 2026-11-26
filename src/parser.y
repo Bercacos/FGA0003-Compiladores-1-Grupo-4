@@ -112,10 +112,44 @@ static void checar_condicao(int linha, const No *cond) {
     erro_semantico(linha, "condicao invalida (%s)", tipo_nome(cond->tipo));
 }
 
+/* Pilha com o tipo de retorno das funcoes sendo analisadas (a gramatica
+ * permite funcao dentro de bloco/funcao). Usada para checar os "return". */
+#define MAX_FUNCOES_ANINHADAS 64
+static Tipo retornos[MAX_FUNCOES_ANINHADAS];
+static int nivel_funcao = 0;
+
 /* Declara a funcao no escopo atual e abre o escopo dela (parametros + corpo). */
 static void abrir_funcao(const char *nome, Tipo retorno, int linha) {
     declarar(nome, CAT_FUNCAO, retorno, linha);
     tabela_entrar_escopo(nome);
+    if (nivel_funcao < MAX_FUNCOES_ANINHADAS) retornos[nivel_funcao] = retorno;
+    nivel_funcao++;
+}
+
+static void fechar_funcao(void) {
+    tabela_sair_escopo();
+    if (nivel_funcao > 0) nivel_funcao--;
+}
+
+/* "return" so dentro de funcao e com valor compativel com o tipo de retorno. */
+static void checar_return(int linha, const No *valor) {
+    if (nivel_funcao == 0) {
+        erro_semantico(linha, "return fora de funcao");
+        return;
+    }
+    if (nivel_funcao > MAX_FUNCOES_ANINHADAS) return;
+    Tipo esperado = retornos[nivel_funcao - 1];
+    if (esperado == TIPO_VOID) {
+        if (valor) erro_semantico(linha, "funcao void nao pode retornar valor");
+        return;
+    }
+    if (!valor) {
+        erro_semantico(linha, "return sem valor em funcao que retorna %s", tipo_nome(esperado));
+        return;
+    }
+    if (valor->tipo != TIPO_ERRO && !tipos_compativeis(esperado, valor->tipo))
+        erro_semantico(linha, "tipo de retorno incompativel (esperado %s, obtido %s)",
+                       tipo_nome(esperado), tipo_nome(valor->tipo));
 }
 %}
 %code requires { #include "ast.h" }
@@ -130,7 +164,7 @@ static void abrir_funcao(const char *nome, Tipo retorno, int linha) {
 %token PONTOVIR VIRGULA PLUS MINUS TIMES DIVIDE MOD
 %token AND OR NOT INVALID
 %token <sval> IDENT STRINGLIT
-%token <dval> NUMBER
+%token <dval> NUMBER REALLIT
 %token <ival> CHARLIT
 %destructor { free($$); } <sval>
 %type <no> programa comando bloco comando_if comando_while comando_print declaracao tipo
@@ -166,8 +200,10 @@ comando:
   | comando_if { $$ = $1; }
   | comando_while { $$ = $1; }
   | comando_print PONTOVIR { $$ = $1; }
-  | KW_RETURN PONTOVIR { $$ = no_novo(@$.first_line, N_RETURN, NULL, NULL, NULL, NULL); }
-  | KW_RETURN expressao PONTOVIR { $$ = no_novo(@$.first_line, N_RETURN, NULL, $2, NULL, NULL); }
+  | KW_RETURN PONTOVIR { checar_return(@1.first_line, NULL);
+                         $$ = no_novo(@$.first_line, N_RETURN, NULL, NULL, NULL, NULL); }
+  | KW_RETURN expressao PONTOVIR { checar_return(@1.first_line, $2);
+                         $$ = no_novo(@$.first_line, N_RETURN, NULL, $2, NULL, NULL); }
   | funcao { $$ = $1; }
   ;
 bloco:
@@ -223,7 +259,7 @@ atribuicao:
 /* Definicao de funcoes */
 funcao:
     cabecalho_funcao parametros RPAREN LCHAVE programa RCHAVE
-      { tabela_sair_escopo();
+      { fechar_funcao();
         $1->filho[1] = $2;
         $1->filho[2] = no_novo(@4.first_line, N_BLOCO, NULL, $5, NULL, NULL);
         $$ = $1; }
@@ -252,6 +288,7 @@ parametro:
 /* Expressoes */
 expressao:
     NUMBER { $$ = no_num(@$.first_line, $1); }
+  | REALLIT { $$ = no_real(@$.first_line, $1); }
   | CHARLIT { $$ = no_char(@$.first_line, $1); }
   | STRINGLIT { $$ = no_novo(@$.first_line, N_STRING, $1, NULL, NULL, NULL); free($1); }
   | IDENT { $$ = no_id(@$.first_line, $1); free($1); }
@@ -285,31 +322,37 @@ void yyerror(const char *mensagem) {
 }
 
 int main(int argc, char **argv) {
-    if (argc > 2) {
-        fprintf(stderr, "Uso: %s [arquivo]\n", argv[0]);
-        return EXIT_FAILURE;
+    /* Uso: analisador [--run] [arquivo] (a ordem dos argumentos nao importa) */
+    int executar = 0;
+    const char *arquivo = NULL;
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "--run") == 0) executar = 1;
+        else if (arquivo == NULL) arquivo = argv[i];
+        else {
+            fprintf(stderr, "Uso: %s [--run] [arquivo]\n", argv[0]);
+            return EXIT_FAILURE;
+        }
     }
-    if (argc == 2 && strcmp(argv[1], "--run") != 0) {
-        yyin = fopen(argv[1], "r");
+    if (arquivo != NULL) {
+        yyin = fopen(arquivo, "r");
         if (yyin == NULL) {
-            perror(argv[1]);
+            perror(arquivo);
             return EXIT_FAILURE;
         }
     }
     tabela_iniciar();
     int resultado = yyparse();
-    if (argc == 2 && strcmp(argv[1], "--run") != 0) fclose(yyin);
+    if (arquivo != NULL) fclose(yyin);
     int status = EXIT_FAILURE;
     if (resultado == 0) {
-        if (argc != 2 || strcmp(argv[1], "--run") != 0) {
+        if (!executar) {
             puts("Analise sintatica concluida com sucesso.");
             puts("Arvore sintatica abstrata:");
             ast_imprimir(raiz, 0);
             tabela_imprimir();
 }
         if (erros_semanticos == 0) {
-            status = (argc == 2 && strcmp(argv[1], "--run") == 0)
-                ? interpretar(raiz) : EXIT_SUCCESS;
+            status = executar ? interpretar(raiz) : EXIT_SUCCESS;
 }
         else fprintf(stderr, "%d erro(s) semantico(s).\n", erros_semanticos);
     }
