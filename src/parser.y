@@ -5,6 +5,7 @@
 #include <string.h>
 #include "ast.h"
 #include "tabela.h"
+#include "interpretador.h"
 int yylex(void);
 void yyerror(const char *mensagem);
 extern FILE *yyin;
@@ -288,7 +289,7 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Uso: %s [arquivo]\n", argv[0]);
         return EXIT_FAILURE;
     }
-    if (argc == 2) {
+    if (argc == 2 && strcmp(argv[1], "--run") != 0) {
         yyin = fopen(argv[1], "r");
         if (yyin == NULL) {
             perror(argv[1]);
@@ -297,14 +298,19 @@ int main(int argc, char **argv) {
     }
     tabela_iniciar();
     int resultado = yyparse();
-    if (argc == 2) fclose(yyin);
+    if (argc == 2 && strcmp(argv[1], "--run") != 0) fclose(yyin);
     int status = EXIT_FAILURE;
     if (resultado == 0) {
-        puts("Analise sintatica concluida com sucesso.");
-        puts("Arvore sintatica abstrata:");
-        ast_imprimir(raiz, 0);
-        tabela_imprimir();
-        if (erros_semanticos == 0) status = EXIT_SUCCESS;
+        if (argc != 2 || strcmp(argv[1], "--run") != 0) {
+            puts("Analise sintatica concluida com sucesso.");
+            puts("Arvore sintatica abstrata:");
+            ast_imprimir(raiz, 0);
+            tabela_imprimir();
+}
+        if (erros_semanticos == 0) {
+            status = (argc == 2 && strcmp(argv[1], "--run") == 0)
+                ? interpretar(raiz) : EXIT_SUCCESS;
+}
         else fprintf(stderr, "%d erro(s) semantico(s).\n", erros_semanticos);
     }
     ast_liberar(raiz);
