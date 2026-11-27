@@ -80,7 +80,8 @@ void        { return KW_VOID; }
 ^#.*                         { /* Ignorar diretivas de pre-processador (#include, #define, ...) */ }
 
 [a-zA-Z_][a-zA-Z0-9_]*  { yylval.sval = strdup(yytext); return IDENT; }
-(([0-9]+\.[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)[fFlL]?|[0-9]+      { yylval.dval = atof(yytext); return NUMBER; }
+(([0-9]+\.[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?|[0-9]+[eE][+-]?[0-9]+)[fFlL]?  { yylval.dval = atof(yytext); return REALLIT; }
+[0-9]+      { yylval.dval = atof(yytext); return NUMBER; }
 \"([^\"\\\r\n]|\\.)*\"      { yylval.sval = strdup(yytext); return STRINGLIT; }
 \'([^\'\\\r\n]|\\.)\'       { yylval.ival = decodifica_char(yytext); return CHARLIT; }
 

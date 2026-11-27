@@ -55,6 +55,8 @@ typedef struct No {
 
 No *no_novo(int linha, TipoNo tipo_no, const char *texto, No *a, No *b, No *c);
 No *no_num(int linha, double valor);
+/* Literal real (com ponto ou expoente no fonte): sempre double, mesmo "2.0". */
+No *no_real(int linha, double valor);
 No *no_char(int linha, int valor);
 No *no_lista_add(No *lista, No *novo);
 const char *tipo_nome(Tipo tipo);

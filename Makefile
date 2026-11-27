@@ -12,7 +12,7 @@ TABELA_HDR := $(SRC_DIR)/tabela.h $(SRC_DIR)/tipos.h
 AST_SRC := $(SRC_DIR)/ast.c
 AST_HDR := $(SRC_DIR)/ast.h
 
-$(TARGET): $(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/lex.yy.c $(AST_SRC) $(AST_HDR) $(TABELA_SRC) $(TABELA_HDR) | $(BUILD_DIR)
+$(TARGET): $(BUILD_DIR)/parser.tab.c $(BUILD_DIR)/lex.yy.c $(AST_SRC) $(AST_HDR) $(TABELA_SRC) $(TABELA_HDR) $(SRC_DIR)/interpretador.c $(SRC_DIR)/interpretador.h | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -I$(BUILD_DIR) -I$(SRC_DIR) $(filter %.c,$^) -o $@
 
 $(BUILD_DIR)/test_tabela: tests/test_tabela.c $(TABELA_SRC) $(TABELA_HDR) | $(BUILD_DIR)
