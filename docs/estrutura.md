@@ -5,13 +5,16 @@ Organização dos principais arquivos do repositório:
 ```text
 FGA0003-Compiladores-1-Grupo-4/
 ├── docs/                         # Documentação do projeto
-├── examples/                     # Programas de exemplo
+├── examples/
+│   ├── variaveis.c               # Declarações e atribuições
+│   └── interpretador.c           # Demonstração do modo --run
 ├── src/
 │   ├── analisador-lexico/
 │   │   └── scanner.l             # Regras léxicas (Flex)
 │   ├── parser.y                  # Gramática e ações (Bison)
 │   ├── ast.c / ast.h             # Estrutura e impressão da AST
 │   ├── tabela.c / tabela.h       # Tabela de símbolos
+│   ├── interpretador.c / .h      # Execução da AST
 │   └── tipos.h                   # Tipos usados pelo projeto
 ├── tests/
 │   ├── test_parser.sh
@@ -19,7 +22,8 @@ FGA0003-Compiladores-1-Grupo-4/
 │   ├── test_scope.sh
 │   ├── test_semantica.sh
 │   ├── test_tabela.c / test_tabela.sh
-│   └── test_ast.sh
+│   ├── test_ast.sh
+│   └── test_interpretador.sh     # Saídas e erros de execução
 ├── Makefile                      # Compilação e testes
 └── mkdocs.yml                    # Navegação da documentação
 ```
@@ -30,7 +34,7 @@ A pasta `build/` contém os arquivos gerados pelo Bison e pelo Flex e o executá
 
 1. O Bison gera `build/parser.tab.c` e `build/parser.tab.h` a partir de `src/parser.y`.
 2. O Flex gera `build/lex.yy.c` a partir de `src/analisador-lexico/scanner.l`.
-3. O GCC compila os arquivos gerados junto com `src/ast.c` e `src/tabela.c`, produzindo `build/analisador`.
+3. O GCC compila os arquivos gerados junto com `src/ast.c`, `src/tabela.c` e `src/interpretador.c`, produzindo `build/analisador`.
 
 ## Fluxo de análise
 
@@ -41,7 +45,9 @@ Scanner (tokens)
     ↓
 Parser (gramática, AST, tabela de símbolos e verificações)
     ↓
-AST e tabela impressas; erros informados quando encontrados
+AST e tabela impressas (modo padrão)
+    ou
+Execução da AST (`--run`)
 ```
 
-O analisador ainda não executa as instruções do programa recebido. O comando `make test` executa as suítes de testes do projeto.
+O comando `make test` executa as suítes de análise e de interpretação. O modo `--run` percorre a AST com ambientes encadeados para representar os valores e escopos em tempo de execução.

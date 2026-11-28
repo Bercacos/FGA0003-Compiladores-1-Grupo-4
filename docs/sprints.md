@@ -8,9 +8,9 @@ Planejamento baseado no guia do professor ([Sugestão de Sprints para interpreta
 | --- | --- | --- |
 | 1 | Equipe, ambiente, escopo da linguagem, estrutura do repo | Concluída |
 | 2 | Análise léxica + início do parser + P1 | Concluída |
-| 3 | Parser completo (variáveis, expressões, `if`, funções) + testes | Concluída |
+| 3 | Parser (variáveis, expressões e `if`) + testes | Concluída |
 | 4 | AST + semântica inicial + preparação P2 | Concluída |
-| 5 | Interpretação da AST + recursos extras | Pendente |
+| 5 | Interpretação da AST + recursos extras | Concluída no subconjunto definido |
 | 6 | Documentação final, ajustes e entrevista | Em andamento (docs) |
 
 ## Sprint 1 — Organização e ambiente
@@ -46,13 +46,13 @@ Planejamento baseado no guia do professor ([Sugestão de Sprints para interpreta
 
 **Objetivos**
 
-- Ampliar a gramática (blocos, `if`/`else`, funções, `return`)
+- Ampliar a gramática (blocos e `if`/`else`)
 - Automatizar testes de aceitação/rejeição
 - Publicar documentação no GitHub Pages
 
 **Entregas realizadas**
 
-- `parser.y` com variáveis, expressões, `if`, funções e `return`
+- `parser.y` com variáveis, expressões e `if`; regras antigas de função permaneceram no arquivo, fora do escopo funcional
 - `Makefile` e exemplo `examples/variaveis.c`
 - Setup MkDocs + workflow de deploy
 - Documentação de testes (`docs/testes.md`) e suíte extra (30 casos)
@@ -82,8 +82,15 @@ Planejamento baseado no guia do professor ([Sugestão de Sprints para interpreta
 **Objetivos**
 
 - Percorrer a AST e executar atribuições, expressões e `if`
-- Evoluir semântica (escopo, funções, se houver tempo)
+- Consolidar semântica de variáveis, tipos e escopos
 - Ampliar exemplos e testes de execução
+
+**Entregas realizadas**
+
+- Interpretador em `src/interpretador.c` acionado por `--run`
+- Execução de declarações, atribuições, expressões, blocos, `if`/`else`, `while` e `print`
+- Ambientes de execução aninhados e erros como variável sem valor e divisão por zero
+- Exemplo executável em `examples/interpretador.c` e suíte de execução integrada a `make test`
 
 ## Sprint 6 — Entrega e entrevista
 

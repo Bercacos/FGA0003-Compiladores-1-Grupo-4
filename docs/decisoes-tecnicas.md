@@ -12,9 +12,9 @@ C foi escolhida por ser familiar ao curso e por ter material de apoio abundante 
 
 - tipos escalares simples (`int`, `float`, `double`, `char`, `string`)
 - expressões, atribuições e blocos
-- `if`/`else`, funções e `return`
+- `if`/`else`, `while` e `print`
 
-Fora do escopo atual: ponteiros, estruturas, arrays, `for`, `do/while`, `switch` e biblioteca padrão. O escopo inclui `while`, `print`, operadores lógicos e chamadas gerais de função.
+Fora do escopo atual: declarações/definições e chamadas de funções, `return`, ponteiros, estruturas, arrays, `for`, `do/while`, `switch` e biblioteca padrão. O parser conserva regras antigas para definição e retorno, mas o interpretador não as executa e não há chamadas de função.
 
 ## 3. Ferramentas: Flex + Bison + C + Make
 
@@ -45,9 +45,9 @@ Motivos:
 
 ## 6. Estratégia de testes
 
-`make test` reúne testes de aceitação e rejeição de programas, verificações de tipos e escopos, testes unitários e de integração da tabela de símbolos e testes da estrutura impressa da AST.
+`make test` reúne testes de aceitação e rejeição de programas, verificações de tipos e escopos, testes unitários e de integração da tabela de símbolos, testes da estrutura impressa da AST e testes de saída e erros do interpretador.
 
-Os testes automatizados são complementados por variações manuais das entradas, usadas para observar mensagens de erro, hierarquia da árvore e símbolos registrados. Todas as suítes executadas nesta versão passaram no WSL.
+Os testes automatizados podem ser complementados por variações manuais das entradas, usadas para observar mensagens de erro, hierarquia da árvore, símbolos registrados e resultados do modo `--run`.
 
 ## 7. Tratamento de erros
 
@@ -55,3 +55,7 @@ Os testes automatizados são complementados por variações manuais das entradas
 - Sintático: `parse.error detailed` do Bison + `yyerror` com linha e lexema próximo
 
 Ainda não há recuperação sofisticada (panic mode avançado); a prioridade foi diagnosticar a falha e abortar a análise.
+
+## 8. Execução opcional
+
+O mesmo binário separa inspeção e execução. Sem `--run`, imprime AST e tabela de símbolos; com `--run`, percorre a árvore em `src/interpretador.c`. Ambientes encadeados guardam valores por bloco, e operadores lógicos usam curto-circuito. Esse recorte evita depender de uma função `main`: o programa é uma sequência de comandos no escopo global.

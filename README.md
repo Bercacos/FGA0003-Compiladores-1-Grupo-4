@@ -17,15 +17,18 @@ mkdocs serve
 
 ## Estado atual
 
-O front-end léxico-sintático reconhece declarações (`int`, `float`, `double`, `char`, `string`), atribuições, expressões com precedência, blocos, `if`/`else`, `while`, `print`, operadores lógicos, definições de funções e `return`.
+O front-end léxico-sintático reconhece declarações (`int`, `float`, `double`, `char`, `string`), atribuições, expressões com precedência, blocos, `if`/`else`, `while`, `print` e operadores lógicos.
 
-A AST, a tabela de símbolos e verificações iniciais de tipos e escopos já estão implementadas. O binário imprime a AST e a tabela; a execução das instruções ainda não foi implementada.
+A AST, a tabela de símbolos, as verificações iniciais de tipos e escopos e o interpretador estão implementados. Sem opções, o binário imprime a AST e a tabela; com `--run`, executa declarações e atribuições, expressões, blocos, `if`/`else`, `while` e `print`.
+
+Declarações/definições e chamadas de funções não fazem parte do escopo funcional. A gramática ainda aceita definições de função e `return` por compatibilidade com uma etapa anterior, mas o interpretador ignora esses nós e não existe sintaxe para chamadas.
 
 ## Uso no WSL/Linux
 
 ```bash
 make
 ./build/analisador examples/variaveis.c
+./build/analisador --run examples/interpretador.c
 printf '%s\n' 'int y = 1; int z = 2; int x = y + z;' | ./build/analisador
 make test
 bash tests/teste_parser_extra.sh ./build/analisador
@@ -35,7 +38,7 @@ Requisitos: `flex`, `bison`, `gcc` e `make`.
 
 ## Testes
 
-Os testes do parser, escopo, tabela de símbolos, análise semântica e AST estão descritos em [docs/testes.md](docs/testes.md).
+`make test` executa as suítes do parser, escopo, tabela de símbolos, análise semântica, AST e interpretação. A suíte de interpretação inclui 40 casos. Veja a cobertura e os comandos em [docs/testes.md](docs/testes.md).
 
 ## Material do professor
 
