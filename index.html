@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -985,8 +985,8 @@
 <ol>
 <li><strong>Análise léxica</strong> — reconhecimento de tokens com <code>flex</code></li>
 <li><strong>Análise sintática</strong> — verificação da gramática com <code>bison</code></li>
-<li><strong>Análise semântica</strong> — tabela de símbolos, tipos e verificações <em>(próxima etapa)</em></li>
-<li><strong>Interpretação / execução</strong> — avaliação da AST <em>(próxima etapa)</em></li>
+<li><strong>Análise semântica</strong> — tabela de símbolos, tipos e verificações</li>
+<li><strong>Interpretação / execução</strong> — avaliação direta da AST com <code>--run</code></li>
 </ol>
 <p>A documentação abaixo segue os requisitos do professor (<a href="https://github.com/sergioaafreitas/COMP1/blob/main/semana%2001/docs/Trabalho%20de%20Compiladores.md">Trabalho de Compiladores</a> e <a href="https://github.com/sergioaafreitas/COMP1/blob/main/semana%2001/docs/Guia%20-%20Projeto%20de%20um%20interpretador.md">Guia — Projeto de um interpretador</a>): estrutura do projeto, decisões técnicas, planejamento das sprints, problemas encontrados e soluções adotadas.</p>
 <h2 id="estado-atual">Estado atual<a class="headerlink" href="#estado-atual" title="Permanent link">&para;</a></h2>
@@ -1012,7 +1012,7 @@
 <tr>
 <td>Análise sintática</td>
 <td>Implementada e testada</td>
-<td>Declarações, expressões, blocos, <code>if</code>/<code>else</code>, <code>while</code>, <code>print</code>, funções e <code>return</code></td>
+<td>Declarações, expressões, blocos, <code>if</code>/<code>else</code>, <code>while</code>, <code>print</code> e operadores</td>
 </tr>
 <tr>
 <td>AST</td>
@@ -1026,12 +1026,12 @@
 </tr>
 <tr>
 <td>Interpretação</td>
-<td>Pendente</td>
-<td>As instruções analisadas ainda não são executadas</td>
+<td>Implementada</td>
+<td>Execução opcional com <code>--run</code>: variáveis, expressões, blocos, desvios, laços e saída</td>
 </tr>
 </tbody>
 </table>
-<p>Nesta versão, <code>build/analisador</code> analisa o código-fonte e imprime a AST e a tabela de símbolos. Ele ainda não executa o programa.</p>
+<p>Nesta versão, <code>build/analisador</code> analisa o código-fonte e imprime a AST e a tabela de símbolos. <code>build/analisador --run</code> executa o subconjunto implementado. Funções não integram o escopo de execução; definições e <code>return</code> ainda são aceitos pelo parser apenas como legado, sem chamadas ou execução.</p>
 <h2 id="equipe">Equipe<a class="headerlink" href="#equipe" title="Permanent link">&para;</a></h2>
 <table>
 <thead>

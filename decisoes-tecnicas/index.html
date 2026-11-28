@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -807,6 +807,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#8-execucao-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Execução opcional
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -999,6 +1010,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#8-execucao-opcional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Execução opcional
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1033,9 +1055,9 @@
 <ul>
 <li>tipos escalares simples (<code>int</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>string</code>)</li>
 <li>expressões, atribuições e blocos</li>
-<li><code>if</code>/<code>else</code>, funções e <code>return</code></li>
+<li><code>if</code>/<code>else</code>, <code>while</code> e <code>print</code></li>
 </ul>
-<p>Fora do escopo atual: ponteiros, estruturas, arrays, <code>for</code>, <code>do/while</code>, <code>switch</code> e biblioteca padrão. O escopo inclui <code>while</code>, <code>print</code>, operadores lógicos e chamadas gerais de função.</p>
+<p>Fora do escopo atual: declarações/definições e chamadas de funções, <code>return</code>, ponteiros, estruturas, arrays, <code>for</code>, <code>do/while</code>, <code>switch</code> e biblioteca padrão. O parser conserva regras antigas para definição e retorno, mas o interpretador não as executa e não há chamadas de função.</p>
 <h2 id="3-ferramentas-flex-bison-c-make">3. Ferramentas: Flex + Bison + C + Make<a class="headerlink" href="#3-ferramentas-flex-bison-c-make" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1079,14 +1101,16 @@
 <li>o site fica acessível em <a href="https://bercacos.github.io/FGA0003-Compiladores-1-Grupo-4/">bercacos.github.io/FGA0003-Compiladores-1-Grupo-4</a></li>
 </ul>
 <h2 id="6-estrategia-de-testes">6. Estratégia de testes<a class="headerlink" href="#6-estrategia-de-testes" title="Permanent link">&para;</a></h2>
-<p><code>make test</code> reúne testes de aceitação e rejeição de programas, verificações de tipos e escopos, testes unitários e de integração da tabela de símbolos e testes da estrutura impressa da AST.</p>
-<p>Os testes automatizados são complementados por variações manuais das entradas, usadas para observar mensagens de erro, hierarquia da árvore e símbolos registrados. Todas as suítes executadas nesta versão passaram no WSL.</p>
+<p><code>make test</code> reúne testes de aceitação e rejeição de programas, verificações de tipos e escopos, testes unitários e de integração da tabela de símbolos, testes da estrutura impressa da AST e testes de saída e erros do interpretador.</p>
+<p>Os testes automatizados podem ser complementados por variações manuais das entradas, usadas para observar mensagens de erro, hierarquia da árvore, símbolos registrados e resultados do modo <code>--run</code>.</p>
 <h2 id="7-tratamento-de-erros">7. Tratamento de erros<a class="headerlink" href="#7-tratamento-de-erros" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Léxico: mensagem própria e devolução do token INVALID para entradas não reconhecidas ou malformadas</li>
 <li>Sintático: <code>parse.error detailed</code> do Bison + <code>yyerror</code> com linha e lexema próximo</li>
 </ul>
 <p>Ainda não há recuperação sofisticada (panic mode avançado); a prioridade foi diagnosticar a falha e abortar a análise.</p>
+<h2 id="8-execucao-opcional">8. Execução opcional<a class="headerlink" href="#8-execucao-opcional" title="Permanent link">&para;</a></h2>
+<p>O mesmo binário separa inspeção e execução. Sem <code>--run</code>, imprime AST e tabela de símbolos; com <code>--run</code>, percorre a árvore em <code>src/interpretador.c</code>. Ambientes encadeados guardam valores por bloco, e operadores lógicos usam curto-circuito. Esse recorte evita depender de uma função <code>main</code>: o programa é uma sequência de comandos no escopo global.</p>
 
 
 

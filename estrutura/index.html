@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -918,30 +918,34 @@
 <p>Organização dos principais arquivos do repositório:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>FGA0003-Compiladores-1-Grupo-4/
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── docs/                         # Documentação do projeto
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── examples/                     # Programas de exemplo
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├── src/
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── analisador-lexico/
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   │   └── scanner.l             # Regras léxicas (Flex)
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── parser.y                  # Gramática e ações (Bison)
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   ├── ast.c / ast.h             # Estrutura e impressão da AST
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   ├── tabela.c / tabela.h       # Tabela de símbolos
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   └── tipos.h                   # Tipos usados pelo projeto
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>├── tests/
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   ├── test_parser.sh
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   ├── teste_parser_extra.sh
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   ├── test_scope.sh
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   ├── test_semantica.sh
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   ├── test_tabela.c / test_tabela.sh
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   └── test_ast.sh
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>├── Makefile                      # Compilação e testes
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>└── mkdocs.yml                    # Navegação da documentação
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── examples/
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── variaveis.c               # Declarações e atribuições
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   └── interpretador.c           # Demonstração do modo --run
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>├── src/
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   ├── analisador-lexico/
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   │   └── scanner.l             # Regras léxicas (Flex)
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   ├── parser.y                  # Gramática e ações (Bison)
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   ├── ast.c / ast.h             # Estrutura e impressão da AST
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│   ├── tabela.c / tabela.h       # Tabela de símbolos
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   ├── interpretador.c / .h      # Execução da AST
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   └── tipos.h                   # Tipos usados pelo projeto
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├── tests/
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│   ├── test_parser.sh
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   ├── teste_parser_extra.sh
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   ├── test_scope.sh
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   ├── test_semantica.sh
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│   ├── test_tabela.c / test_tabela.sh
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│   ├── test_ast.sh
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│   └── test_interpretador.sh     # Saídas e erros de execução
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>├── Makefile                      # Compilação e testes
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>└── mkdocs.yml                    # Navegação da documentação
 </code></pre></div>
 <p>A pasta <code>build/</code> contém os arquivos gerados pelo Bison e pelo Flex e o executável <code>analisador</code>. Ela é criada durante a compilação e não é versionada.</p>
 <h2 id="fluxo-de-compilacao">Fluxo de compilação<a class="headerlink" href="#fluxo-de-compilacao" title="Permanent link">&para;</a></h2>
 <ol>
 <li>O Bison gera <code>build/parser.tab.c</code> e <code>build/parser.tab.h</code> a partir de <code>src/parser.y</code>.</li>
 <li>O Flex gera <code>build/lex.yy.c</code> a partir de <code>src/analisador-lexico/scanner.l</code>.</li>
-<li>O GCC compila os arquivos gerados junto com <code>src/ast.c</code> e <code>src/tabela.c</code>, produzindo <code>build/analisador</code>.</li>
+<li>O GCC compila os arquivos gerados junto com <code>src/ast.c</code>, <code>src/tabela.c</code> e <code>src/interpretador.c</code>, produzindo <code>build/analisador</code>.</li>
 </ol>
 <h2 id="fluxo-de-analise">Fluxo de análise<a class="headerlink" href="#fluxo-de-analise" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Código-fonte
@@ -950,9 +954,11 @@
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    ↓
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Parser (gramática, AST, tabela de símbolos e verificações)
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    ↓
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>AST e tabela impressas; erros informados quando encontrados
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>AST e tabela impressas (modo padrão)
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    ou
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Execução da AST (`--run`)
 </code></pre></div>
-<p>O analisador ainda não executa as instruções do programa recebido. O comando <code>make test</code> executa as suítes de testes do projeto.</p>
+<p>O comando <code>make test</code> executa as suítes de análise e de interpretação. O modo <code>--run</code> percorre a AST com ambientes encadeados para representar os valores e escopos em tempo de execução.</p>
 
 
 

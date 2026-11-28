@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1035,9 +1035,10 @@
 </tr>
 </tbody>
 </table>
+<p>As categorias <code>funcao</code> e <code>parametro</code> permanecem porque o parser ainda reconhece definições legadas. Elas não significam suporte a declaração/chamada de funções no interpretador.</p>
 <h2 id="escopos">Escopos<a class="headerlink" href="#escopos" title="Permanent link">&para;</a></h2>
 <ul>
-<li>O escopo <code>0</code> é o global. Cada função abre um escopo (parâmetros e corpo compartilham o mesmo) e cada bloco <code>{ ... }</code> abre um escopo filho.</li>
+<li>O escopo <code>0</code> é o global. Cada bloco <code>{ ... }</code> abre um escopo filho. Uma definição de função aceita pela gramática legada também abre um escopo para parâmetros e corpo, embora não seja executada.</li>
 <li>A busca (<code>tabela_buscar</code>) começa no escopo informado e sobe para os escopos externos; o mais interno vence.</li>
 <li>Redeclaração é avaliada <strong>somente no escopo atual</strong>: <code>int x; { int x; }</code> é válido, <code>int x; int x;</code> não é.</li>
 <li>Os símbolos permanecem na tabela depois que o escopo termina (para impressão e para a análise semântica), mas deixam de ser visíveis de fora dele.</li>
@@ -1082,7 +1083,7 @@
 </tbody>
 </table>
 <h2 id="integracao-com-o-parser">Integração com o parser<a class="headerlink" href="#integracao-com-o-parser" title="Permanent link">&para;</a></h2>
-<p>As declarações alimentam a tabela nas reduções do Bison (<code>declarador</code>, <code>parametro</code>, <code>cabecalho_funcao</code>) e <code>bloco</code> abre/fecha escopo. A linha vem de <code>@N.first_line</code>, preenchido pelo <code>YY_USER_ACTION</code> do <code>scanner.l</code>. Redeclaração gera <code>Erro semantico na linha N: ...</code> e o programa termina com código ≠ 0.</p>
+<p>As declarações de variáveis alimentam a tabela na redução <code>declarador</code>, e <code>bloco</code> abre/fecha escopo. As reduções legadas <code>parametro</code> e <code>cabecalho_funcao</code> também registram símbolos, apenas para manter coerência com o parser existente. A linha vem de <code>@N.first_line</code>, preenchido pelo <code>YY_USER_ACTION</code> do <code>scanner.l</code>. Redeclaração gera <code>Erro semantico na linha N: ...</code> e o programa termina com código ≠ 0.</p>
 <p>O uso de um identificador não declarado gera erro semântico. A busca começa no escopo atual e percorre os escopos externos; se não encontrar o nome, o analisador informa o erro e termina com código de saída diferente de zero.</p>
 <h2 id="exemplo">Exemplo<a class="headerlink" href="#exemplo" title="Permanent link">&para;</a></h2>
 <p>trecho abaixo destaca a tabela de símbolos; a AST impressa pelo analisador foi omitida.</p>

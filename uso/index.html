@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1012,7 +1012,7 @@
 <p>Na raiz do repositório, execute:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make
 </code></pre></div>
-<p>Esse comando gera <code>build/analisador</code> usando o analisador léxico (<code>src/analisador-lexico/scanner.l</code>), o parser (<code>src/parser.y</code>), a AST (<code>src/ast.c</code>) e a tabela de símbolos (<code>src/tabela.c</code>).</p>
+<p>Esse comando gera <code>build/analisador</code> usando o analisador léxico (<code>src/analisador-lexico/scanner.l</code>), o parser (<code>src/parser.y</code>), a AST (<code>src/ast.c</code>), a tabela de símbolos (<code>src/tabela.c</code>) e o interpretador (<code>src/interpretador.c</code>).</p>
 <h2 id="executar">Executar<a class="headerlink" href="#executar" title="Permanent link">&para;</a></h2>
 <p>Para analisar um arquivo:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>./build/analisador<span class="w"> </span>examples/variaveis.c
@@ -1021,20 +1021,28 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'%s\n'</span><span class="w"> </span><span class="s1">'int y = 1; int z = 2; int x = y + z;'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>./build/analisador
 </code></pre></div>
 <p>Quando a entrada é aceita, o analisador imprime <code>Analise sintatica concluida com sucesso.</code>, a árvore sintática abstrata e a tabela de símbolos. Se encontrar um erro léxico, sintático ou semântico, informa o problema e retorna um código de saída diferente de zero.</p>
-<p>O analisador ainda não executa as instruções do programa recebido.</p>
+<p>Para executar o programa em vez de imprimir a AST e a tabela:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>./build/analisador<span class="w"> </span>--run<span class="w"> </span>examples/interpretador.c
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">printf</span><span class="w"> </span><span class="s1">'%s\n'</span><span class="w"> </span><span class="s1">'int i = 0; while (i &lt; 3) { print("valor", i); i++; }'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>./build/analisador<span class="w"> </span>--run
+</code></pre></div>
+<p>O modo <code>--run</code> implementa variáveis escalares, expressões, atribuições, incremento/decremento, blocos, <code>if</code>/<code>else</code>, <code>while</code> e <code>print</code>. Definições e chamadas de funções estão fora do escopo; uma definição ainda pode ser reconhecida pela gramática, mas é ignorada durante a execução.</p>
 <h2 id="testes">Testes<a class="headerlink" href="#testes" title="Permanent link">&para;</a></h2>
-<p>Para executar todas as suítes, incluindo os testes da AST, da tabela de símbolos e da análise semântica:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>make<span class="w"> </span><span class="nb">test</span>
+<p>Para executar todas as suítes, incluindo os testes de execução do interpretador:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>make<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+<p>Os scripts de teste usam quebras de linha LF. O arquivo <code>.gitattributes</code> preserva esse formato quando o Git extrai os arquivos. Se uma cópia existente no Windows apresentar um erro de Bash com <code>\r</code>, use uma cópia nova do repositório ou converta para LF os arquivos <code>.sh</code> em <code>tests/</code>.</p>
+<p>Para rodar apenas a suíte de execução após compilar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>bash<span class="w"> </span>tests/test_interpretador.sh<span class="w"> </span>./build/analisador
 </code></pre></div>
 <p>Para executar apenas os quatro testes estruturais da AST:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>bash<span class="w"> </span>tests/test_ast.sh<span class="w"> </span>./build/analisador
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>bash<span class="w"> </span>tests/test_ast.sh<span class="w"> </span>./build/analisador
 </code></pre></div>
 <h2 id="pre-visualizar-a-documentacao">Pré-visualizar a documentação<a class="headerlink" href="#pre-visualizar-a-documentacao" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>mkdocs<span class="w"> </span>serve
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>mkdocs<span class="w"> </span>serve
 </code></pre></div>
 <h2 id="limpar-arquivos-gerados">Limpar arquivos gerados<a class="headerlink" href="#limpar-arquivos-gerados" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>make<span class="w"> </span>clean
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>make<span class="w"> </span>clean
 </code></pre></div>
 
 

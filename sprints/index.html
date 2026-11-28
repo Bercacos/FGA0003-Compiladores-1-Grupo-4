@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -1070,7 +1070,7 @@
 </tr>
 <tr>
 <td>3</td>
-<td>Parser completo (variáveis, expressões, <code>if</code>, funções) + testes</td>
+<td>Parser (variáveis, expressões e <code>if</code>) + testes</td>
 <td>Concluída</td>
 </tr>
 <tr>
@@ -1081,7 +1081,7 @@
 <tr>
 <td>5</td>
 <td>Interpretação da AST + recursos extras</td>
-<td>Pendente</td>
+<td>Concluída no subconjunto definido</td>
 </tr>
 <tr>
 <td>6</td>
@@ -1120,13 +1120,13 @@
 <h2 id="sprint-3-parser-utilizavel-e-testes">Sprint 3 — Parser utilizável e testes<a class="headerlink" href="#sprint-3-parser-utilizavel-e-testes" title="Permanent link">&para;</a></h2>
 <p><strong>Objetivos</strong></p>
 <ul>
-<li>Ampliar a gramática (blocos, <code>if</code>/<code>else</code>, funções, <code>return</code>)</li>
+<li>Ampliar a gramática (blocos e <code>if</code>/<code>else</code>)</li>
 <li>Automatizar testes de aceitação/rejeição</li>
 <li>Publicar documentação no GitHub Pages</li>
 </ul>
 <p><strong>Entregas realizadas</strong></p>
 <ul>
-<li><code>parser.y</code> com variáveis, expressões, <code>if</code>, funções e <code>return</code></li>
+<li><code>parser.y</code> com variáveis, expressões e <code>if</code>; regras antigas de função permaneceram no arquivo, fora do escopo funcional</li>
 <li><code>Makefile</code> e exemplo <code>examples/variaveis.c</code></li>
 <li>Setup MkDocs + workflow de deploy</li>
 <li>Documentação de testes (<code>docs/testes.md</code>) e suíte extra (30 casos)</li>
@@ -1154,8 +1154,15 @@
 <p><strong>Objetivos</strong></p>
 <ul>
 <li>Percorrer a AST e executar atribuições, expressões e <code>if</code></li>
-<li>Evoluir semântica (escopo, funções, se houver tempo)</li>
+<li>Consolidar semântica de variáveis, tipos e escopos</li>
 <li>Ampliar exemplos e testes de execução</li>
+</ul>
+<p><strong>Entregas realizadas</strong></p>
+<ul>
+<li>Interpretador em <code>src/interpretador.c</code> acionado por <code>--run</code></li>
+<li>Execução de declarações, atribuições, expressões, blocos, <code>if</code>/<code>else</code>, <code>while</code> e <code>print</code></li>
+<li>Ambientes de execução aninhados e erros como variável sem valor e divisão por zero</li>
+<li>Exemplo executável em <code>examples/interpretador.c</code> e suíte de execução integrada a <code>make test</code></li>
 </ul>
 <h2 id="sprint-6-entrega-e-entrevista">Sprint 6 — Entrega e entrevista<a class="headerlink" href="#sprint-6-entrega-e-entrevista" title="Permanent link">&para;</a></h2>
 <p><strong>Objetivos</strong></p>

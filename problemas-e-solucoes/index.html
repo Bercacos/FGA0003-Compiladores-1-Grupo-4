@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -851,10 +851,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-analise-nao-e-execucao" class="md-nav__link">
+  <a href="#7-separacao-entre-analise-e-execucao" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Análise não é execução
+        7. Separação entre análise e execução
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-funcoes-fora-do-escopo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Funções fora do escopo
       
     </span>
   </a>
@@ -989,10 +1000,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-analise-nao-e-execucao" class="md-nav__link">
+  <a href="#7-separacao-entre-analise-e-execucao" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. Análise não é execução
+        7. Separação entre análise e execução
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-funcoes-fora-do-escopo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Funções fora do escopo
       
     </span>
   </a>
@@ -1048,9 +1070,12 @@
 <h2 id="6-documentacao-acompanhando-o-codigo">6. Documentação acompanhando o código<a class="headerlink" href="#6-documentacao-acompanhando-o-codigo" title="Permanent link">&para;</a></h2>
 <p><strong>Problema.</strong> A documentação foi criada em etapas e algumas páginas ainda descreviam a AST e a análise semântica como pendentes após sua implementação.</p>
 <p><strong>Solução.</strong> As páginas de estrutura, análise, tabela de símbolos e testes foram atualizadas para apresentar o estado atual do projeto.</p>
-<h2 id="7-analise-nao-e-execucao">7. Análise não é execução<a class="headerlink" href="#7-analise-nao-e-execucao" title="Permanent link">&para;</a></h2>
-<p><strong>Problema.</strong> A mensagem “Analise sintatica concluida com sucesso” pode ser confundida com a execução do programa recebido.</p>
-<p><strong>Solução.</strong> A documentação explica que o analisador constrói e imprime a AST e a tabela de símbolos, mas ainda não executa as instruções.</p>
+<h2 id="7-separacao-entre-analise-e-execucao">7. Separação entre análise e execução<a class="headerlink" href="#7-separacao-entre-analise-e-execucao" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> A mensagem “Analise sintatica concluida com sucesso” podia ser confundida com a execução do programa recebido.</p>
+<p><strong>Solução.</strong> Os modos foram separados: sem opção, o programa constrói e imprime a AST e a tabela; com <code>--run</code>, executa os nós suportados.</p>
+<h2 id="8-funcoes-fora-do-escopo">8. Funções fora do escopo<a class="headerlink" href="#8-funcoes-fora-do-escopo" title="Permanent link">&para;</a></h2>
+<p><strong>Problema.</strong> O parser conserva regras e testes antigos para definição de funções, embora não haja chamadas e o interpretador ignore esses nós.</p>
+<p><strong>Solução.</strong> A documentação não apresenta funções como recurso implementado. As regras remanescentes são descritas explicitamente como legado sintático; o exemplo integrado executável usa comandos globais.</p>
 
 
 

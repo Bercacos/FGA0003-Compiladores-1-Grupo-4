@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.2">
     
     
       
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#testes-do-analisador-da-ast-e-da-tabela-de-simbolos" class="md-skip">
+        <a href="#testes-do-analisador-e-do-interpretador" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -903,6 +903,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#testes-de-execucao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testes de execução
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacao-manual-da-execucao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação manual da execução
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1031,6 +1053,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#testes-de-execucao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testes de execução
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacao-manual-da-execucao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação manual da execução
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1056,15 +1100,15 @@
   
 
 
-<h1 id="testes-do-analisador-da-ast-e-da-tabela-de-simbolos">Testes do analisador, da AST e da tabela de símbolos<a class="headerlink" href="#testes-do-analisador-da-ast-e-da-tabela-de-simbolos" title="Permanent link">&para;</a></h1>
+<h1 id="testes-do-analisador-e-do-interpretador">Testes do analisador e do interpretador<a class="headerlink" href="#testes-do-analisador-e-do-interpretador" title="Permanent link">&para;</a></h1>
 <p>Os testes automatizados estão em <code>tests/</code> e são executados com <code>make test</code>. As instruções de uso estão em <a href="../uso/">Como usar</a>.</p>
 <h2 id="objetivo">Objetivo<a class="headerlink" href="#objetivo" title="Permanent link">&para;</a></h2>
-<p>Verificar o reconhecimento léxico, a aceitação ou rejeição das construções da linguagem, as verificações de tipos e escopos, a estrutura da AST e os dados da tabela de símbolos. Testes manuais complementam as suítes com variações das entradas.</p>
+<p>Verificar o reconhecimento léxico, a aceitação ou rejeição das construções da linguagem, as verificações de tipos e escopos, a estrutura da AST, os dados da tabela de símbolos e o comportamento do modo <code>--run</code>.</p>
 <h2 id="testes-realizados">Testes realizados<a class="headerlink" href="#testes-realizados" title="Permanent link">&para;</a></h2>
 <p>Na análise léxica, foram verificados identificadores, palavras reservadas, números, strings, caracteres, operadores, comentários e caracteres não reconhecidos. Também foram observadas as mensagens de erro e a indicação da linha em que o erro ocorre.</p>
 <p>Na análise sintática, foram testadas declarações de variáveis, atribuições, expressões aritméticas e comparações, uso de parênteses, múltiplos declaradores, incremento e decremento e blocos delimitados por chaves. Para cada grupo de construções, foram usadas entradas válidas e inválidas.</p>
 <h2 id="resultados">Resultados<a class="headerlink" href="#resultados" title="Permanent link">&para;</a></h2>
-<p>O projeto compilou sem erros e o comando <code>make test</code> terminou sem falhas no WSL. Passaram as suítes do parser, escopo, tabela de símbolos, análise semântica e AST. Os testes manuais complementaram essas suítes com variações de programas válidos e inválidos, permitindo conferir a árvore impressa e os símbolos registrados.</p>
+<p>Na rodada de 27/11/2026, <code>make test</code> compilou o projeto no WSL e concluiu todas as suítes com sucesso. A nova suíte de execução do interpretador passou em 40 de 40 casos. A execução do exemplo <code>examples/interpretador.c</code> também produziu as saídas esperadas.</p>
 <h3 id="exemplos-de-entradas-e-saidas">Exemplos de entradas e saídas<a class="headerlink" href="#exemplos-de-entradas-e-saidas" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1129,10 +1173,10 @@
 </table>
 <h2 id="limites-dos-testes">Limites dos testes<a class="headerlink" href="#limites-dos-testes" title="Permanent link">&para;</a></h2>
 <p>Os testes automatizados e manuais verificam o reconhecimento léxico, a sintaxe, a estrutura da AST impressa e a tabela de símbolos. Na tabela, foram conferidos nomes, categorias, tipos, escopos e linhas, além da busca de identificadores, ocultação de variáveis e rejeição de redeclarações.</p>
-<p>Os testes da AST conferem a ordem e a hierarquia dos nós na saída do analisador. O projeto ainda não executa as instruções analisadas; portanto, os testes não verificam resultados da execução do interpretador.</p>
+<p>Os testes da AST conferem a ordem e a hierarquia dos nós na saída do analisador. A suíte do interpretador usa programas curtos para verificar comportamentos específicos de execução.</p>
 <h2 id="atualizacao-apos-as-novas-regras-sintaticas">Atualização após as novas regras sintáticas<a class="headerlink" href="#atualizacao-apos-as-novas-regras-sintaticas" title="Permanent link">&para;</a></h2>
-<p>Após a inclusão de <code>if</code>/<code>else</code>, definições de funções e <code>return</code>, a suíte adicional foi atualizada. O teste que antes esperava a rejeição de <code>if</code> passou a esperar sua aceitação, e foram acrescentados dez casos. Na versão atual, a suíte principal passou (7/7) e a adicional passou (30/30).</p>
-<p>Os novos casos verificam <code>if</code> simples, <code>if-else</code>, <code>if</code> aninhado, funções com parâmetros tipados, sem parâmetros e com <code>(void)</code>, e <code>return</code>. Também verificam a rejeição de <code>if</code> sem condição, <code>else</code> isolado, parâmetro sem tipo, vírgula final nos parâmetros e <code>return</code> sem ponto e vírgula.</p>
+<p>Em uma etapa anterior, a suíte adicional passou a aceitar <code>if</code>/<code>else</code> e também regras sintáticas de definição de função e <code>return</code>. Esses testes históricos continuam no repositório, mas funções não fazem parte do escopo funcional atual.</p>
+<p>Os casos verificam <code>if</code> simples, <code>if-else</code>, <code>if</code> aninhado e rejeições relacionadas. Casos de função e <code>return</code> apenas registram o comportamento legado do parser, não uma capacidade do interpretador.</p>
 <table>
 <thead>
 <tr>
@@ -1149,16 +1193,6 @@
 </tr>
 <tr>
 <td><code>if () { int x = 1; }</code></td>
-<td>Rejeitar</td>
-<td>Erro sintático: <code>unexpected RPAREN</code></td>
-</tr>
-<tr>
-<td><code>int soma(int a, int b) { return a + b; }</code></td>
-<td>Aceitar</td>
-<td><code>Analise sintatica concluida com sucesso.</code></td>
-</tr>
-<tr>
-<td><code>int soma(int a,) { return a; }</code></td>
 <td>Rejeitar</td>
 <td>Erro sintático: <code>unexpected RPAREN</code></td>
 </tr>
@@ -1186,7 +1220,7 @@
 </tr>
 <tr>
 <td><code>int soma(int a, int b) { return a + b; }</code></td>
-<td>A função contém o tipo, os parâmetros e o <code>Return</code> com a soma.</td>
+<td>Teste histórico: a AST ainda representa a regra legada, sem execução ou chamada.</td>
 </tr>
 <tr>
 <td><code>int x = 0; while (x &lt; 3) { x = x + 1; }</code></td>
@@ -1194,7 +1228,22 @@
 </tr>
 </tbody>
 </table>
-<p>A tabela de símbolos é testada isoladamente em <code>tests/test_tabela.c</code> e junto ao analisador em <code>tests/test_tabela.sh</code>. Esses testes verificam inserção e busca de símbolos, nomes, categorias, tipos, escopos, linhas, ocultação de variáveis e rejeição de redeclarações. Todas essas suítes passaram no WSL.</p>
+<p>A tabela de símbolos é testada isoladamente em <code>tests/test_tabela.c</code> e junto ao analisador em <code>tests/test_tabela.sh</code>. Esses testes verificam inserção e busca de símbolos, nomes, categorias, tipos, escopos, linhas, ocultação de variáveis e rejeição de redeclarações.</p>
+<h2 id="testes-de-execucao">Testes de execução<a class="headerlink" href="#testes-de-execucao" title="Permanent link">&para;</a></h2>
+<p><code>tests/test_interpretador.sh</code> é executado por <code>make test</code>. Os 40 casos incluem 34 programas com saída esperada, quatro erros de execução e duas verificações do modo de uso.</p>
+<ul>
+<li>Os casos de sucesso comparam a saída padrão e exigem código de saída zero. Cobrem aritmética, conversões entre tipos numéricos, caracteres, strings, comparações, curto-circuito, incremento e decremento, <code>if</code>/<code>else</code>, <code>while</code>, escopo de blocos e <code>print</code> com vários argumentos.</li>
+<li>Os casos de erro exigem código de saída diferente de zero e conferem o diagnóstico de divisão por zero, resto de divisão por zero e leitura ou incremento de variável sem valor.</li>
+<li>Os dois casos restantes verificam o modo padrão de análise e se um erro semântico impede a execução mesmo quando há um <code>print</code> antes do erro.</li>
+</ul>
+<p>Para rodar apenas essa suíte:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>make
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>bash<span class="w"> </span>tests/test_interpretador.sh<span class="w"> </span>./build/analisador
+</code></pre></div>
+<h2 id="verificacao-manual-da-execucao">Verificação manual da execução<a class="headerlink" href="#verificacao-manual-da-execucao" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>./build/analisador<span class="w"> </span>--run<span class="w"> </span>examples/interpretador.c
+</code></pre></div>
+<p>Entre as saídas esperadas estão <code>divisao inteira: 3</code>, <code>divisao real: 3.5</code>, <code>5! = 120</code>, <code>x dentro do bloco: 99</code> e <code>x fora do bloco: 1</code>.</p>
 
 
 
