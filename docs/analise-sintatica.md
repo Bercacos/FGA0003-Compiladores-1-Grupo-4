@@ -1,6 +1,6 @@
 # Análise sintática
 
-O parser está em `src/parser.y` e usa Bison. Ele valida a sintaxe, constrói a AST e realiza verificações de tipos e escopos com a tabela de símbolos. As instruções analisadas ainda não são executadas.
+O parser está em `src/parser.y` e usa Bison. Ele valida a sintaxe, constrói a AST e realiza verificações de tipos e escopos com a tabela de símbolos. A AST pode ser executada pelo interpretador com `--run`.
 
 ## Comparação com o escopo até `while`
 
@@ -15,7 +15,7 @@ O parser está em `src/parser.y` e usa Bison. Ele valida a sintaxe, constrói a 
 | `while` | Token no léxico, sem produção sintática | Implementado com condição, bloco ou comando único, incluindo `;` |
 | `print` | Ausente | Implementado `print(expressao, ...);`, com pelo menos um argumento |
 
-`print` é uma extensão deste subconjunto de C, assim como `string`. Não é uma chamada de `printf` da biblioteca padrão. Funções e `return`, já existentes, foram preservados.
+`print` é uma extensão deste subconjunto de C, assim como `string`. Não é uma chamada de `printf` da biblioteca padrão.
 
 ## Gramática das novas instruções
 
@@ -35,21 +35,18 @@ Da menor para a maior: `||`; `&&`; `==` e `!=`; `<`, `<=`, `>`, `>=`; `+` e `-`;
 ## Exemplo integrado
 
 ```c
-int main(void) {
-    int i = 0;
-    while (i < 5 && !(i == 3)) {
-        if (i != 1) print("valor", i);
-        else print("pulado");
-        i++;
-    }
-    return 0;
+int i = 0;
+while (i < 5 && !(i == 3)) {
+    if (i != 1) print("valor", i);
+    else print("pulado");
+    i++;
 }
 ```
 
-Este código é reconhecido sintaticamente; `print` e `while` ainda não são executados.
+Este código é reconhecido e pode ser executado com `./build/analisador --run`.
 
 ## Validação e limites
 
-`make test` executa as suítes do parser, escopo, tabela de símbolos, análise semântica e AST. Todas passaram no WSL. A suíte de escopo inclui casos válidos e inválidos para `while`, `print`, operadores lógicos e integração com as demais construções.
+A suíte de escopo inclui casos válidos e inválidos para `while`, `print`, operadores lógicos e integração com as demais construções. Ela é executada por `make test`, junto com as outras [suítes do projeto](testes.md).
 
-Fora do escopo atual estão `for`, `do/while`, `switch`, ponteiros, arrays, structs, chamadas gerais de função e biblioteca padrão. A execução das instruções pelo interpretador ainda não foi implementada.
+Fora do escopo atual estão declarações/definições e chamadas de funções, `return`, `for`, `do/while`, `switch`, ponteiros, arrays, structs e biblioteca padrão. O parser ainda contém produções legadas para definições de função e `return`, mas elas não representam suporte funcional: não há chamadas e o interpretador ignora definições.

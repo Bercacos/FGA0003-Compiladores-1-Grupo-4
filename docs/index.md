@@ -8,8 +8,8 @@ O projeto implementa, em etapas, um **interpretador** para um subconjunto de C, 
 
 1. **Análise léxica** — reconhecimento de tokens com `flex`
 2. **Análise sintática** — verificação da gramática com `bison`
-3. **Análise semântica** — tabela de símbolos, tipos e verificações *(próxima etapa)*
-4. **Interpretação / execução** — avaliação da AST *(próxima etapa)*
+3. **Análise semântica** — tabela de símbolos, tipos e verificações
+4. **Interpretação / execução** — avaliação direta da AST com `--run`
 
 A documentação abaixo segue os requisitos do professor ([Trabalho de Compiladores](https://github.com/sergioaafreitas/COMP1/blob/main/semana%2001/docs/Trabalho%20de%20Compiladores.md) e [Guia — Projeto de um interpretador](https://github.com/sergioaafreitas/COMP1/blob/main/semana%2001/docs/Guia%20-%20Projeto%20de%20um%20interpretador.md)): estrutura do projeto, decisões técnicas, planejamento das sprints, problemas encontrados e soluções adotadas.
 
@@ -19,12 +19,12 @@ A documentação abaixo segue os requisitos do professor ([Trabalho de Compilado
 | --- | --- | --- |
 | Ambiente e repositório | Concluído | `Makefile`, Flex/Bison e GitHub Pages com MkDocs |
 | Análise léxica | Implementada e testada | Tokens, literais, operadores, comentários e erros léxicos |
-| Análise sintática | Implementada e testada | Declarações, expressões, blocos, `if`/`else`, `while`, `print`, funções e `return` |
+| Análise sintática | Implementada e testada | Declarações, expressões, blocos, `if`/`else`, `while`, `print` e operadores |
 | AST | Implementada e testada | Representa as construções reconhecidas e imprime a árvore |
 | Análise semântica | Verificações iniciais implementadas e testadas | Tabela de símbolos, escopos, declarações e compatibilidade básica de tipos |
-| Interpretação | Pendente | As instruções analisadas ainda não são executadas |
+| Interpretação | Implementada | Execução opcional com `--run`: variáveis, expressões, blocos, desvios, laços e saída |
 
-Nesta versão, `build/analisador` analisa o código-fonte e imprime a AST e a tabela de símbolos. Ele ainda não executa o programa.
+Nesta versão, `build/analisador` analisa o código-fonte e imprime a AST e a tabela de símbolos. `build/analisador --run` executa o subconjunto implementado. Funções não integram o escopo de execução; definições e `return` ainda são aceitos pelo parser apenas como legado, sem chamadas ou execução.
 
 ## Equipe
 

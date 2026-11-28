@@ -12,9 +12,11 @@ Implementada em `src/tabela.c` / `src/tabela.h` (tipos em `src/tipos.h`), seguin
 | Escopo | `global`, ou `<rótulo>#<id>` (ex.: `soma#1`, `bloco#2`) |
 | Linha | linha da declaração |
 
+As categorias `funcao` e `parametro` permanecem porque o parser ainda reconhece definições legadas. Elas não significam suporte a declaração/chamada de funções no interpretador.
+
 ## Escopos
 
-- O escopo `0` é o global. Cada função abre um escopo (parâmetros e corpo compartilham o mesmo) e cada bloco `{ ... }` abre um escopo filho.
+- O escopo `0` é o global. Cada bloco `{ ... }` abre um escopo filho. Uma definição de função aceita pela gramática legada também abre um escopo para parâmetros e corpo, embora não seja executada.
 - A busca (`tabela_buscar`) começa no escopo informado e sobe para os escopos externos; o mais interno vence.
 - Redeclaração é avaliada **somente no escopo atual**: `int x; { int x; }` é válido, `int x; int x;` não é.
 - Os símbolos permanecem na tabela depois que o escopo termina (para impressão e para a análise semântica), mas deixam de ser visíveis de fora dele.
@@ -33,7 +35,7 @@ Implementada em `src/tabela.c` / `src/tabela.h` (tipos em `src/tipos.h`), seguin
 
 ## Integração com o parser
 
-As declarações alimentam a tabela nas reduções do Bison (`declarador`, `parametro`, `cabecalho_funcao`) e `bloco` abre/fecha escopo. A linha vem de `@N.first_line`, preenchido pelo `YY_USER_ACTION` do `scanner.l`. Redeclaração gera `Erro semantico na linha N: ...` e o programa termina com código ≠ 0.
+As declarações de variáveis alimentam a tabela na redução `declarador`, e `bloco` abre/fecha escopo. As reduções legadas `parametro` e `cabecalho_funcao` também registram símbolos, apenas para manter coerência com o parser existente. A linha vem de `@N.first_line`, preenchido pelo `YY_USER_ACTION` do `scanner.l`. Redeclaração gera `Erro semantico na linha N: ...` e o programa termina com código ≠ 0.
 
 O uso de um identificador não declarado gera erro semântico. A busca começa no escopo atual e percorre os escopos externos; se não encontrar o nome, o analisador informa o erro e termina com código de saída diferente de zero.
 

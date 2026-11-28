@@ -45,8 +45,14 @@ e a produção do `if` sem `else` marcada com `%prec THEN`, fazendo o `else` ass
 
 **Solução.** As páginas de estrutura, análise, tabela de símbolos e testes foram atualizadas para apresentar o estado atual do projeto.
 
-## 7. Análise não é execução
+## 7. Separação entre análise e execução
 
-**Problema.** A mensagem “Analise sintatica concluida com sucesso” pode ser confundida com a execução do programa recebido.
+**Problema.** A mensagem “Analise sintatica concluida com sucesso” podia ser confundida com a execução do programa recebido.
 
-**Solução.** A documentação explica que o analisador constrói e imprime a AST e a tabela de símbolos, mas ainda não executa as instruções.
+**Solução.** Os modos foram separados: sem opção, o programa constrói e imprime a AST e a tabela; com `--run`, executa os nós suportados.
+
+## 8. Funções fora do escopo
+
+**Problema.** O parser conserva regras e testes antigos para definição de funções, embora não haja chamadas e o interpretador ignore esses nós.
+
+**Solução.** A documentação não apresenta funções como recurso implementado. As regras remanescentes são descritas explicitamente como legado sintático; o exemplo integrado executável usa comandos globais.

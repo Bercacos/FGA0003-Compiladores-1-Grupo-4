@@ -1,10 +1,10 @@
-# Testes do analisador, da AST e da tabela de símbolos
+# Testes do analisador e do interpretador
 
 Os testes automatizados estão em `tests/` e são executados com `make test`. As instruções de uso estão em [Como usar](uso.md).
 
 ## Objetivo
 
-Verificar o reconhecimento léxico, a aceitação ou rejeição das construções da linguagem, as verificações de tipos e escopos, a estrutura da AST e os dados da tabela de símbolos. Testes manuais complementam as suítes com variações das entradas.
+Verificar o reconhecimento léxico, a aceitação ou rejeição das construções da linguagem, as verificações de tipos e escopos, a estrutura da AST, os dados da tabela de símbolos e o comportamento do modo `--run`.
 
 ## Testes realizados
 
@@ -14,7 +14,7 @@ Na análise sintática, foram testadas declarações de variáveis, atribuiçõe
 
 ## Resultados
 
-O projeto compilou sem erros e o comando `make test` terminou sem falhas no WSL. Passaram as suítes do parser, escopo, tabela de símbolos, análise semântica e AST. Os testes manuais complementaram essas suítes com variações de programas válidos e inválidos, permitindo conferir a árvore impressa e os símbolos registrados.
+Na rodada de 27/11/2026, `make test` compilou o projeto no WSL e concluiu todas as suítes com sucesso. A nova suíte de execução do interpretador passou em 40 de 40 casos. A execução do exemplo `examples/interpretador.c` também produziu as saídas esperadas.
 
 ### Exemplos de entradas e saídas
 
@@ -35,20 +35,18 @@ O projeto compilou sem erros e o comando `make test` terminou sem falhas no WSL.
 
 Os testes automatizados e manuais verificam o reconhecimento léxico, a sintaxe, a estrutura da AST impressa e a tabela de símbolos. Na tabela, foram conferidos nomes, categorias, tipos, escopos e linhas, além da busca de identificadores, ocultação de variáveis e rejeição de redeclarações.
 
-Os testes da AST conferem a ordem e a hierarquia dos nós na saída do analisador. O projeto ainda não executa as instruções analisadas; portanto, os testes não verificam resultados da execução do interpretador.
+Os testes da AST conferem a ordem e a hierarquia dos nós na saída do analisador. A suíte do interpretador usa programas curtos para verificar comportamentos específicos de execução.
 
 ## Atualização após as novas regras sintáticas
 
-Após a inclusão de `if`/`else`, definições de funções e `return`, a suíte adicional foi atualizada. O teste que antes esperava a rejeição de `if` passou a esperar sua aceitação, e foram acrescentados dez casos. Na versão atual, a suíte principal passou (7/7) e a adicional passou (30/30).
+Em uma etapa anterior, a suíte adicional passou a aceitar `if`/`else` e também regras sintáticas de definição de função e `return`. Esses testes históricos continuam no repositório, mas funções não fazem parte do escopo funcional atual.
 
-Os novos casos verificam `if` simples, `if-else`, `if` aninhado, funções com parâmetros tipados, sem parâmetros e com `(void)`, e `return`. Também verificam a rejeição de `if` sem condição, `else` isolado, parâmetro sem tipo, vírgula final nos parâmetros e `return` sem ponto e vírgula.
+Os casos verificam `if` simples, `if-else`, `if` aninhado e rejeições relacionadas. Casos de função e `return` apenas registram o comportamento legado do parser, não uma capacidade do interpretador.
 
 | Entrada | Resultado esperado | Saída observada |
 | --- | --- | --- |
 | `if (1) { int x = 2; }` | Aceitar | `Analise sintatica concluida com sucesso.` |
 | `if () { int x = 1; }` | Rejeitar | Erro sintático: `unexpected RPAREN` |
-| `int soma(int a, int b) { return a + b; }` | Aceitar | `Analise sintatica concluida com sucesso.` |
-| `int soma(int a,) { return a; }` | Rejeitar | Erro sintático: `unexpected RPAREN` |
 
 ## Extensão do escopo até `while`
 
@@ -62,7 +60,30 @@ A suíte `tests/test_ast.sh`, executada por `make test`, verifica trechos da ár
 | --- | --- |
 | `int a = 10; int b = 20; int soma = a + b * 2;` | A multiplicação aparece como filha da soma, respeitando a precedência. |
 | `int x = 1; if (x) { x = x + 2; } else { x = x - 1; }` | O `If` contém a condição e dois blocos, na ordem de `if` e `else`. |
-| `int soma(int a, int b) { return a + b; }` | A função contém o tipo, os parâmetros e o `Return` com a soma. |
+| `int soma(int a, int b) { return a + b; }` | Teste histórico: a AST ainda representa a regra legada, sem execução ou chamada. |
 | `int x = 0; while (x < 3) { x = x + 1; }` | O `While` contém a condição e o bloco do corpo. |
 
-A tabela de símbolos é testada isoladamente em `tests/test_tabela.c` e junto ao analisador em `tests/test_tabela.sh`. Esses testes verificam inserção e busca de símbolos, nomes, categorias, tipos, escopos, linhas, ocultação de variáveis e rejeição de redeclarações. Todas essas suítes passaram no WSL.
+A tabela de símbolos é testada isoladamente em `tests/test_tabela.c` e junto ao analisador em `tests/test_tabela.sh`. Esses testes verificam inserção e busca de símbolos, nomes, categorias, tipos, escopos, linhas, ocultação de variáveis e rejeição de redeclarações.
+
+## Testes de execução
+
+`tests/test_interpretador.sh` é executado por `make test`. Os 40 casos incluem 34 programas com saída esperada, quatro erros de execução e duas verificações do modo de uso.
+
+- Os casos de sucesso comparam a saída padrão e exigem código de saída zero. Cobrem aritmética, conversões entre tipos numéricos, caracteres, strings, comparações, curto-circuito, incremento e decremento, `if`/`else`, `while`, escopo de blocos e `print` com vários argumentos.
+- Os casos de erro exigem código de saída diferente de zero e conferem o diagnóstico de divisão por zero, resto de divisão por zero e leitura ou incremento de variável sem valor.
+- Os dois casos restantes verificam o modo padrão de análise e se um erro semântico impede a execução mesmo quando há um `print` antes do erro.
+
+Para rodar apenas essa suíte:
+
+```bash
+make
+bash tests/test_interpretador.sh ./build/analisador
+```
+
+## Verificação manual da execução
+
+```bash
+./build/analisador --run examples/interpretador.c
+```
+
+Entre as saídas esperadas estão `divisao inteira: 3`, `divisao real: 3.5`, `5! = 120`, `x dentro do bloco: 99` e `x fora do bloco: 1`.

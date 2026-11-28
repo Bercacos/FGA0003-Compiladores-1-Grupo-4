@@ -6,7 +6,9 @@ A AST representa a estrutura dos programas reconhecidos pelo analisador. Ela é 
 
 Cada nó registra sua categoria e a linha de origem. Dependendo da categoria, também guarda um nome, operador ou valor, filhos e o tipo associado à expressão. Comandos, declaradores, parâmetros e argumentos são encadeados na ordem em que aparecem no programa.
 
-A árvore representa declarações, atribuições, blocos, `if`/`else`, `while`, `print`, funções, `return` e expressões. Por exemplo, um nó `If` possui a condição, o comando do `if` e, quando presente, o comando do `else`.
+A árvore representa declarações, atribuições, blocos, `if`/`else`, `while`, `print` e expressões. Por exemplo, um nó `If` possui a condição, o comando do `if` e, quando presente, o comando do `else`. Nós de função e `return` permanecem por compatibilidade com a gramática anterior, mas estão fora do escopo de execução.
+
+No modo `--run`, `src/interpretador.c` percorre os nós suportados. Definições de função são ignoradas e não existem nós de chamada.
 
 ## Exemplo
 
