@@ -43,6 +43,7 @@ test: $(TARGET)
 	bash tests/test_scope.sh ./$(TARGET)
 	bash tests/test_semantica.sh ./$(TARGET)
 	bash tests/test_ast.sh ./$(TARGET)
+	bash tests/test_interpretador.sh ./$(TARGET)
 
 clean:
 	rm -rf $(BUILD_DIR)
